@@ -1,6 +1,6 @@
 FROM node:10 as build
 WORKDIR /usr/app
-COPY oje /usr/app
+COPY . /usr/app
 RUN npm ci
 RUN npm run build
 
