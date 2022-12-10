@@ -5,7 +5,6 @@ import songsReducer from './songs/reducer'
 import wordsReducer from './words/reducer'
 import artistsReducer from "./artists/reducer";
 
-
 const middleware = compose(
    applyMiddleware(thunk),
 window.devToolsExtension ? window.devToolsExtension() : f => f
@@ -18,8 +17,6 @@ const rootReducer = combineReducers({
    artistsState: artistsReducer,
 });
 
-
 const store = createStore(rootReducer, middleware);
-
 
 export default store;

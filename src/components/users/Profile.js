@@ -11,7 +11,6 @@ import Grid from "@material-ui/core/Grid";
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {Link} from "react-router-dom";
 
-
 const styles = theme => ({
 
     '@global': {
@@ -112,14 +111,12 @@ class Profile extends Component {
         GetLanguages();
         getProfileFetch();
     }
-
     componentWillReceiveProps(newProps) {
         if (this.state.name !== newProps.usersState.username) {
             this.setState({
                 name: newProps.usersState.username
             })
         }
-
         if (this.state.native_language_id !== newProps.usersState.native_language_id) {
             console.log('newProps.usersState.native_language_id', newProps.usersState.native_language_id)
             this.setState({
@@ -134,7 +131,6 @@ class Profile extends Component {
                 target_language_id: newProps.usersState.target_language_id
             })
         }
-
         // if (this.state.email !== newProps.usersState.currentUser.email) {
         //     this.setState({
         //         email: newProps.usersState.currentUser.email
@@ -145,12 +141,11 @@ class Profile extends Component {
 
     render() {
         const {handleChange} = this;
-        const {classes, usersState, history} = this.props;
+        const {classes, usersState} = this.props;
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <div className={classes.paper}>
-
                     <Typography component="h1" variant="h5">
                         Profile
                     </Typography>
@@ -224,13 +219,12 @@ class Profile extends Component {
     }
 }
 
-
 const mapDispatchToProps = (dispatch, {history}) => ({
     getProfileFetch: () => dispatch(getProfileFetch(history)),
-    GetLanguages: () => dispatch(GetLanguages()),
+    GetLanguages,
     userUpdateDataFetch: (data) => dispatch(userUpdateDataFetch(data))
 });
+
 const mapStateToProps = ({usersState}) => ({usersState});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Profile));
-

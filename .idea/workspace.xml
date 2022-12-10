@@ -1,7 +1,51 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e27e4b-3776-4443-afa2-d3572ecbd7cc" name="Default Changelist" comment="Init" />
+    <list default="true" id="68e27e4b-3776-4443-afa2-d3572ecbd7cc" name="Default Changelist" comment="refactoring[p1]">
+      <change afterPath="$PROJECT_DIR$/src/components/songs/songs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/ArtistSongs.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/FoundSong.js" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/pages/LikedSongs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/App.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/ModalWindow.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/ModalWindow.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/artists/Artists.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/artists/Artists.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/dict/Row.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dict/Row.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/snackbars.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/snackbars.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/Card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/Card.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/FoundSong.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/Like.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/Like.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/LikedSongs.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/SearchForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/SearchForm.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/Song.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/Song.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/Songs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/Songs.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/UnLike.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/UserPosts.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/songs/Video.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/Video.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/users/Profile.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/Profile.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/users/ResetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/ResetPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/users/SecondStep.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SecondStep.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/users/SetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SetPassword.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/users/SignIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SignIn.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/components/users/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SignUp.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/config.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/config.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consts/common.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/consts/index.js" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/history.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/history.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/index.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/routes/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/router.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/artists/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/artists/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/artists/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/artists/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/rootReducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/rootReducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/songs/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/songs/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/songs/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/songs/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/users/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/users/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/users/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/users/reducer.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/words/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/words/actions.js" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/store/words/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/words/reducer.js" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -26,17 +70,20 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;WebServerToolWindowFactoryState&quot;: &quot;false&quot;,
-    &quot;last_opened_file_path&quot;: &quot;/home/dmartyniuk/Desktop/folder_for_saving/gifts&quot;,
-    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
-    &quot;ts.external.directory.path&quot;: &quot;/home/dmartyniuk/.local/share/JetBrains/Toolbox/apps/WebStorm/ch-0/222.4345.14/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external&quot;,
-    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "/home/dmartyniuk/Desktop/folder_for_saving/oje-front/src/pages",
+    "nodejs_package_manager_path": "npm",
+    "settings.editor.selected.configurable": "preferences.lookFeel",
+    "ts.external.directory.path": "/home/dmartyniuk/.local/share/JetBrains/Toolbox/apps/WebStorm/ch-0/222.4345.14/plugins/JavaScriptLanguage/jsLanguageServicesImpl/external",
+    "vue.rearranger.settings.migration": "true"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/src/pages" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/docker" />
@@ -101,6 +148,7 @@
       <workItem from="1669220639201" duration="11529000" />
       <workItem from="1669727824711" duration="2625000" />
       <workItem from="1669823124405" duration="36774000" />
+      <workItem from="1670618251083" duration="16061000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1662483992655</created>
@@ -144,6 +192,7 @@
     <MESSAGE value="Init" />
     <MESSAGE value="finished 2-d part" />
     <MESSAGE value="added docker files" />
-    <option name="LAST_COMMIT_MESSAGE" value="added docker files" />
+    <MESSAGE value="refactoring[p1]" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring[p1]" />
   </component>
 </project>

@@ -4,7 +4,7 @@ import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
 import React, {Component} from "react";
-import {Box, useTheme} from "@material-ui/core";
+import {Box} from "@material-ui/core";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
 import {translateWordFetch} from "../../store/words/actions";
@@ -12,7 +12,6 @@ import {userAddToDict} from "../../store/users/actions";
 import {red} from "@material-ui/core/colors";
 import {withStyles} from "@material-ui/core/styles";
 import SwipeableViews from 'react-swipeable-views';
-
 
 const bull = (
     <Box
@@ -22,7 +21,6 @@ const bull = (
         •
     </Box>
 );
-
 
 const styles = theme => ({
     card: {
@@ -50,7 +48,6 @@ const styles = theme => ({
         axis: theme.direction === 'rtl' ? 'x-reverse' : 'x',
         maxWidth: 500,
         marginTop: theme.spacing(5),
-
     }
 });
 
@@ -75,24 +72,22 @@ class WordCard extends Component {
         }
     }
 
-    handleAddToDict = event => {
+    handleAddToDict = () => {
         const {translatedWord, song} = this.props;
         this.props.userAddToDict(translatedWord.id, this.state.image, song.id)
     };
 
     handleCurrentImage = image => {
         this.setState({image: image});
-
     };
 
-
     render = () => {
-        const {translatedWord, word, classes} = this.props;
+        const {translatedWord, classes} = this.props;
         return (
             <Card sx={{minWidth: 275}}>
                 <SwipeableViews className={classes.card}
                                 enableMouseEvents>
-                    {translatedWord.pictures ? translatedWord.pictures.map((step, index) => (
+                    {translatedWord.pictures ? translatedWord.pictures.map((step) => (
                         <div key={step} onMouseOver={() => this.handleCurrentImage(step)}>
                             <Box
                                 component="img"
@@ -127,14 +122,10 @@ class WordCard extends Component {
     }
 }
 
-
 const mapDispatchToProps = (dispatch) => ({
     translateWordFetch: (word) => dispatch(translateWordFetch(word)),
     userAddToDict: (wordId, image, songId) => dispatch(userAddToDict(wordId, image, songId))
-
 });
-
 
 const mapStateToProps = (state) => ({translatedWord: state.wordsState.word});
 export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(WordCard)))
-

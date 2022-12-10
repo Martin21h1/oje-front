@@ -1,13 +1,11 @@
 import Api from '../../api'
 
-
 export const userSignUpFetch = (user, history) => {
     return dispatch => {
         return Api.fetchCreateUser(user)
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     dispatch(SetUserData(data));
                     dispatch(setToken(data));
@@ -23,14 +21,12 @@ export const userSignUpFetch = (user, history) => {
     }
 };
 
-
 export const userLoginFetch = (user, history) => {
     return dispatch => {
         return Api.fetchLoginUser(user)
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     localStorage.setItem('token', data.jwt);
                     dispatch(setToken(data.jwt));
@@ -46,13 +42,12 @@ export const userLoginFetch = (user, history) => {
     }
 };
 
-export const userLoginWithGoogleFetch = (user, history) => {
+export const userLoginWithGoogleFetch = () => {
     return dispatch => {
         Api.fetchLoginWithGoogleUser()
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     window.location.replace(data['redirect_url'])
                 }
@@ -71,7 +66,6 @@ export const userGetTokenFetch = (history) => {
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     dispatch(SetUserData(data));
                     dispatch(setToken(data));
@@ -93,7 +87,6 @@ export const userUpdateDataFetch = (data) => {
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     // dispatch(setUsername(user.username));
                     // localStorage.setItem('username', user.username);
@@ -114,9 +107,7 @@ export const userAddToDict = (wordId, image, songId) => {
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
-
                 }
             })
             .catch(error => {
@@ -131,7 +122,6 @@ export const userGetDict = () => {
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     dispatch({
                         type: 'DICT',
@@ -151,7 +141,6 @@ export const GetLanguages = () => {
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     dispatch({
                         type: 'SET_LANGUAGES',
@@ -171,7 +160,6 @@ export const DeleteWord = (id) => {
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
 
                 }
@@ -188,7 +176,6 @@ export const getProfileFetch = () => {
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     dispatch(setUsername(data.data.username));
 
@@ -204,12 +191,10 @@ export const getProfileFetch = () => {
     }
 };
 
-
 export const LogoutUser = (history) => {
     return dispatch => {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
-
         return Api.fetchLogOutUser()
             .then(data => {
                 if (data.message) {
@@ -229,12 +214,12 @@ export const LogoutUser = (history) => {
 
     }
 };
+
 export const SetPasswordFetch = (user, history) => {
     return dispatch => {
         return Api.fetchSetPassword(user)
             .then(data => {
                 if (data.message) {
-                    
                 } else {
                     history.replace('/')
                 }
@@ -246,6 +231,7 @@ export const SetPasswordFetch = (user, history) => {
 
     }
 };
+
 export const ResetPasswordFetch = (user, history) => {
     return dispatch => {
         return Api.fetchResetPassword(user)
@@ -259,8 +245,6 @@ export const ResetPasswordFetch = (user, history) => {
             .catch(error => {
                 console.log(error);
             })
-
-
     }
 };
 

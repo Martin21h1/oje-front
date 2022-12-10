@@ -2,7 +2,6 @@ import React, {Component} from "react";
 import ThumbUpAltIcon from '@material-ui/icons/ThumbUpAlt';
 import {withStyles} from "@material-ui/core";
 
-
 const styles = theme => ({
 
     '@global': {

@@ -10,7 +10,6 @@ import WarningIcon from '@material-ui/icons/Warning';
 import {withStyles} from '@material-ui/core/styles';
 import Snackbar from "@material-ui/core/Snackbar";
 
-
 const variantIcon = {
   success: CheckCircleIcon,
   warning: WarningIcon,
@@ -44,8 +43,6 @@ const styles = theme => ({
   },
 
 });
-
-
 
 class MySnackbar extends Component {
   state = {
@@ -99,6 +96,4 @@ class MySnackbar extends Component {
   }
 }
 
-
 export default withStyles(styles)(MySnackbar)
-

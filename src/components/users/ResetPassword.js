@@ -9,7 +9,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {withStyles} from '@material-ui/core/styles';
 
-
 const styles = theme => ({
 
     '@global': {
@@ -57,7 +56,6 @@ class ResetPassword extends Component {
 
     };
 
-
     render() {
 
         const {classes} = this.props;
@@ -81,7 +79,6 @@ class ResetPassword extends Component {
                             id="OldPassword"
                             onChange={this.handleChange}
                             autoComplete="password"
-
                         />
                         <TextField
                             variant="outlined"
@@ -94,7 +91,6 @@ class ResetPassword extends Component {
                             id="password"
                             onChange={this.handleChange}
                             autoComplete="current-password"
-
                         />
                         <TextField
                             variant="outlined"
@@ -107,7 +103,6 @@ class ResetPassword extends Component {
                             id="password2"
                             onChange={this.handleChange}
                             autoComplete="password2"
-
                         />
                         <Button
                             type="submit"
@@ -128,10 +123,8 @@ class ResetPassword extends Component {
     }
 }
 
-
 const mapDispatchToProps = (dispatch, {history}) => ({
     ResetPasswordFetch: userInfo => dispatch(ResetPasswordFetch(userInfo, history)),
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(ResetPassword));
-

@@ -2,12 +2,8 @@ const initialState = {
     artists: []
 };
 
-
 export default function artistsReducer(state = initialState, action) {
-    // console.log('action', action);
-    // console.log('state', state);
-
-    const {payload, type} = action;
+    const {type} = action;
     switch (type) {
         case 'LIST_ARTISTS':
             return {

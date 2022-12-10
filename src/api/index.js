@@ -2,7 +2,6 @@ import config from '../config'
 import {mergeRecursive} from "../helpers/mergeObjects";
 import redirect from "react-router/es/Redirect";
 
-
 class ApiClass {
     constructor() {
         this.url = `${config.apiUrl}`;
@@ -14,32 +13,26 @@ class ApiClass {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
                 ...!!token && {Authorization: `Bearer ${token}`},
-
             },
             credentials: 'include',
-
         };
 
         const mergedData = mergeRecursive(data, _data);
 
         return fetch(url, mergedData)
             .then(response => {
-                if (response.status <= 300) {
-                    return response;
-                }
+                if (response.status <= 300) return response;
                 console.log(response.status)
                 if (response.status === 302) {
                     redirect(response.headers.location);
                 }
 
                 return response.json().then(data => {
-                    if (response.status >= 300) {
-                        return data.message
-                    }
+                    if (response.status >= 300) return data.message
                     return data;
                 });
             })
-            .catch(e => Error(e));
+            .catch(Error);
 
     };
 
@@ -48,11 +41,7 @@ class ApiClass {
             url: `${this.url}/signUp`,
             data: {
                 method: 'POST',
-                body: JSON.stringify({
-                    username: user.username,
-                    password: user.password,
-                    email: user.email
-                })
+                body: JSON.stringify(user)
             }
         })
     };
@@ -63,10 +52,7 @@ class ApiClass {
             url: `${this.url}/login`,
             data: {
                 method: 'POST',
-                body: JSON.stringify({
-                    email: user.email,
-                    password: user.password
-                })
+                body: JSON.stringify(user)
             }
         })
     };
@@ -267,6 +253,4 @@ class ApiClass {
     };
 }
 
-
-const Api = new ApiClass();
-export default Api;
+export default new ApiClass();

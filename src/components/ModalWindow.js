@@ -7,12 +7,9 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 
-
-
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
-
 
 class Modal extends Component {
     state = {
@@ -20,17 +17,15 @@ class Modal extends Component {
         isOpened: false,
     };
 
-
     handleOpenClick = () => {
         this.setState(({isOpened}) => ({isOpened: !isOpened}));
-
     };
 
-    componentDidMount = () => {return this.handleOpenClick()}
+    componentDidMount = () => {this.handleOpenClick()}
 
     render = () => {
         const { id, title, content, onClick } = this.props;
-        return <div>
+        return <>
 
             <Dialog
                 open={this.state.isOpened}
@@ -42,7 +37,6 @@ class Modal extends Component {
             >
                 <DialogTitle id="alert-dialog-slide-title">{title}</DialogTitle>
                 <DialogContent>
-
                     <DialogContentText id="alert-dialog-slide-description">
                         {content}
                     </DialogContentText>
@@ -56,9 +50,8 @@ class Modal extends Component {
                     </Button>
                 </DialogActions>
             </Dialog>
-        </div>
+        </>
     }
 }
-
 
 export default Modal;

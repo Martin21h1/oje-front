@@ -11,7 +11,6 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {withStyles} from '@material-ui/core/styles';
 
-
 const styles = theme => ({
 
     '@global': {
@@ -38,7 +37,6 @@ const styles = theme => ({
     },
 });
 
-
 const FIELDS = [
     {
         name: 'username',
@@ -49,7 +47,6 @@ const FIELDS = [
         label: 'Email',
     }
 ];
-
 
 const InputTextField = ({value, label, name, onChange}) =>
     <TextField
@@ -64,7 +61,6 @@ const InputTextField = ({value, label, name, onChange}) =>
         value={value}
         onChange={onChange}
     />;
-
 
 class SignUp extends Component {
     state = {
@@ -83,7 +79,6 @@ class SignUp extends Component {
         event.preventDefault();
         this.props.userSignUpFetch(this.state)
     };
-
 
     render() {
         const {handleChange} = this;
@@ -107,7 +102,6 @@ class SignUp extends Component {
                                 onChange={handleChange}
                             />)
                         }
-
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -130,7 +124,6 @@ class SignUp extends Component {
                             Sign Up
                         </Button>
                         <Grid container>
-
                         </Grid>
                     </form>
                 </div>
@@ -139,10 +132,8 @@ class SignUp extends Component {
     }
 }
 
-
 const mapDispatchToProps = (dispatch, {history}) => ({
     userSignUpFetch: userInfo => dispatch(userSignUpFetch(userInfo, history))
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(SignUp));
-

@@ -1,14 +1,11 @@
 import Api from '../../api'
 
-
 export const SongsFetch = (page, limit) => {
     return dispatch => {
         return Api.fetchSongs(page, limit)
             .then(data => data.json())
-
             .then(payload => {
                 if (payload.message) {
-                    //Тут прописываем логику
                 } else {
                     dispatch({
                         type: 'LIST_SONGS',
@@ -26,10 +23,8 @@ export const LikedSongsFetch = () => {
     return dispatch => {
         return Api.fetchLikedSongs()
             .then(data => data.json())
-
             .then(payload => {
                 if (payload.message) {
-                    //Тут прописываем логику
                 } else {
                     dispatch({
                         type: 'SET_LIKED_SONG',

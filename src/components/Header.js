@@ -13,7 +13,6 @@ import {LogoutUser, userGetTokenFetch} from "../store/users/actions"
 import {connect} from "react-redux";
 import {Link, withRouter} from "react-router-dom";
 
-
 const styles = theme => ({
     root: {
         flexGrow: 1,
@@ -33,21 +32,24 @@ class Header extends Component {
     };
 
     componentDidMount() {
-        if (localStorage.token === undefined) {
+        if (!localStorage.token) {
             this.props.userGetTokenFetch();
         }
     }
 
-
     handleOpenClick = event => {
         this.setState(({isOpened}) => ({isOpened: !isOpened}));
         this.setState({anchorEl: event.currentTarget});
-
     };
 
     render() {
-        const {classes, usersState, history, LogoutUser} = this.props;
-        const access = usersState.auth.access;
+        const {
+            classes,
+            usersState : { auth: { access } },
+            history,
+            LogoutUser
+        } = this.props;
+
         return (
             <div className={classes.root}>
                 <AppBar position="static">
@@ -58,8 +60,6 @@ class Header extends Component {
                         <Typography variant="h6" onClick={() => history.push("/")} className={classes.title}>
                             Project oje
                         </Typography>
-
-
                         {access || localStorage.token ?
                             <div>
                                 <IconButton
@@ -109,7 +109,6 @@ class Header extends Component {
 }
 
 const mapStateToProps = ({usersState}) => ({usersState});
-
 
 const mapDispatchToProps = (dispatch) => ({
     LogoutUser: (history) => dispatch(LogoutUser(history)),

@@ -13,9 +13,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {withStyles} from '@material-ui/core/styles';
 
-
 const styles = theme => ({
-
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
@@ -60,9 +58,7 @@ class SignIn extends Component {
         this.props.userLoginWithGoogleFetch(this.state)
     };
 
-
     render() {
-
         const {classes} = this.props;
         return (
             <Container component="main" maxWidth="xs">
@@ -99,7 +95,6 @@ class SignIn extends Component {
                             id="password"
                             onChange={this.handleChange}
                             autoComplete="current-password"
-
                         />
                         <FormControlLabel
                             control={<Checkbox value="remember" color="primary"/>}
@@ -132,7 +127,6 @@ class SignIn extends Component {
         );
     }
 }
-
 
 const mapDispatchToProps = (dispatch, {history}) => ({
     userLoginFetch: userInfo => dispatch(userLoginFetch(userInfo, history)),

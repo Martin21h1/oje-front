@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import {connect} from 'react-redux';
 import {GetLanguages, getProfileFetch, userUpdateDataFetch} from '../../store/users/actions';
 import CssBaseline from '@material-ui/core/CssBaseline';
-import TextField from '@material-ui/core/TextField';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {withStyles} from '@material-ui/core/styles';
@@ -10,9 +9,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 
-
 const styles = theme => ({
-
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
@@ -38,22 +35,6 @@ const styles = theme => ({
 });
 
 
-
-
-const InputTextField = ({value, label, name, onChange}) =>
-    <TextField
-        variant="outlined"
-        margin="normal"
-        required
-        fullWidth
-        id={name}
-        label={label}
-        name={name}
-        autoComplete={name}
-        value={value}
-        onChange={onChange}
-    />;
-
 class SecondStep extends Component {
     state = {
         native_language_id: '',
@@ -73,20 +54,19 @@ class SecondStep extends Component {
     };
 
     handleSubmit = event => {
-        const {userUpdateDataFetch} = this.props;
-
+        const {userUpdateDataFetch, history} = this.props;
         event.preventDefault();
         userUpdateDataFetch(this.state)
+        history.push(`/`)
     };
 
     componentDidMount() {
-        const {getProfileFetch, GetLanguages, usersState} = this.props;
+        const {getProfileFetch, GetLanguages} = this.props;
         // if (usersState.currentUser===0) {
         //     console.log(usersState.currentUser, 'usersState.currentUser')
         //     getProfileFetch();
         //
         // }
-        console.log('usersState', usersState)
         GetLanguages();
         getProfileFetch();
     }
@@ -99,12 +79,9 @@ class SecondStep extends Component {
         }
 
         if (this.state.native_language_id !== newProps.usersState.native_language_id) {
-            console.log('newProps.usersState.native_language_id', newProps.usersState.native_language_id)
             this.setState({
                 native_language_id: newProps.usersState.native_language_id
             })
-            console.log('this.state', this.state)
-
         }
 
         if (this.state.target_language_id !== newProps.usersState.target_language_id) {
@@ -112,18 +89,11 @@ class SecondStep extends Component {
                 target_language_id: newProps.usersState.target_language_id
             })
         }
-
-        // if (this.state.email !== newProps.usersState.currentUser.email) {
-        //     this.setState({
-        //         email: newProps.usersState.currentUser.email
-        //     })
-        // }
-
     }
 
     render() {
         const {handleChange} = this;
-        const {classes, usersState, history} = this.props;
+        const {classes, usersState} = this.props;
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
@@ -193,10 +163,9 @@ class SecondStep extends Component {
     }
 }
 
-
 const mapDispatchToProps = (dispatch, {history}) => ({
     getProfileFetch: () => dispatch(getProfileFetch(history)),
-    GetLanguages: () => dispatch(GetLanguages()),
+    GetLanguages,
     userUpdateDataFetch: (data) => dispatch(userUpdateDataFetch(data))
 });
 const mapStateToProps = ({usersState}) => ({usersState});

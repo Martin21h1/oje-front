@@ -3,14 +3,13 @@ import {withStyles} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import {DeleteWord, userGetDict} from "../../store/users/actions";
+import {DeleteWord} from "../../store/users/actions";
 import MenuItem from "@material-ui/core/MenuItem";
 import DeleteIcon from "@material-ui/icons/Delete";
 import Modal from "../ModalWindow";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
-
 
 const styles = theme => ({
     container: {
@@ -23,7 +22,6 @@ const styles = theme => ({
         marginTop: theme.spacing(1),
     },
 });
-
 
 class Row extends Component {
     state = {
@@ -44,7 +42,6 @@ class Row extends Component {
 
     handleOpenClickModal = () => {
         this.setState(({isOpenedModal}) => ({isOpenedModal: !isOpenedModal}));
-
     };
 
     render() {
@@ -57,7 +54,6 @@ class Row extends Component {
                 <TableCell align="left">
                     <img src={row.prime_picture} alt="picture" className={classes.card}/>
                 </TableCell>
-
                 <IconButton aria-label="settings">
                     <MoreVertIcon
                         onClick={this.handleOpenClick}
@@ -67,7 +63,6 @@ class Row extends Component {
                         onClose={this.handleOpenClick}
                         anchorEl={this.state.anchorEl}
                     >
-
                         <MenuItem onClick={this.handleOpenClickModal}>
                             <DeleteIcon
                                 onClose={this.handleOpenClickModal}
@@ -86,7 +81,6 @@ class Row extends Component {
         )
     }
 }
-
 
 const mapDispatchToProps = {
     DeleteWord

@@ -6,7 +6,6 @@ import Container from "@material-ui/core/Container";
 import Song from './Song'
 import SearchForm from "./SearchForm";
 
-
 const styles = theme => ({
     container: {
         marginTop: theme.spacing(2),
@@ -25,20 +24,16 @@ class Songs extends Component {
         limit: 2
     };
 
-
     getSongs(page) {
         const {songsState, SongsFetch} = this.props;
-
         this.setState({loading: true});
         if (songsState.songs.length !== 0) {
             SongsFetch(page, this.state.limit);
         }
         this.setState({loading: false});
-
     }
 
-
-    handleObserver(entities, observer) {
+    handleObserver(entities) {
         const y = entities[0].boundingClientRect.y;
         if (this.state.prevY > y) {
             const curPage = this.state.page + 1
@@ -49,7 +44,7 @@ class Songs extends Component {
     }
 
     componentDidMount() {
-        const {songsState, SongsFetch} = this.props;
+        const {SongsFetch} = this.props;
 
             SongsFetch(this.state.page, this.state.limit);
             const options = {
@@ -63,8 +58,6 @@ class Songs extends Component {
                 options
             );
             this.observer.observe(this.loadingRef);
-
-
     }
 
     componentDidUpdate(prevProps) {
@@ -74,7 +67,6 @@ class Songs extends Component {
         }
     }
 
-
     render() {
         const loadingTextCSS = {display: this.state.loading ? "block" : "none"};
         const loadingCSS = {
@@ -82,12 +74,10 @@ class Songs extends Component {
             margin: "30px"
         };
 
-        const {classes, songsState, FindSongFetch} = this.props;
+        const {classes, FindSongFetch} = this.props;
         return (
-
             <Container component="main" className={classes.container}>
                 <SearchForm onSubmit={FindSongFetch}/>
-
 
                 {/*{songsState.songs &&*/}
                 {/*    songsState.songs.map((item) => {*/}
@@ -108,7 +98,6 @@ class Songs extends Component {
                         />
                     );
                 })}
-
                 <div
                     ref={loadingRef => (this.loadingRef = loadingRef)}
                     style={loadingCSS}
@@ -120,14 +109,11 @@ class Songs extends Component {
     }
 }
 
-
 const mapDispatchToProps = (dispatch) => ({
     SongsFetch: (page, limit) => dispatch(SongsFetch(page, limit)),
     FindSongFetch: (song) => dispatch(FindSongFetch(song))
-
 });
 
 const mapStateToProps = ({songsState}) => ({songsState});
 
 export default connect(mapStateToProps, mapDispatchToProps)(withStyles(styles)(Songs));
-

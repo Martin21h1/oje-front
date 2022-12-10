@@ -6,7 +6,6 @@ import {withRouter} from 'react-router-dom'
 import {Box} from "@material-ui/core";
 
 const styles = theme => ({
-
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
@@ -27,14 +26,10 @@ class SearchForm extends Component {
         artist: '',
     };
     handleChange = event => {
-
         this.setState({
             [event.target.name]: event.target.value
         });
-
-
     };
-
 
     componentWillReceiveProps(newProps) {
         if (this.props.title !== newProps.title) {
@@ -49,7 +44,6 @@ class SearchForm extends Component {
         }
     }
 
-
     render() {
         const {classes, onSubmit, history} = this.props;
         return (
@@ -57,7 +51,6 @@ class SearchForm extends Component {
                 e.preventDefault()
                 // console.log('this.state', this.state)
                 onSubmit(this.state)
-
             }}>
                 <Box
                     component="form"
@@ -87,7 +80,6 @@ class SearchForm extends Component {
                         className={classes.textField}
                         value={this.state.title}
                         onChange={this.handleChange}/>
-
                     <Button
                         type="submit"
                         variant="contained"
@@ -105,6 +97,4 @@ class SearchForm extends Component {
     }
 }
 
-
 export default withRouter(withStyles(styles)(SearchForm));
-

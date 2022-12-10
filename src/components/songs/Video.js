@@ -2,19 +2,16 @@ import React, {Component} from 'react';
 import {connect} from "react-redux";
 import {withStyles} from "@material-ui/core/styles";
 
-
 const styles = () => ({
     videoResponsive: {
         overflow: "hidden",
     }
 });
 
-
 class YoutubeEmbed extends Component {
     render() {
         const {embedId} = this.props
         return (
-
             <div className="videoResponsive">
                 <iframe
                     width="853"
