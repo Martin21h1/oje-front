@@ -10,8 +10,8 @@ export default function ArtistSongsPage(props) {
     useEffect(() => {
         const {name} = props.match.params;
         dispatch(FetchSongsByArtist(name))
+    }, [])
 
-    }, [dispatch])
     return (
         <SongsComponent songs={songsState.userSongs}/>
     )

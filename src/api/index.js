@@ -7,17 +7,18 @@ class ApiClass {
         this.url = `${config.apiUrl}`;
     }
 
-    makeRequest = ({url, data, token}) => {
+    makeRequest = ({url, data}) => {
         const _data = {
+                method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
-                ...!!token && {Authorization: `Bearer ${token}`},
+                ...!!localStorage.token && {Authorization: `Bearer ${localStorage.token}`},
             },
             credentials: 'include',
         };
 
-        const mergedData = mergeRecursive(data, _data);
+        const mergedData = mergeRecursive(_data, data);
 
         return fetch(url, mergedData)
             .then(response => {
@@ -26,17 +27,15 @@ class ApiClass {
                 if (response.status === 302) {
                     redirect(response.headers.location);
                 }
-
                 return response.json().then(data => {
                     if (response.status >= 300) return data.message
                     return data;
                 });
             })
             .catch(Error);
-
     };
 
-    fetchCreateUser = user => {
+    createUser = user => {
         return this.makeRequest({
             url: `${this.url}/signUp`,
             data: {
@@ -46,8 +45,7 @@ class ApiClass {
         })
     };
 
-
-    fetchLoginUser = user => {
+    loginUser = user => {
         return this.makeRequest({
             url: `${this.url}/login`,
             data: {
@@ -57,176 +55,118 @@ class ApiClass {
         })
     };
 
-    fetchLoginWithGoogleUser = () => {
+    loginWithGoogleUser = () => {
         return this.makeRequest({
-            url: `${this.url}/login/google`,
-            data: {
-                method: 'GET',
-
-            }
+            url: `${this.url}/login/google`
         })
     };
 
-    fetchGetTokenUser = () => {
+    fetchTokenUser = () => {
         return this.makeRequest({
-            url: `${this.url}/getToken`,
-            data: {
-                method: 'GET',
-
-            }
+            url: `${this.url}/getToken`
         })
     };
 
     fetchArtists = () => {
         return this.makeRequest({
-            url: `${this.url}/artists`,
-            data: {
-                method: 'GET',
-            },
-            token: localStorage.token
+            url: `${this.url}/artists`
         })
     };
 
-    fetchAddToDict = (WordId, image, songId) => {
+    addToDict = (data) => {
         return this.makeRequest({
             url: `${this.url}/user/dict`,
             data: {
                 method: 'POST',
-                body: JSON.stringify({
-                    word_id: WordId,
-                    song_id: songId,
-                    prime_picture: image,
-                })
-            },
-            token: localStorage.token
-
+                body: JSON.stringify(data)
+            }
         })
     };
 
     fetchDict = () => {
         return this.makeRequest({
-            url: `${this.url}/user/dict`,
-            data: {
-                method: 'GET'
-            },
-            token: localStorage.token
-
+            url: `${this.url}/user/dict`
         })
     };
 
     fetchLanguages = () => {
         return this.makeRequest({
-            url: `${this.url}/languages`,
-            data: {
-                method: 'GET'
-            },
-            token: localStorage.token
-
+            url: `${this.url}/languages`
         })
     };
 
-    fetchDeleteWord = (id) => {
+    deleteWord = (id) => {
         return this.makeRequest({
             url: `${this.url}/user/dict?word_id=${id}`,
             data: {
                 method: 'DELETE'
-            },
-            token: localStorage.token
-
+            }
         })
     };
 
-
-    fetchLogOutUser = () => {
+    logOutUser = () => {
         return this.makeRequest({
-            url: `${this.url}/logout`,
-            data: {
-                method: 'GET'
-            },
+            url: `${this.url}/logout`
         })
     };
 
     fetchSongs = (page, limit) => {
         return this.makeRequest(
             {
-                url: `${this.url}/songs?page=${page}&limit=${limit}`,
-                data: {
-                    method: 'GET'
-                },
-                token: localStorage.token
-
+                url: `${this.url}/songs?page=${page}&limit=${limit}`
             })
     };
 
-    fetchLikeSong = id => {
+    likeSong = id => {
         return this.makeRequest({
             url: `${this.url}/songs/${id}/like`,
             data: {
                 method: 'POST',
-            },
-            token: localStorage.token
-
+            }
         })
     };
-    fetchFindSong = (title, artist) => {
+
+    searchSong = (title, artist) => {
         return this.makeRequest({
-            url: `${this.url}/songs/search?title=${title}&artist=${artist}`,
-            data: {
-                method: 'GET',
-
-            },
-            token: localStorage.token
-
+            url: `${this.url}/songs/search?title=${title}&artist=${artist}`
         })
     };
+
     fetchLikedSongs = () => {
         return this.makeRequest({
-            url: `${this.url}/songs/liked`,
-            data: {
-                method: 'GET'
-            },
-            token: localStorage.token
-
+            url: `${this.url}/songs/liked`
         })
     };
+
     fetchSongsByArtist = (artist) => {
         return this.makeRequest({
-            url: `${this.url}/songs?artist=${artist}`,
-            data: {
-                method: 'GET'
-            },
-            token: localStorage.token
+            url: `${this.url}/songs?artist=${artist}`
         })
     };
-    fetchTranslateWord = (word) => {
+
+    translateWord = (word) => {
         return this.makeRequest({
-            url: `${this.url}/words/translate?word=${word}`,
-            data: {
-                method: 'GET'
-            },
-            token: localStorage.token
+            url: `${this.url}/words/translate?word=${word}`
         })
     };
+
     fetchDataUser = () => {
         return this.makeRequest({
-            url: `${this.url}/user`,
-            data: {
-                method: 'GET'
-            },
-            token: localStorage.token
+            url: `${this.url}/user`
         })
     };
-    fetchUserUpdateData = (data) => {
+
+    updateUserData = (data) => {
         return this.makeRequest({
             url: `${this.url}/user`,
             data: {
                 method: 'PATCH',
                 body: JSON.stringify(data)
-            },
-            token: localStorage.token
+            }
         })
     };
-    fetchSetPassword = (user) => {
+
+    setPassword = (user) => {
         return this.makeRequest({
             url: `${this.url}/setPassword`,
             data: {
@@ -234,11 +174,11 @@ class ApiClass {
                 body: JSON.stringify({
                     password: user.password,
                 })
-            },
-            token: localStorage.token
+            }
         })
     };
-    fetchResetPassword = (user) => {
+
+    resetPassword = (user) => {
         return this.makeRequest({
             url: `${this.url}/resetPassword`,
             data: {
@@ -247,8 +187,7 @@ class ApiClass {
                     password: user.password,
                     old_password: user.old_password,
                 })
-            },
-            token: localStorage.token
+            }
         })
     };
 }

@@ -7,8 +7,8 @@ import React, {Component} from "react";
 import {Box} from "@material-ui/core";
 import {connect} from "react-redux";
 import {withRouter} from "react-router-dom";
-import {translateWordFetch} from "../../store/words/actions";
-import {userAddToDict} from "../../store/users/actions";
+import {translateWordFetch} from "../store/words/actions";
+import {userAddToDict} from "../store/users/actions";
 import {red} from "@material-ui/core/colors";
 import {withStyles} from "@material-ui/core/styles";
 import SwipeableViews from 'react-swipeable-views';
@@ -63,7 +63,6 @@ class WordCard extends Component {
     }
 
     componentDidUpdate(prevProps) {
-
         const {word, translateWordFetch} = this.props;
         const {word: prevWord} = prevProps;
 
@@ -74,7 +73,7 @@ class WordCard extends Component {
 
     handleAddToDict = () => {
         const {translatedWord, song} = this.props;
-        this.props.userAddToDict(translatedWord.id, this.state.image, song.id)
+        this.props.userAddToDict({word_id:translatedWord.id, prime_picture:this.state.image, song_id:song.id})
     };
 
     handleCurrentImage = image => {
@@ -102,7 +101,7 @@ class WordCard extends Component {
                                 alt={step}
                             />
                         </div>
-                    )) : <div></div>}
+                    )) : null}
                 </SwipeableViews>
 
                 <CardContent>
@@ -124,7 +123,7 @@ class WordCard extends Component {
 
 const mapDispatchToProps = (dispatch) => ({
     translateWordFetch: (word) => dispatch(translateWordFetch(word)),
-    userAddToDict: (wordId, image, songId) => dispatch(userAddToDict(wordId, image, songId))
+    userAddToDict: (data) => dispatch(userAddToDict(data))
 });
 
 const mapStateToProps = (state) => ({translatedWord: state.wordsState.word});

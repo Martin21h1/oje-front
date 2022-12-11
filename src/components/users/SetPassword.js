@@ -56,11 +56,10 @@ class SetPassword extends Component {
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <div className={classes.paper}>
-
                     <Typography component="h1" variant="h5">
                         Save password
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+                    <form className={classes.form} onSubmit={this.handleSubmit}>
                         <TextField
                             variant="outlined"
                             margin="normal"

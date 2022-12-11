@@ -12,7 +12,6 @@ import Container from '@material-ui/core/Container';
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = theme => ({
-
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
@@ -93,7 +92,7 @@ class SignUp extends Component {
                     <Typography component="h1" variant="h5">
                         Sign Up
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+                    <form className={classes.form} onSubmit={this.handleSubmit}>
                         {
                             FIELDS.map(({name, label}) => <InputTextField
                                 label={label}

@@ -1,3 +1,3 @@
 export default {
-  apiUrl: 'http://3.73.84.195:49160'
+  apiUrl: 'http://oje-alb-1851584766.eu-central-1.elb.amazonaws.com'
 }

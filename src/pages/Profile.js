@@ -1,14 +1,16 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Languages from "../languages";
+import {Link} from "react-router-dom";
+import {getProfileFetch, setUsername, updateUserData} from "../store/users/actions";
+import {InputTextField} from "../components/fields";
+import {makeStyles} from "@material-ui/core/styles";
+import Languages from "../components/languages";
 import {useHistory} from "react-router";
-import {updateUserData} from "../../store/users/actions";
 
 const useStyles = makeStyles(theme=>({
     '@global': {
@@ -31,30 +33,50 @@ const useStyles = makeStyles(theme=>({
     },
 }))
 
-export default function SecondStep (){
-    const classes = useStyles();
+const FIELDS = [
+    {
+        name: 'name',
+        label: 'Name',
+    }
+];
+
+export default function Profile() {
     const dispatch = useDispatch()
     const {usersState} = useSelector(state => state);
+    const classes = useStyles();
     const history = useHistory();
+
+    useEffect(() => {
+        if (!usersState.username) {
+            dispatch(getProfileFetch())
+        }
+
+    }, [usersState.username])
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(updateUserData({
-            native_language_id: usersState.native_language_id,
-            target_language_id: usersState.target_language_id,
-        }))
-        history.push(`/`)
+        dispatch(updateUserData({name:usersState.username,
+            native_language_id:usersState.native_language_id,
+            target_language_id:usersState.target_language_id}))
+        history.push('/');
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
             <div className={classes.paper}>
-
                 <Typography component="h1" variant="h5">
-                    Choose languages
+                    Profile
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                <form className={classes.form} onSubmit={handleSubmit}>
+                    {
+                        FIELDS.map(({name, label}) => <InputTextField
+                            label={label}
+                            name={name}
+                            value={usersState.username}
+                            onChange={(event) => dispatch(setUsername(event.target.value))}
+                        />)
+                    }
                     <Languages/>
                     <Button
                         type="submit"
@@ -66,6 +88,9 @@ export default function SecondStep (){
                         Save
                     </Button>
                     <Grid container>
+                        <Link to={'/resetPassword'}>
+                            Reset Password
+                        </Link>
                     </Grid>
                 </form>
             </div>

@@ -9,11 +9,11 @@ import Typography from '@material-ui/core/Typography';
 import {red} from '@material-ui/core/colors';
 import {withStyles} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-import {LikeSongsFetch} from '../../store/songs/actions'
-import Like from './Like'
+import {likeSong} from '../../store/songs/actions'
+import Like from '../Like'
 import {withRouter} from 'react-router-dom'
-import WordCard from './Card'
-import YoutubeEmbed from "./Video";
+import WordCard from '../Card'
+import YoutubeEmbed from "../Video";
 import {translateWordFetch} from "../../store/words/actions";
 
 const styles = theme => ({
@@ -22,7 +22,6 @@ const styles = theme => ({
         marginTop: theme.spacing(5),
     },
     media: {
-        height: 0,
         paddingTop: '56.25%', // 16:9
     },
     expand: {
@@ -71,7 +70,7 @@ class Song extends Component {
         }))
     }
 
-    CalculatePopupPos = () => {
+        CalculatePopupPos = () => {
         return {
             left: `${this.state.popUpData.LeftoffSet}px`,
             top: `${this.state.popUpData.TopoffSet}px`
@@ -104,7 +103,6 @@ class Song extends Component {
                     </Typography>
                     {this.state.popUpData.isVisible && <div style={{
                         position: "absolute",
-                        height: "fit-content",
                         ...this.CalculatePopupPos()
                     }}>
                         <WordCard song={item} word={this.state.popUpData.selectedTextstate}/>
@@ -130,7 +128,7 @@ class Song extends Component {
 }
 
 const mapDispatchToProps = () => ({
-    LikeSongsFetch,
+    LikeSongsFetch: likeSong,
     translateWordFetch,
 });
 

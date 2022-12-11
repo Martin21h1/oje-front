@@ -6,20 +6,20 @@ import {ArtistsFetch} from "../../store/artists/actions";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme=>({
     container: {
-        marginTop: 12,
+        marginTop: theme.spacing(2),
         flexDirection: 'column',
         alignItems: 'center',
     },
     avatar: {
-        marginTop: 12,
+        marginTop: theme.spacing(2),
         flexDirection: 'column',
         alignItems: 'center',
         width: 56,
         height: 56
     }
-});
+}))
 
 export default function Artists(props) {
     const classes = useStyles();
@@ -30,7 +30,7 @@ export default function Artists(props) {
         if(!artistsState.artists.length){
             dispatch(ArtistsFetch())
         }
-    }, [dispatch])
+    }, [])
 
     return (
         <Container component="main" className={classes.container}>
@@ -38,7 +38,8 @@ export default function Artists(props) {
                 artistsState.artists.map((item) => {
                     return (
                         <div>
-                            <Avatar aria-label="recipe" className={classes.avatar}
+                            <Avatar aria-label="recipe"
+                                    className={classes.avatar}
                                     onClick={() => props.history.push(`/artist/${item.name}/`)}
                                     src={item.image_url}
                             />

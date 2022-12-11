@@ -57,7 +57,6 @@ class SearchForm extends Component {
                     sx={{
                         '& > :not(style)': {m: 1, width: '25ch'},
                     }}
-                    noValidate
                 >
                     <TextField
                         id="outlined-multiline-static"

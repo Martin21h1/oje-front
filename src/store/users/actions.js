@@ -2,7 +2,7 @@ import Api from '../../api'
 
 export const userSignUpFetch = (user, history) => {
     return dispatch => {
-        return Api.fetchCreateUser(user)
+        return Api.createUser(user)
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
@@ -23,7 +23,7 @@ export const userSignUpFetch = (user, history) => {
 
 export const userLoginFetch = (user, history) => {
     return dispatch => {
-        return Api.fetchLoginUser(user)
+        return Api.loginUser(user)
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
@@ -32,7 +32,6 @@ export const userLoginFetch = (user, history) => {
                     dispatch(setToken(data.jwt));
                     dispatch(setUsername(user.username));
                     localStorage.setItem('username', user.username);
-
                     history.replace('/')
                 }
             })
@@ -44,7 +43,7 @@ export const userLoginFetch = (user, history) => {
 
 export const userLoginWithGoogleFetch = () => {
     return dispatch => {
-        Api.fetchLoginWithGoogleUser()
+        Api.loginWithGoogleUser()
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
@@ -55,14 +54,12 @@ export const userLoginWithGoogleFetch = () => {
             .catch(error => {
                 console.log(error);
             })
-
-
     }
 };
 
 export const userGetTokenFetch = (history) => {
     return dispatch => {
-        Api.fetchGetTokenUser()
+        Api.fetchTokenUser()
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
@@ -81,9 +78,9 @@ export const userGetTokenFetch = (history) => {
     }
 };
 
-export const userUpdateDataFetch = (data) => {
+export const updateUserData = (data) => {
     return dispatch => {
-        Api.fetchUserUpdateData(data)
+        Api.updateUserData(data)
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
@@ -95,15 +92,12 @@ export const userUpdateDataFetch = (data) => {
             .catch(error => {
                 console.log(error);
             })
-
-
     }
 };
 
-
-export const userAddToDict = (wordId, image, songId) => {
+export const userAddToDict = (data) => {
     return dispatch => {
-        return Api.fetchAddToDict(wordId, image, songId)
+        return Api.addToDict(data)
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
@@ -156,12 +150,11 @@ export const GetLanguages = () => {
 
 export const DeleteWord = (id) => {
     return dispatch => {
-        return Api.fetchDeleteWord(id)
+        return Api.deleteWord(id)
             .then(data => data.json())
             .then(data => {
                 if (data.message) {
                 } else {
-
                 }
             })
             .catch(error => {
@@ -195,12 +188,10 @@ export const LogoutUser = (history) => {
     return dispatch => {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
-        return Api.fetchLogOutUser()
+        return Api.logOutUser()
             .then(data => {
                 if (data.message) {
-                    
                 } else {
-
                     dispatch({
                         type: 'LOGOUT_USER'
                     })
@@ -210,34 +201,14 @@ export const LogoutUser = (history) => {
             .catch(error => {
                 console.log(error);
             })
-
-
     }
 };
 
 export const SetPasswordFetch = (user, history) => {
     return dispatch => {
-        return Api.fetchSetPassword(user)
+        return Api.setPassword(user)
             .then(data => {
                 if (data.message) {
-                } else {
-                    history.replace('/')
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-
-
-    }
-};
-
-export const ResetPasswordFetch = (user, history) => {
-    return dispatch => {
-        return Api.fetchResetPassword(user)
-            .then(data => {
-                if (data.message) {
-                    
                 } else {
                     history.replace('/')
                 }
@@ -248,7 +219,37 @@ export const ResetPasswordFetch = (user, history) => {
     }
 };
 
-const setUsername = username => ({
+export const ResetPasswordFetch = (user, history) => {
+    return dispatch => {
+        return Api.resetPassword(user)
+            .then(data => {
+                if (data.message) {
+
+                } else {
+                    history.replace('/')
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    }
+};
+
+export const setNativeLanguageId = (langId) => {
+    return {
+        type: 'SET_NATIVE_LANG',
+        payload: langId
+    }
+}
+
+export const setTargetLanguageId = (langId) => {
+    return {
+        type: 'SET_TARGET_LANG',
+        payload: langId
+    }
+}
+
+export const setUsername = username => ({
     type: 'SET_USERNAME',
     payload: username
 });

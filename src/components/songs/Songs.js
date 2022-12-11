@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-import {FindSongFetch, SongsFetch} from '../../store/songs/actions'
+import {searchSong, fetchSongs} from '../../store/songs/actions'
 import Container from "@material-ui/core/Container";
 import Song from './Song'
-import SearchForm from "./SearchForm";
+import SearchForm from "../SearchForm";
 
 const styles = theme => ({
     container: {
@@ -13,7 +13,6 @@ const styles = theme => ({
         alignItems: 'center',
     }
 });
-//https://www.pluralsight.com/guides/how-to-implement-infinite-scrolling-with-reactjs
 
 class Songs extends Component {
     state = {
@@ -27,7 +26,7 @@ class Songs extends Component {
     getSongs(page) {
         const {songsState, SongsFetch} = this.props;
         this.setState({loading: true});
-        if (songsState.songs.length !== 0) {
+        if (songsState.songs.length) {
             SongsFetch(page, this.state.limit);
         }
         this.setState({loading: false});
@@ -110,8 +109,8 @@ class Songs extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    SongsFetch: (page, limit) => dispatch(SongsFetch(page, limit)),
-    FindSongFetch: (song) => dispatch(FindSongFetch(song))
+    SongsFetch: (page, limit) => dispatch(fetchSongs(page, limit)),
+    FindSongFetch: (song) => dispatch(searchSong(song))
 });
 
 const mapStateToProps = ({songsState}) => ({songsState});

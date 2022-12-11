@@ -2,7 +2,7 @@ import Api from '../../api'
 
 export const translateWordFetch = (word) => {
     return dispatch => {
-        return Api.fetchTranslateWord(word)
+        return Api.translateWord(word)
             .then(data => data.json())
             .then(payload => {
                 if (payload.message) {

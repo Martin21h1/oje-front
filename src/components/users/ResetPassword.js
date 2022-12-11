@@ -10,7 +10,6 @@ import Container from '@material-ui/core/Container';
 import {withStyles} from '@material-ui/core/styles';
 
 const styles = theme => ({
-
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
@@ -53,21 +52,18 @@ class ResetPassword extends Component {
             old_password: this.state.OldPassword,
             password: this.state.password2
         })
-
     };
 
     render() {
-
         const {classes} = this.props;
         return (
             <Container component="main" maxWidth="xs">
                 <CssBaseline/>
                 <div className={classes.paper}>
-
                     <Typography component="h1" variant="h5">
                         Change password
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+                    <form className={classes.form} onSubmit={this.handleSubmit}>
                         <TextField
                             variant="outlined"
                             margin="normal"

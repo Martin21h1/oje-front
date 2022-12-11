@@ -53,6 +53,7 @@ class SignIn extends Component {
         event.preventDefault();
         this.props.userLoginFetch(this.state)
     };
+
     handleGoogleSubmit = event => {
         event.preventDefault();
         this.props.userLoginWithGoogleFetch(this.state)
@@ -70,7 +71,7 @@ class SignIn extends Component {
                     <Typography component="h1" variant="h5">
                         Sign In
                     </Typography>
-                    <form className={classes.form} noValidate onSubmit={this.handleSubmit}>
+                    <form className={classes.form} onSubmit={this.handleSubmit}>
                         <TextField
                             variant="outlined"
                             margin="normal"
@@ -134,4 +135,3 @@ const mapDispatchToProps = (dispatch, {history}) => ({
 });
 
 export default connect(null, mapDispatchToProps)(withStyles(styles)(SignIn));
-

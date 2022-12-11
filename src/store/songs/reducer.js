@@ -6,8 +6,8 @@ const initialState = {
 };
 
 export default function songsReducer(state = initialState, action) {
-    console.log('action', action);
-    console.log('state', state);
+    // console.log('action', action);
+    // console.log('state', state);
 
     const {payload, type} = action;
     switch (type) {

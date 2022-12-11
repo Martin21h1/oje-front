@@ -4,7 +4,6 @@ import { Router } from "react-router-dom";
 import Songs from '../components/songs/Songs'
 import SignIn from '../components/users/SignIn'
 import SignUp from '../components/users/SignUp'
-import Profile from '../components/users/Profile'
 import Header from '../components/Header'
 import history from '../history';
 import Dict from "../components/dict/Dict";
@@ -15,6 +14,7 @@ import SecondStep from "../components/users/SecondStep";
 import LikedSongsPage from "../pages/LikedSongs";
 import ArtistSongsPage from "../pages/ArtistSongs";
 import FoundSongPage from "../pages/FoundSong";
+import Profile from "../pages/Profile";
 
 const router = (
     <Router history={history}>

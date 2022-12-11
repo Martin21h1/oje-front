@@ -1,6 +1,6 @@
 import Api from '../../api'
 
-export const SongsFetch = (page, limit) => {
+export const fetchSongs = (page, limit) => {
     return dispatch => {
         return Api.fetchSongs(page, limit)
             .then(data => data.json())
@@ -19,7 +19,7 @@ export const SongsFetch = (page, limit) => {
     }
 };
 
-export const LikedSongsFetch = () => {
+export const fetchLikedSongs = () => {
     return dispatch => {
         return Api.fetchLikedSongs()
             .then(data => data.json())
@@ -38,9 +38,9 @@ export const LikedSongsFetch = () => {
     }
 };
 
-export const FindSongFetch = (song) => {
+export const searchSong = (song) => {
     return dispatch => {
-        return Api.fetchFindSong(song.title, song.artist)
+        return Api.searchSong(song.title, song.artist)
             .then(data => data.json())
             .then(payload => {
                 if (payload.message) {
@@ -57,9 +57,9 @@ export const FindSongFetch = (song) => {
     }
 };
 
-export const LikeSongsFetch = (id) => {
+export const likeSong = (id) => {
     return dispatch => {
-        return Api.fetchLikeSong(id)
+        return Api.likeSong(id)
             .then(payload => {
                 dispatch({
                     type: 'SET_LIKE_SONG',
