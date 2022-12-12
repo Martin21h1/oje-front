@@ -5,7 +5,7 @@ export const ArtistsFetch = () => {
         return Api.fetchArtists()
             .then(data => data.json())
             .then(payload => {
-                if (payload.message) {
+                if (payload.error) {
                 } else {
                     dispatch({
                         type: 'LIST_ARTISTS',

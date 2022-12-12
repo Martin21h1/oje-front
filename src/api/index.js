@@ -1,6 +1,5 @@
 import config from '../config'
 import {mergeRecursive} from "../helpers/mergeObjects";
-import redirect from "react-router/es/Redirect";
 
 class ApiClass {
     constructor() {
@@ -22,15 +21,13 @@ class ApiClass {
 
         return fetch(url, mergedData)
             .then(response => {
-                if (response.status <= 300) return response;
-                console.log(response.status)
-                if (response.status === 302) {
-                    redirect(response.headers.location);
-                }
-                return response.json().then(data => {
-                    if (response.status >= 300) return data.message
-                    return data;
-                });
+                if (response.status <= 600) return response;
+                // return response.json().then(data => {
+                //     console.log(data.error)
+                //     if (response.status >= 300) return data.error
+                //     console.log(data)
+                //     return data;
+                // });
             })
             .catch(Error);
     };

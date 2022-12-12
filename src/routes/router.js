@@ -1,20 +1,20 @@
 import React from "react";
 import {Route, Switch} from "react-router-dom";
 import { Router } from "react-router-dom";
-import Songs from '../components/songs/Songs'
-import SignIn from '../components/users/SignIn'
-import SignUp from '../components/users/SignUp'
 import Header from '../components/Header'
 import history from '../history';
-import Dict from "../components/dict/Dict";
-import Artists from "../components/artists/Artists";
-import SetPassword from "../components/users/SetPassword";
-import ResetPassword from "../components/users/ResetPassword";
-import SecondStep from "../components/users/SecondStep";
+import SetPassword from "../pages/SetPassword";
+import ResetPassword from "../pages/ResetPassword";
+import SecondStep from "../pages/SecondStep";
 import LikedSongsPage from "../pages/LikedSongs";
 import ArtistSongsPage from "../pages/ArtistSongs";
 import FoundSongPage from "../pages/FoundSong";
 import Profile from "../pages/Profile";
+import Songs from "../pages/Home";
+import Dictionary from "../pages/Dictionary";
+import Artists from "../pages/Artist";
+import SignIn from "../pages/SignIn";
+import SignUp from "../pages/SignUp";
 
 const router = (
     <Router history={history}>
@@ -31,7 +31,7 @@ const router = (
                 <Route path="/likedSongs/" component={LikedSongsPage}/>
                 <Route path='/artist/:name' component={ArtistSongsPage}/>
                 <Route path='/song/:songName/artist/:artistName' component={FoundSongPage}/>
-                <Route path='/dict/' component={Dict}/>
+                <Route path='/dict/' component={Dictionary}/>
                 <Route path='/setPassword/' component={SetPassword}/>
                 <Route path='/resetPassword/' component={ResetPassword}/>
                 <Route path='/secondStep/' component={SecondStep}/>

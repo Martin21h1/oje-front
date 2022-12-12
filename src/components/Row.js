@@ -1,12 +1,11 @@
 import React, {useState} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
-import {useDispatch} from 'react-redux';
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import {DeleteWord} from "../../store/users/actions";
+import {DeleteWord} from "../store/users/actions";
 import MenuItem from "@material-ui/core/MenuItem";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Modal from "../ModalWindow";
+import Modal from "./ModalWindow";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
@@ -29,7 +28,6 @@ export default function Row(props) {
     const [anchorEl, setAnchorEl] = React.useState(null);
 
     const classes = useStyles();
-    const dispatch = useDispatch()
 
     const row = props.row
 
@@ -64,9 +62,9 @@ export default function Row(props) {
                             open={isOpenedModal}
                         />
                         {isOpenedModal ? <Modal id={row.id}
-                                                           onClick={dispatch(DeleteWord(row.id))}
-                                                           title={`Delete Word ${row.word}`}
-                                                           content={'Are you sure?'}
+                                                onClick={DeleteWord}
+                                                title={`Delete Word ${row.word}`}
+                                                content={'Are you sure?'}
                         /> : null}
                     </MenuItem>
                 </Menu>

@@ -5,7 +5,7 @@ export const fetchSongs = (page, limit) => {
         return Api.fetchSongs(page, limit)
             .then(data => data.json())
             .then(payload => {
-                if (payload.message) {
+                if (payload.error) {
                 } else {
                     dispatch({
                         type: 'LIST_SONGS',
@@ -24,7 +24,7 @@ export const fetchLikedSongs = () => {
         return Api.fetchLikedSongs()
             .then(data => data.json())
             .then(payload => {
-                if (payload.message) {
+                if (payload.error) {
                 } else {
                     dispatch({
                         type: 'SET_LIKED_SONG',
@@ -38,17 +38,20 @@ export const fetchLikedSongs = () => {
     }
 };
 
-export const searchSong = (song) => {
+export const searchSong = (song, history) => {
     return dispatch => {
+        dispatch(setLoading(true))
         return Api.searchSong(song.title, song.artist)
             .then(data => data.json())
             .then(payload => {
-                if (payload.message) {
+                if (payload.error) {
                 } else {
+                    dispatch(setLoading(false))
                     dispatch({
                         type: 'SET_FOUND_SONG',
                         payload: payload.data,
                     });
+                    history.push(`/song/${song.title}/artist/${song.artist}`)
                 }
             })
             .catch(error => {
@@ -82,10 +85,15 @@ export const FetchSongsByArtist = (artist) => {
                     payload: payload.data
                 });
                 return payload;
-
             })
             .catch(error => {
                 console.log(error);
             })
     }
 };
+
+
+const setLoading = (payload) => ({
+    type: 'SET_LOADING',
+    payload: payload
+});

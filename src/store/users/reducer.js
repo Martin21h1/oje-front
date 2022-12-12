@@ -6,10 +6,12 @@ const initialState = {
     languages: [],
     native_language_id: null,
     target_language_id: null,
+    err_fields: {},
+    err_message: ''
 };
 
 export default function usersReducer(state = initialState, action) {
-    console.log(action)
+    // console.log(action)
     const {payload, type} = action;
     switch (type) {
         case 'SET_USERNAME':
@@ -20,7 +22,7 @@ export default function usersReducer(state = initialState, action) {
             return {...state, auth: {}};
         case 'SET_TOKEN':
             return {...state, auth: {...action.payload}};
-        case 'DICT':
+        case 'SET_DICT':
             return {...state, words: [...action.payload]};
         case 'SET_LANGUAGES':
             return {
@@ -47,6 +49,16 @@ export default function usersReducer(state = initialState, action) {
             return {
                 ...state,
                 target_language_id: action.payload,
+            };
+            case 'SET_ERR_FIELDS':
+            return {
+                ...state,
+                err_fields: action.payload,
+            };
+            case 'SET_ERR_MESSAGE':
+            return {
+                ...state,
+                err_message: action.payload,
             };
         default:
             return state;
