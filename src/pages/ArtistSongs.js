@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import SongsComponent from "../components/songs/songs";
+import SongsComponent from "../components/songs";
 import {FetchSongsByArtist} from "../store/songs/actions";
 
 export default function ArtistSongsPage(props) {
@@ -10,7 +10,7 @@ export default function ArtistSongsPage(props) {
     useEffect(() => {
         const {name} = props.match.params;
         dispatch(FetchSongsByArtist(name))
-    }, [])
+    })
 
     return (
         <SongsComponent songs={songsState.userSongs}/>

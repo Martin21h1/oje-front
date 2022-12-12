@@ -2,9 +2,9 @@ import React, {useEffect} from 'react';
 import {makeStyles} from '@material-ui/core/styles';
 import {useDispatch, useSelector} from 'react-redux';
 import Container from "@material-ui/core/Container";
-import {ArtistsFetch} from "../../store/artists/actions";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import {ArtistsFetch} from "../store/artists/actions";
 
 const useStyles = makeStyles(theme=>({
     container: {
@@ -30,7 +30,7 @@ export default function Artists(props) {
         if(!artistsState.artists.length){
             dispatch(ArtistsFetch())
         }
-    }, [])
+    }, [artistsState.artists.length])
 
     return (
         <Container component="main" className={classes.container}>

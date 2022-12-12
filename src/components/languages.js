@@ -1,7 +1,5 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import CssBaseline from '@material-ui/core/CssBaseline';
-import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {GetLanguages, getProfileFetch, setNativeLanguageId, setTargetLanguageId} from "../store/users/actions";
@@ -33,7 +31,6 @@ export default function Languages() {
 
     useEffect(() => {
         if (!usersState.native_languages) {
-            console.log('////', usersState.native_languages)
             dispatch(GetLanguages())
             dispatch(getProfileFetch())
         }
@@ -45,8 +42,6 @@ export default function Languages() {
     }, [usersState])
 
     return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
             <div className={classes.paper}>
                     <FormControl fullWidth>
                         <InputLabel id="demo-simple-select-label">Native Language</InputLabel>
@@ -85,6 +80,5 @@ export default function Languages() {
                         </Select>
                     </FormControl>
             </div>
-        </Container>
     )
 }

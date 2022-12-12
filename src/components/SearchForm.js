@@ -1,11 +1,22 @@
-import React, {Component} from 'react';
+import React, {useState} from 'react';
 import Button from '@material-ui/core/Button';
-import TextField from '@material-ui/core/TextField';
-import {withStyles} from '@material-ui/core/styles';
-import {withRouter} from 'react-router-dom'
-import {Box} from "@material-ui/core";
+import {makeStyles} from '@material-ui/core/styles';
+import {InputTextField} from "./fields";
+import {useDispatch, useSelector} from "react-redux";
+import {useHistory} from "react-router";
+import {searchSong} from "../store/songs/actions";
 
-const styles = theme => ({
+const FIELDS = [
+    {
+        name: 'title',
+        label: 'Title',
+    }, {
+        name: 'artist',
+        label: 'Artist',
+    }
+];
+
+const useStyles = makeStyles(theme => ({
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
@@ -15,85 +26,54 @@ const styles = theme => ({
     },
     textField: {
         margin: theme.spacing(2, 1, 0),
-
-        // width: '100%', // Fix IE 11 issue.
     }
-});
+}))
 
-class SearchForm extends Component {
-    state = {
-        title: '',
-        artist: '',
-    };
-    handleChange = event => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    };
+export default function SearchForm (props) {
+    const classes = useStyles();
+    const history = useHistory();
+    const dispatch = useDispatch()
+    const {usersState} = useSelector(state => state);
 
-    componentWillReceiveProps(newProps) {
-        if (this.props.title !== newProps.title) {
-            this.setState({
-                title: newProps.title
-            })
-        }
-        if (this.props.artist !== newProps.artist) {
-            this.setState({
-                artist: newProps.artist
-            })
-        }
+    const [state, setState] = useState('');
+
+    const handleChange = (event) => {
+        const key = event.target.name;
+        const value = event.target.value;
+        setState(prev => ({
+            ...prev,
+            [key]: value
+        }))
     }
 
-    render() {
-        const {classes, onSubmit, history} = this.props;
-        return (
-            <form className={classes.form} noValidate onSubmit={e => {
-                e.preventDefault()
-                // console.log('this.state', this.state)
-                onSubmit(this.state)
-            }}>
-                <Box
-                    component="form"
-                    sx={{
-                        '& > :not(style)': {m: 1, width: '25ch'},
-                    }}
+    const handleSubmit = event => {
+        event.preventDefault();
+        dispatch(searchSong(state, history))
+    };
+
+    return (
+            <form className={classes.form} onSubmit={handleSubmit}>
+                {
+                    FIELDS.map(({name, label}) => <InputTextField
+                        className={classes.textField}
+                        label={label}
+                        name={name}
+                        value={state.name}
+                        onChange={handleChange}
+                        error={usersState.err_fields[name] ? true: null}
+                        helperText={usersState.err_fields[name] ? usersState.err_fields[name]: null}
+                    />)
+                }
+                <Button
+                    type="submit"
+                    variant="contained"
+                    color="primary"
+                    margin="normal"
+                    size="large"
+                    className={classes.submit}
                 >
-                    <TextField
-                        id="outlined-multiline-static"
-                        required
-                        label="Artist"
-                        name="artist"
-                        className={classes.textField}
-                        margin="normal"
-                        variant="outlined"
-                        value={this.state.artist}
-                        onChange={this.handleChange}/>
-                    <TextField
-                        variant="outlined"
-                        margin="normal"
-                        required
-                        id="song"
-                        label="Song"
-                        name="title"
-                        autoComplete="song"
-                        className={classes.textField}
-                        value={this.state.title}
-                        onChange={this.handleChange}/>
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        color="primary"
-                        margin="normal"
-                        size="large"
-                        className={classes.submit}
-                        onClick={() => history.push(`/song/${this.state.title}/artist/${this.state.artist}`)}
-                    >
-                        Search
-                    </Button>
-                </Box>
-            </form>
-        );
-    }
+                    Search
+                </Button>
+        </form>
+    );
 }
-
-export default withRouter(withStyles(styles)(SearchForm));

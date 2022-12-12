@@ -1,16 +1,16 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import Avatar from '@material-ui/core/Avatar';
+import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
+import Grid from '@material-ui/core/Grid';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import Button from "@material-ui/core/Button";
-import Grid from "@material-ui/core/Grid";
-import {Link} from "react-router-dom";
-import {getProfileFetch, updateUserData} from "../store/users/actions";
+import {useHistory} from "react-router";
 import {InputTextField} from "../components/fields";
 import {makeStyles} from "@material-ui/core/styles";
-import Languages from "../components/languages";
-import {useHistory} from "react-router";
+import {signUpUser} from "../store/users/actions";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -24,6 +24,10 @@ const useStyles = makeStyles(theme => ({
         flexDirection: 'column',
         alignItems: 'center',
     },
+    avatar: {
+        margin: theme.spacing(1),
+        backgroundColor: theme.palette.secondary.main,
+    },
     form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
@@ -35,73 +39,79 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(2),
         margin: 'normal',
         width: '100%', // Fix IE 11 issue.
-    }
+    },
 }))
 
 const FIELDS = [
     {
-        name: 'name',
-        label: 'Name',
+        name: 'username',
+        label: 'Username',
+    },
+    {
+        name: 'email',
+        label: 'Email',
+    },
+    {
+        name: 'password',
+        label: 'Password',
     }
 ];
 
-export default function Profile() {
-    const dispatch = useDispatch()
-    const {usersState} = useSelector(state => state);
+export default function SignUp() {
     const classes = useStyles();
+    const dispatch = useDispatch()
     const history = useHistory();
-    const [username, setUsername] = useState('');
+    const {usersState} = useSelector(state => state);
 
-    useEffect(() => {
-        if (!usersState.username) {
-            dispatch(getProfileFetch())
-        }
-        setUsername(usersState.username)
-    }, [usersState.username])
+    const [state, setState] = useState('');
+
+    const handleChange = (event) => {
+        const key = event.target.name;
+        const value = event.target.value;
+        setState(prev => ({
+            ...prev,
+            [key]: value
+        }))
+    }
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(updateUserData({
-            name: username,
-            native_language_id: usersState.native_language_id,
-            target_language_id: usersState.target_language_id
-        }, history))
+        dispatch(signUpUser(state, history))
     };
 
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
             <div className={classes.paper}>
+                <Avatar className={classes.avatar}>
+                    <LockOutlinedIcon/>
+                </Avatar>
                 <Typography component="h1" variant="h5">
-                    Profile
+                    Sign Up
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     {
                         FIELDS.map(({name, label}) => <InputTextField
                             label={label}
                             name={name}
-                            value={username}
-                            onChange={(event) => setUsername(event.target.value)}
-                            error={usersState.err_fields[name] ? true : null}
-                            helperText={usersState.err_fields[name] ? usersState.err_fields[name] : null}
+                            value={state.name}
+                            onChange={handleChange}
+                            error={usersState.err_fields[name] ? true: null}
+                            helperText={usersState.err_fields[name] ? usersState.err_fields[name]: null}
                             className={classes.textField}
                         />)
                     }
-                    <Languages/>
                     {usersState.err_message ? <Typography> {usersState.err_message} </Typography> : null}
-                    <Button
+                <Button
                         type="submit"
                         fullWidth
                         variant="contained"
                         color="primary"
                         className={classes.submit}
                     >
-                        Save
+                        Sign Up
                     </Button>
                     <Grid container>
-                        <Link to={'/resetPassword'}>
-                            Reset Password
-                        </Link>
                     </Grid>
                 </form>
             </div>

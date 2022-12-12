@@ -1,10 +1,10 @@
 import React, {Component} from 'react';
 import {withStyles} from '@material-ui/core/styles';
 import {connect} from 'react-redux';
-import {searchSong, fetchSongs} from '../../store/songs/actions'
 import Container from "@material-ui/core/Container";
-import Song from './Song'
-import SearchForm from "../SearchForm";
+import SearchForm from "../components/SearchForm";
+import {fetchSongs, searchSong} from "../store/songs/actions";
+import SongsComponent from "../components/songs";
 
 const styles = theme => ({
     container: {
@@ -24,10 +24,10 @@ class Songs extends Component {
     };
 
     getSongs(page) {
-        const {songsState, SongsFetch} = this.props;
+        const {songsState, fetchSongs} = this.props;
         this.setState({loading: true});
         if (songsState.songs.length) {
-            SongsFetch(page, this.state.limit);
+            fetchSongs(page, this.state.limit);
         }
         this.setState({loading: false});
     }
@@ -43,20 +43,20 @@ class Songs extends Component {
     }
 
     componentDidMount() {
-        const {SongsFetch} = this.props;
+        const {fetchSongs} = this.props;
 
-            SongsFetch(this.state.page, this.state.limit);
-            const options = {
-                root: null,
-                rootMargin: "0px",
-                threshold: 1.0
-            };
+        fetchSongs(this.state.page, this.state.limit);
+        const options = {
+            root: null,
+            rootMargin: "0px",
+            threshold: 1.0
+        };
 
-            this.observer = new IntersectionObserver(
-                this.handleObserver.bind(this),
-                options
-            );
-            this.observer.observe(this.loadingRef);
+        this.observer = new IntersectionObserver(
+            this.handleObserver.bind(this),
+            options
+        );
+        this.observer.observe(this.loadingRef);
     }
 
     componentDidUpdate(prevProps) {
@@ -73,30 +73,11 @@ class Songs extends Component {
             margin: "30px"
         };
 
-        const {classes, FindSongFetch} = this.props;
+        const {classes, searchSong} = this.props;
         return (
             <Container component="main" className={classes.container}>
-                <SearchForm onSubmit={FindSongFetch}/>
-
-                {/*{songsState.songs &&*/}
-                {/*    songsState.songs.map((item) => {*/}
-                {/*        return (*/}
-                {/*            <Song*/}
-                {/*                key={item.id}*/}
-                {/*                item={item}*/}
-                {/*                classes={classes}*/}
-                {/*            />*/}
-                {/*        );*/}
-                {/*    })}*/}
-                {this.state.songs.map((item) => {
-                    return (
-                        <Song
-                            key={item.id}
-                            item={item}
-                            classes={classes}
-                        />
-                    );
-                })}
+                {localStorage.token ? <SearchForm onSubmit={searchSong}/> : null}
+                <SongsComponent songs={this.state.songs}/>
                 <div
                     ref={loadingRef => (this.loadingRef = loadingRef)}
                     style={loadingCSS}
@@ -109,8 +90,8 @@ class Songs extends Component {
 }
 
 const mapDispatchToProps = (dispatch) => ({
-    SongsFetch: (page, limit) => dispatch(fetchSongs(page, limit)),
-    FindSongFetch: (song) => dispatch(searchSong(song))
+    fetchSongs: (page, limit) => dispatch(fetchSongs(page, limit)),
+    searchSong: (song) => dispatch(searchSong(song))
 });
 
 const mapStateToProps = ({songsState}) => ({songsState});

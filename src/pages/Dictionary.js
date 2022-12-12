@@ -8,8 +8,8 @@ import TableContainer from "@material-ui/core/Container";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import {userGetDict} from "../../store/users/actions";
-import Row from "./Row";
+import {userGetDict} from "../store/users/actions";
+import Row from "../components/Row";
 
 const useStyles = makeStyles(theme=>({
     container: {
@@ -19,7 +19,7 @@ const useStyles = makeStyles(theme=>({
     }
 }));
 
-export default function Dict() {
+export default function Dictionary() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const {usersState} = useSelector(state => state);

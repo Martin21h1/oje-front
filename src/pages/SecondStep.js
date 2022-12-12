@@ -6,11 +6,11 @@ import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Languages from "../languages";
+import Languages from "../components/languages";
 import {useHistory} from "react-router";
-import {updateUserData} from "../../store/users/actions";
+import {updateUserData} from "../store/users/actions";
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles(theme => ({
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
@@ -28,10 +28,12 @@ const useStyles = makeStyles(theme=>({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
+
+
     },
 }))
 
-export default function SecondStep (){
+export default function SecondStep() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const {usersState} = useSelector(state => state);
@@ -54,8 +56,9 @@ export default function SecondStep (){
                 <Typography component="h1" variant="h5">
                     Choose languages
                 </Typography>
-                <form className={classes.form} noValidate onSubmit={handleSubmit}>
+                <form className={classes.form} onSubmit={handleSubmit}>
                     <Languages/>
+                    {usersState.err_message ? <Typography> {usersState.err_message} </Typography> : null}
                     <Button
                         type="submit"
                         fullWidth

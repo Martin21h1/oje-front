@@ -3,14 +3,13 @@ import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import React, {Component} from "react";
-import {Box} from "@material-ui/core";
-import {connect} from "react-redux";
-import {withRouter} from "react-router-dom";
-import {translateWordFetch} from "../store/words/actions";
-import {userAddToDict} from "../store/users/actions";
+import React, {useEffect, useState} from "react";
+import {Box, CircularProgress} from "@material-ui/core";
+import {useDispatch, useSelector} from "react-redux";
+import {translateWord} from "../store/words/actions";
+import {addToDict} from "../store/users/actions";
 import {red} from "@material-ui/core/colors";
-import {withStyles} from "@material-ui/core/styles";
+import {makeStyles} from "@material-ui/core/styles";
 import SwipeableViews from 'react-swipeable-views';
 
 const bull = (
@@ -22,7 +21,7 @@ const bull = (
     </Box>
 );
 
-const styles = theme => ({
+const useStyles = makeStyles(theme => ({
     card: {
         maxWidth: 500,
         marginTop: theme.spacing(5),
@@ -44,87 +43,68 @@ const styles = theme => ({
     avatar: {
         backgroundColor: red[500],
     },
-    pop: {
-        axis: theme.direction === 'rtl' ? 'x-reverse' : 'x',
-        maxWidth: 500,
-        marginTop: theme.spacing(5),
-    }
-});
+}))
 
-class WordCard extends Component {
-    state = {
-        activeStep: 1,
-        image: null
-    }
+export default function WordCard(props) {
+    const classes = useStyles();
+    const dispatch = useDispatch()
+    const [image, setImage] = useState(null);
+    const [prevWord, setPrevWord] = useState(null);
+    const {wordsState} = useSelector(state => state);
 
-    componentDidMount() {
-        const {word, translateWordFetch} = this.props;
-        translateWordFetch(word)
-    }
-
-    componentDidUpdate(prevProps) {
-        const {word, translateWordFetch} = this.props;
-        const {word: prevWord} = prevProps;
-
-        if (word !== prevWord) {
-            translateWordFetch(word)
+    useEffect(() => {
+        if (props.word !== prevWord) {
+            dispatch(translateWord(props.word))
+            setPrevWord(props.word)
         }
-    }
+    }, [props])
 
-    handleAddToDict = () => {
-        const {translatedWord, song} = this.props;
-        this.props.userAddToDict({word_id:translatedWord.id, prime_picture:this.state.image, song_id:song.id})
+    const handleAddToDict = () => {
+        dispatch(addToDict(
+            {
+                word_id: wordsState.word.id,
+                prime_picture: image, song_id:
+                props.song.id
+            }))
     };
 
-    handleCurrentImage = image => {
-        this.setState({image: image});
+    const handleCurrentImage = image => {
+        setImage(image);
     };
 
-    render = () => {
-        const {translatedWord, classes} = this.props;
-        return (
-            <Card sx={{minWidth: 275}}>
-                <SwipeableViews className={classes.card}
-                                enableMouseEvents>
-                    {translatedWord.pictures ? translatedWord.pictures.map((step) => (
-                        <div key={step} onMouseOver={() => this.handleCurrentImage(step)}>
-                            <Box
-                                component="img"
-                                sx={{
-                                    height: 255,
-                                    display: 'block',
-                                    maxWidth: 400,
-                                    overflow: 'hidden',
-                                    width: '100%',
-                                }}
-                                src={step}
-                                alt={step}
-                            />
-                        </div>
-                    )) : null}
-                </SwipeableViews>
-
-                <CardContent>
-
-                    <Typography variant="h5" component="div">
-                        {bull}{translatedWord.translate}{bull}
-                    </Typography>
-
-                </CardContent>
-                <CardActions>
-                    <Button
-                        onClick={this.handleAddToDict}
-                        size="small">Add to dict</Button>
-                </CardActions>
-            </Card>
-        )
-    }
+    return (
+            wordsState.loading ? (<CircularProgress/>) :
+                (<Card sx={{minWidth: 275}}>
+                    <SwipeableViews
+                        className={classes.card}
+                        enableMouseEvents>
+                        {wordsState.word.pictures ? wordsState.word.pictures.map((step) => (
+                            <div key={step} onMouseOver={() => handleCurrentImage(step)}>
+                                <Box
+                                    component="img"
+                                    sx={{
+                                        height: 255,
+                                        display: 'block',
+                                        maxWidth: 400,
+                                        overflow: 'hidden',
+                                        width: '100%',
+                                    }}
+                                    src={step}
+                                    alt={step}
+                                />
+                            </div>
+                        )) : null}
+                    </SwipeableViews>
+                    <CardContent>
+                        <Typography variant="h5" component="div">
+                            {bull}{wordsState.word.translate}{bull}
+                        </Typography>
+                    </CardContent>
+                    <CardActions>
+                        <Button
+                            onClick={() => handleAddToDict()}
+                            size="small">Add to dict</Button>
+                    </CardActions>
+                </Card>)
+    )
 }
-
-const mapDispatchToProps = (dispatch) => ({
-    translateWordFetch: (word) => dispatch(translateWordFetch(word)),
-    userAddToDict: (data) => dispatch(userAddToDict(data))
-});
-
-const mapStateToProps = (state) => ({translatedWord: state.wordsState.word});
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(withStyles(styles)(WordCard)))

@@ -9,8 +9,8 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-import {LogoutUser, userGetTokenFetch} from "../store/users/actions"
-import {useDispatch, useSelector} from "react-redux";
+import {LogoutUser, getToken} from "../store/users/actions"
+import {useDispatch} from "react-redux";
 import {Link} from "react-router-dom";
 import {useHistory} from "react-router";
 
@@ -35,7 +35,7 @@ export default function Header() {
 
     useEffect(() => {
         if (!localStorage.token) {
-            dispatch(userGetTokenFetch());
+            dispatch(getToken());
         }
     }, [])
 

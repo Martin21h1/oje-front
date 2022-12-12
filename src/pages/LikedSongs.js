@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import {useSelector, useDispatch} from 'react-redux';
-import SongsComponent from "../components/songs/songs";
+import SongsComponent from "../components/songs";
 import {fetchLikedSongs} from "../store/songs/actions";
 
 export default function LikedSongsPage() {
@@ -11,8 +11,8 @@ export default function LikedSongsPage() {
         if (!songsState.likedSongs.length) {
             dispatch(fetchLikedSongs())
         }
-    }, [])
+    })
     return (
-        <SongsComponent songs={songsState.likedSongs}/>
+        <SongsComponent songs={songsState.likedSongs} />
     )
 }
