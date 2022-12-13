@@ -11,8 +11,7 @@ import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
 import {LogoutUser, getToken} from "../store/users/actions"
 import {useDispatch} from "react-redux";
-import {Link} from "react-router-dom";
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -29,7 +28,7 @@ const useStyles = makeStyles(theme => ({
 export default function Header() {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const history = useHistory();
+    const navigate = useNavigate();
     const [isOpened, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
 
@@ -51,7 +50,7 @@ export default function Header() {
                     <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                         <MenuIcon/>
                     </IconButton>
-                    <Typography variant="h6" onClick={() => history.push("/")} className={classes.title}>
+                    <Typography variant="h6" onClick={() => navigate("/")} className={classes.title}>
                         Project oje
                     </Typography>
                     {localStorage.token ?
@@ -70,24 +69,24 @@ export default function Header() {
                                 anchorEl={anchorEl}
                                 open={isOpened}
                             >
-                                <Link to={`/profile`}>
-                                    <MenuItem onClick={handleOpenClick}>Profile</MenuItem>
-                                </Link>
-                                <Link to={`/artists`}>
-                                    <MenuItem onClick={handleOpenClick}>Artists</MenuItem>
-                                </Link>
-                                <Link to={`/dict`}>
-                                    <MenuItem onClick={handleOpenClick}>My Dictionary</MenuItem>
-                                </Link>
-                                <Link to={`/likedSongs`}>
-                                    <MenuItem onClick={handleOpenClick}>Liked Songs</MenuItem>
-                                </Link>
-                                <MenuItem onClick={() => dispatch(LogoutUser(history))}>Sign out</MenuItem>
+                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/profile"))}>
+                                    Profile
+                                </MenuItem>
+                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/artists"))}>
+                                    Artists
+                                </MenuItem>
+                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/dict"))}>
+                                    My Dictionary
+                                </MenuItem>
+                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/likedSongs"))}>
+                                    Liked Songs
+                                </MenuItem>
+                                <MenuItem onClick={() => dispatch(LogoutUser(navigate))}>Sign out</MenuItem>
                             </Menu>
                         </div> :
                         <div>
-                            <Button onClick={() => history.push("/login/")} color="inherit">Sign In</Button>
-                            <Button onClick={() => history.push("/signup/")} color="inherit">Sign Up</Button>
+                            <Button onClick={() => navigate("/login")} color="inherit">Sign In</Button>
+                            <Button onClick={() => navigate("/signup")} color="inherit">Sign Up</Button>
                         </div>
                     }
                 </Toolbar>

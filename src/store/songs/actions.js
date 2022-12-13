@@ -1,4 +1,5 @@
 import Api from '../../api'
+import {setErrFields, setErrMessage} from "../users/actions";
 
 export const fetchSongs = (page, limit) => {
     return dispatch => {
@@ -38,20 +39,27 @@ export const fetchLikedSongs = () => {
     }
 };
 
-export const searchSong = (song, history) => {
+export const searchSong = (song, navigate) => {
     return dispatch => {
         dispatch(setLoading(true))
         return Api.searchSong(song.title, song.artist)
             .then(data => data.json())
-            .then(payload => {
-                if (payload.error) {
+            .then(data => {
+                if (data.error) {
+                    dispatch(setLoading(false))
+                    if (data.error.fields) {
+                        dispatch(setErrFields(data))
+                    }
+                    if (data.error.message) {
+                        dispatch(setErrMessage(data))
+                    }
                 } else {
                     dispatch(setLoading(false))
                     dispatch({
                         type: 'SET_FOUND_SONG',
-                        payload: payload.data,
+                        payload: data.data,
                     });
-                    history.push(`/song/${song.title}/artist/${song.artist}`)
+                    navigate(`/song/${song.title}/artist/${song.artist}`)
                 }
             })
             .catch(error => {

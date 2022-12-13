@@ -4,6 +4,8 @@ const initialState = {
     userSongs: [],
     likedSongs: [],
     loading: null,
+    err_fields: {},
+    err_message: ''
 };
 
 export default function songsReducer(state = initialState, action) {
@@ -35,18 +37,27 @@ export default function songsReducer(state = initialState, action) {
                     return i.id !== payload.id
                 })
             };
-               case 'USER_SONG':
+        case 'USER_SONG':
             return {
                 ...state, userSongs: [...action.payload],
             };
-            case 'SET_FOUND_SONG':
+        case 'SET_FOUND_SONG':
             return {
                 ...state, foundSong: [...action.payload],
             };
-            case 'SET_LOADING':
-                return {...state, loading: action.payload};
+        case 'SET_LOADING':
+            return {...state, loading: action.payload};
 
-
+        case 'SET_ERR_FIELDS':
+            return {
+                ...state,
+                err_fields: action.payload,
+            };
+        case 'SET_ERR_MESSAGE':
+            return {
+                ...state,
+                err_message: action.payload,
+            };
         default:
             return state;
     }

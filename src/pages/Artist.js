@@ -5,8 +5,9 @@ import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
 import {ArtistsFetch} from "../store/artists/actions";
+import {useNavigate} from "react-router";
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles(theme => ({
     container: {
         marginTop: theme.spacing(2),
         flexDirection: 'column',
@@ -21,13 +22,15 @@ const useStyles = makeStyles(theme=>({
     }
 }))
 
-export default function Artists(props) {
+export default function Artists() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const {artistsState} = useSelector(state => state);
+    const navigate = useNavigate();
+
 
     useEffect(() => {
-        if(!artistsState.artists.length){
+        if (!artistsState.artists.length) {
             dispatch(ArtistsFetch())
         }
     }, [artistsState.artists.length])
@@ -40,7 +43,7 @@ export default function Artists(props) {
                         <div>
                             <Avatar aria-label="recipe"
                                     className={classes.avatar}
-                                    onClick={() => props.history.push(`/artist/${item.name}/`)}
+                                    onClick={() => navigate(`/artist/${item.name}/`)}
                                     src={item.image_url}
                             />
                             <Typography paragraph>{item.name}</Typography>

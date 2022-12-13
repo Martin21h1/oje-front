@@ -14,7 +14,7 @@ import Like from './Like'
 import WordCard from './Card'
 import YoutubeEmbed from "./Video"
 import {translateWord} from "../store/words/actions"
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -40,8 +40,7 @@ const useStyles = makeStyles(theme => ({
 }))
 
 export default function Song(props) {
-    const history = useHistory();
-
+    const navigate = useNavigate();
     const classes = useStyles();
     const dispatch = useDispatch()
     const [popUpData, setPopUpData] = useState({
@@ -85,7 +84,7 @@ export default function Song(props) {
                     <Avatar
                         aria-label="recipe"
                         className={classes.avatar}
-                        onClick={() => history.push(`/artist/${item.name}/`)}
+                        onClick={() => navigate(`/artist/${item.name}/`)}
                         src={item.image_url}>
                     </Avatar>
                 }
@@ -109,7 +108,7 @@ export default function Song(props) {
                     position: "absolute",
                     ...CalculatePopupPos()
                 }}>
-                    <WordCard song={item} word={popUpData.selectedTextstate}  />
+                    <WordCard song={item} word={popUpData.selectedTextstate}/>
                 </div>}
 
                 <div id="cal2" style={{

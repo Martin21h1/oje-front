@@ -34,28 +34,28 @@ export default function usersReducer(state = initialState, action) {
                     return i.is_allow_native_language === true
                 }),
             };
-            case 'SET_USER_DATA1':
+        case 'SET_USER_DATA1':
             return {
                 ...state,
                 native_language_id: action.payload.native_language_id,
                 target_language_id: action.payload.target_language_id,
             };
-            case 'SET_NATIVE_LANG':
+        case 'SET_NATIVE_LANG':
             return {
                 ...state,
                 native_language_id: action.payload,
             };
-            case 'SET_TARGET_LANG':
+        case 'SET_TARGET_LANG':
             return {
                 ...state,
                 target_language_id: action.payload,
             };
-            case 'SET_ERR_FIELDS':
+        case 'SET_ERR_FIELDS':
             return {
                 ...state,
                 err_fields: action.payload,
             };
-            case 'SET_ERR_MESSAGE':
+        case 'SET_ERR_MESSAGE':
             return {
                 ...state,
                 err_message: action.payload,

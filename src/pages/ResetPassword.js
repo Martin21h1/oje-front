@@ -8,7 +8,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import {InputTextField} from "../components/fields";
-import {useHistory} from "react-router";
+import {useNavigate} from 'react-router-dom';
+import Alert from "@mui/material/Alert";
 
 const FIELDS = [
     {
@@ -49,12 +50,15 @@ const useStyles = makeStyles(theme => ({
     submit: {
         margin: theme.spacing(3, 0, 2),
     },
+    alert: {
+        marginTop: theme.spacing(1),
+    }
 }))
 
-export default function ResetPassword(){
+export default function ResetPassword() {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const history = useHistory();
+    const navigate = useNavigate();
     const {usersState} = useSelector(state => state);
 
     const [state, setState] = useState('');
@@ -70,7 +74,7 @@ export default function ResetPassword(){
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(ResetPasswordFetch(state, history))
+        dispatch(ResetPasswordFetch(state, navigate))
     };
 
     return (
@@ -87,12 +91,15 @@ export default function ResetPassword(){
                             name={name}
                             value={state.name}
                             onChange={handleChange}
-                            error={usersState.err_fields[name] ? true: null}
-                            helperText={usersState.err_fields[name] ? usersState.err_fields[name]: null}
+                            error={usersState.err_fields[name] ? true : null}
+                            helperText={usersState.err_fields[name] ? usersState.err_fields[name] : null}
                             className={classes.textField}
                         />)
                     }
-                    {usersState.err_message ? <Typography> {usersState.err_message} </Typography> : null}
+                    {usersState.err_message ?
+                        <Alert variant="outlined" severity="error" className={classes.alert}>
+                            {usersState.err_message}
+                        </Alert> : null}
                     <Button
                         type="submit"
                         fullWidth

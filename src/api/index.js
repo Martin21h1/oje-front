@@ -8,7 +8,7 @@ class ApiClass {
 
     makeRequest = ({url, data}) => {
         const _data = {
-                method: 'GET',
+            method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',

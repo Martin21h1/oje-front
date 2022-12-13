@@ -1,15 +1,15 @@
 import Api from '../../api'
 
-export const signUpUser = (user, history) => {
+export const signUpUser = (user, navigate) => {
     return dispatch => {
         return Api.createUser(user)
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields){
+                    if (data.error.fields) {
                         dispatch(setErrFields(data))
                     }
-                    if (data.error.message){
+                    if (data.error.message) {
                         dispatch(setErrMessage(data))
                     }
                 } else {
@@ -18,7 +18,7 @@ export const signUpUser = (user, history) => {
                     localStorage.setItem('token', data.jwt);
                     localStorage.setItem('refreshToken', data.refresh_jwt);
                     // dispatch(setUsername(data.username));
-                    history.replace('/secondStep/')
+                    navigate('/secondStep/')
                 }
             })
             .catch(error => {
@@ -27,16 +27,16 @@ export const signUpUser = (user, history) => {
     }
 };
 
-export const signInUser = (user, history) => {
+export const signInUser = (user, navigate) => {
     return dispatch => {
         return Api.loginUser(user)
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields){
+                    if (data.error.fields) {
                         dispatch(setErrFields(data))
                     }
-                    if (data.error.message){
+                    if (data.error.message) {
                         dispatch(setErrMessage(data))
                     }
                 } else {
@@ -44,7 +44,7 @@ export const signInUser = (user, history) => {
                     localStorage.setItem('refreshToken', data.refresh_jwt);
                     dispatch(setToken(data.jwt));
                     // dispatch(setUsername(data.username));
-                    history.replace('/')
+                    navigate('/')
                 }
             })
             .catch(error => {
@@ -69,7 +69,7 @@ export const userLoginWithGoogle = () => {
     }
 };
 
-export const getToken = (history) => {
+export const getToken = (navigate) => {
     return dispatch => {
         Api.fetchTokenUser()
             .then(data => data.json())
@@ -81,7 +81,7 @@ export const getToken = (history) => {
                     localStorage.setItem('token', data.jwt);
                     // dispatch(setUsername(user.username));
                     // localStorage.setItem('username', user.username);
-                    history.replace('/')
+                    navigate('/')
                 }
             })
             .catch(error => {
@@ -90,20 +90,20 @@ export const getToken = (history) => {
     }
 };
 
-export const updateUserData = (data, history) => {
+export const updateUserData = (data, navigate) => {
     return dispatch => {
         Api.updateUserData(data)
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields){
+                    if (data.error.fields) {
                         dispatch(setErrFields(data))
                     }
-                    if (data.error.message){
+                    if (data.error.message) {
                         dispatch(setErrMessage(data))
                     }
                 } else {
-                    history.push('/');
+                    navigate('/');
 
                     // dispatch(setUsername(user.username));
                     // localStorage.setItem('username', user.username);
@@ -121,10 +121,10 @@ export const addToDict = (data) => {
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields){
+                    if (data.error.fields) {
                         dispatch(setErrFields(data))
                     }
-                    if (data.error.message){
+                    if (data.error.message) {
                         dispatch(setErrMessage(data))
                     }
                 } else {
@@ -209,7 +209,7 @@ export const getProfileFetch = () => {
     }
 };
 
-export const LogoutUser = (history) => {
+export const LogoutUser = (navigate) => {
     return dispatch => {
         localStorage.removeItem("token");
         localStorage.removeItem("username");
@@ -220,7 +220,7 @@ export const LogoutUser = (history) => {
                     dispatch({
                         type: 'LOGOUT_USER'
                     })
-                    history.replace('/')
+                    window.location.replace('/')
                 }
             })
             .catch(error => {
@@ -229,20 +229,20 @@ export const LogoutUser = (history) => {
     }
 };
 
-export const SetPasswordFetch = (user, history) => {
+export const SetPasswordFetch = (user, navigate) => {
     return dispatch => {
         return Api.setPassword(user)
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields){
+                    if (data.error.fields) {
                         dispatch(setErrFields(data))
                     }
-                    if (data.error.message){
+                    if (data.error.message) {
                         dispatch(setErrMessage(data))
                     }
                 } else {
-                    history.replace('/')
+                    navigate('/')
                 }
             })
             .catch(error => {
@@ -251,20 +251,20 @@ export const SetPasswordFetch = (user, history) => {
     }
 };
 
-export const ResetPasswordFetch = (user, history) => {
+export const ResetPasswordFetch = (user, navigate) => {
     return dispatch => {
         return Api.resetPassword(user)
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields){
+                    if (data.error.fields) {
                         dispatch(setErrFields(data))
                     }
-                    if (data.error.message){
+                    if (data.error.message) {
                         dispatch(setErrMessage(data))
                     }
                 } else {
-                    history.replace('/')
+                    navigate('/')
                 }
             })
             .catch(error => {

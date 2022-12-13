@@ -7,8 +7,9 @@ import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import Languages from "../components/languages";
-import {useHistory} from "react-router";
+import {useNavigate} from 'react-router-dom';
 import {updateUserData} from "../store/users/actions";
+import Alert from "@mui/material/Alert";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -28,24 +29,24 @@ const useStyles = makeStyles(theme => ({
     },
     submit: {
         margin: theme.spacing(3, 0, 2),
-
-
     },
+    alert: {
+        marginTop: theme.spacing(1),
+    }
 }))
 
 export default function SecondStep() {
     const classes = useStyles();
     const dispatch = useDispatch()
     const {usersState} = useSelector(state => state);
-    const history = useHistory();
+    const navigate = useNavigate();
 
     const handleSubmit = event => {
         event.preventDefault();
         dispatch(updateUserData({
             native_language_id: usersState.native_language_id,
             target_language_id: usersState.target_language_id,
-        }))
-        history.push(`/`)
+        }, navigate))
     };
 
     return (
@@ -58,7 +59,10 @@ export default function SecondStep() {
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Languages/>
-                    {usersState.err_message ? <Typography> {usersState.err_message} </Typography> : null}
+                    {usersState.err_message ?
+                        <Alert variant="outlined" severity="error" className={classes.alert}>
+                            {usersState.err_message}
+                        </Alert> : null}
                     <Button
                         type="submit"
                         fullWidth

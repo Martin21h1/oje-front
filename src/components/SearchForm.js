@@ -3,8 +3,9 @@ import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import {InputTextField} from "./fields";
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router";
+import {useNavigate} from "react-router";
 import {searchSong} from "../store/songs/actions";
+import Alert from "@mui/material/Alert";
 
 const FIELDS = [
     {
@@ -26,14 +27,17 @@ const useStyles = makeStyles(theme => ({
     },
     textField: {
         margin: theme.spacing(2, 1, 0),
+    },
+    alert: {
+        marginTop: theme.spacing(1),
     }
 }))
 
-export default function SearchForm (props) {
+export default function SearchForm() {
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
     const dispatch = useDispatch()
-    const {usersState} = useSelector(state => state);
+    const {songsState} = useSelector(state => state);
 
     const [state, setState] = useState('');
 
@@ -48,32 +52,36 @@ export default function SearchForm (props) {
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(searchSong(state, history))
+        dispatch(searchSong(state, navigate))
     };
 
     return (
-            <form className={classes.form} onSubmit={handleSubmit}>
-                {
-                    FIELDS.map(({name, label}) => <InputTextField
-                        className={classes.textField}
-                        label={label}
-                        name={name}
-                        value={state.name}
-                        onChange={handleChange}
-                        error={usersState.err_fields[name] ? true: null}
-                        helperText={usersState.err_fields[name] ? usersState.err_fields[name]: null}
-                    />)
-                }
-                <Button
-                    type="submit"
-                    variant="contained"
-                    color="primary"
-                    margin="normal"
-                    size="large"
-                    className={classes.submit}
-                >
-                    Search
-                </Button>
+        <form className={classes.form} onSubmit={handleSubmit}>
+            {
+                FIELDS.map(({name, label}) => <InputTextField
+                    className={classes.textField}
+                    label={label}
+                    name={name}
+                    value={state.name}
+                    onChange={handleChange}
+                    error={songsState.err_fields[name] ? true : null}
+                    helperText={songsState.err_fields[name] ? songsState.err_fields[name] : null}
+                />)
+            }
+            <Button
+                type="submit"
+                variant="contained"
+                color="primary"
+                margin="normal"
+                size="large"
+                className={classes.submit}
+            >
+                Search
+            </Button>
+            {songsState.err_message ?
+                <Alert variant="outlined" severity="error" className={classes.alert}>
+                    {songsState.err_message}
+                </Alert> : null}
         </form>
     );
 }

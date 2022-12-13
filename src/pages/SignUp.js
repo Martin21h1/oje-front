@@ -7,10 +7,11 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {useHistory} from "react-router";
+import {useNavigate} from 'react-router-dom';
 import {InputTextField} from "../components/fields";
 import {makeStyles} from "@material-ui/core/styles";
 import {signUpUser} from "../store/users/actions";
+import Alert from "@mui/material/Alert";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -40,6 +41,9 @@ const useStyles = makeStyles(theme => ({
         margin: 'normal',
         width: '100%', // Fix IE 11 issue.
     },
+    alert: {
+        marginTop: theme.spacing(1),
+    }
 }))
 
 const FIELDS = [
@@ -60,7 +64,7 @@ const FIELDS = [
 export default function SignUp() {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const history = useHistory();
+    const navigate = useNavigate();
     const {usersState} = useSelector(state => state);
 
     const [state, setState] = useState('');
@@ -76,7 +80,7 @@ export default function SignUp() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(signUpUser(state, history))
+        dispatch(signUpUser(state, navigate))
     };
 
     return (
@@ -96,13 +100,16 @@ export default function SignUp() {
                             name={name}
                             value={state.name}
                             onChange={handleChange}
-                            error={usersState.err_fields[name] ? true: null}
-                            helperText={usersState.err_fields[name] ? usersState.err_fields[name]: null}
+                            error={usersState.err_fields[name] ? true : null}
+                            helperText={usersState.err_fields[name] ? usersState.err_fields[name] : null}
                             className={classes.textField}
                         />)
                     }
-                    {usersState.err_message ? <Typography> {usersState.err_message} </Typography> : null}
-                <Button
+                    {usersState.err_message ?
+                        <Alert variant="outlined" severity="error" className={classes.alert}>
+                            {usersState.err_message}
+                        </Alert> : null}
+                    <Button
                         type="submit"
                         fullWidth
                         variant="contained"

@@ -6,15 +6,15 @@ import wordsReducer from './words/reducer'
 import artistsReducer from "./artists/reducer";
 
 const middleware = compose(
-   applyMiddleware(thunk),
-window.devToolsExtension ? window.devToolsExtension() : f => f
+    applyMiddleware(thunk),
+    window.devToolsExtension ? window.devToolsExtension() : f => f
 );
 
 const rootReducer = combineReducers({
-   usersState: usersReducer,
-   songsState: songsReducer,
-   wordsState: wordsReducer,
-   artistsState: artistsReducer,
+    usersState: usersReducer,
+    songsState: songsReducer,
+    wordsState: wordsReducer,
+    artistsState: artistsReducer,
 });
 
 const store = createStore(rootReducer, middleware);

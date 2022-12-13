@@ -11,7 +11,7 @@ import Paper from "@material-ui/core/Paper";
 import {userGetDict} from "../store/users/actions";
 import Row from "../components/Row";
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles(theme => ({
     container: {
         marginTop: theme.spacing(2),
         flexDirection: 'column',

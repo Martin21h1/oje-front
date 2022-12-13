@@ -1,5 +1,5 @@
-import TextField from "@material-ui/core/TextField";
 import React from "react";
+import TextField from "@material-ui/core/TextField";
 
 export const InputTextField = ({value, label, name, onChange, error, helperText, className}) =>
     <TextField
@@ -12,7 +12,7 @@ export const InputTextField = ({value, label, name, onChange, error, helperText,
         value={value}
         onChange={onChange}
         type={name}
-        error = {error}
+        error={error}
         helperText={helperText}
         className={className}
     />;

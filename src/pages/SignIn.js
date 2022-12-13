@@ -9,8 +9,9 @@ import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import {signInUser, userLoginWithGoogle} from "../store/users/actions";
 import {useDispatch, useSelector} from "react-redux";
-import {useHistory} from "react-router";
+import {useNavigate} from 'react-router-dom';
 import {InputTextField} from "../components/fields";
+import Alert from "@mui/material/Alert";
 
 const FIELDS = [
     {
@@ -50,12 +51,15 @@ const useStyles = makeStyles(theme => ({
         margin: 'normal',
         width: '100%', // Fix IE 11 issue.
     },
+    alert: {
+        marginTop: theme.spacing(1),
+    }
 }));
 
 export default function SignIn() {
     const classes = useStyles();
     const dispatch = useDispatch()
-    const history = useHistory();
+    const navigate = useNavigate();
     const {usersState} = useSelector(state => state);
 
     const [state, setState] = useState('');
@@ -71,7 +75,7 @@ export default function SignIn() {
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(signInUser(state, history))
+        dispatch(signInUser(state, navigate))
     };
 
 
@@ -92,12 +96,15 @@ export default function SignIn() {
                             name={name}
                             value={state.name}
                             onChange={handleChange}
-                            error={usersState.err_fields[name] ? true: null}
-                            helperText={usersState.err_fields[name] ? usersState.err_fields[name]: null}
+                            error={usersState.err_fields[name] ? true : null}
+                            helperText={usersState.err_fields[name] ? usersState.err_fields[name] : null}
                             className={classes.textField}
                         />)
                     }
-                    {usersState.err_message ? <Typography> {usersState.err_message} </Typography> : null}
+                    {usersState.err_message ?
+                        <Alert variant="outlined" severity="error" className={classes.alert}>
+                            {usersState.err_message}
+                        </Alert> : null}
                     <Button
                         type="submit"
                         fullWidth

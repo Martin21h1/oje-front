@@ -73,38 +73,38 @@ export default function WordCard(props) {
     };
 
     return (
-            wordsState.loading ? (<CircularProgress/>) :
-                (<Card sx={{minWidth: 275}}>
-                    <SwipeableViews
-                        className={classes.card}
-                        enableMouseEvents>
-                        {wordsState.word.pictures ? wordsState.word.pictures.map((step) => (
-                            <div key={step} onMouseOver={() => handleCurrentImage(step)}>
-                                <Box
-                                    component="img"
-                                    sx={{
-                                        height: 255,
-                                        display: 'block',
-                                        maxWidth: 400,
-                                        overflow: 'hidden',
-                                        width: '100%',
-                                    }}
-                                    src={step}
-                                    alt={step}
-                                />
-                            </div>
-                        )) : null}
-                    </SwipeableViews>
-                    <CardContent>
-                        <Typography variant="h5" component="div">
-                            {bull}{wordsState.word.translate}{bull}
-                        </Typography>
-                    </CardContent>
-                    <CardActions>
-                        <Button
-                            onClick={() => handleAddToDict()}
-                            size="small">Add to dict</Button>
-                    </CardActions>
-                </Card>)
+        wordsState.loading ? (<CircularProgress/>) :
+            (<Card sx={{minWidth: 275}}>
+                <SwipeableViews
+                    className={classes.card}
+                    enableMouseEvents>
+                    {wordsState.word.pictures ? wordsState.word.pictures.map((step) => (
+                        <div key={step} onMouseOver={() => handleCurrentImage(step)}>
+                            <Box
+                                component="img"
+                                sx={{
+                                    height: 255,
+                                    display: 'block',
+                                    maxWidth: 400,
+                                    overflow: 'hidden',
+                                    width: '100%',
+                                }}
+                                src={step}
+                                alt={step}
+                            />
+                        </div>
+                    )) : null}
+                </SwipeableViews>
+                <CardContent>
+                    <Typography variant="h5" component="div">
+                        {bull}{wordsState.word.translate}{bull}
+                    </Typography>
+                </CardContent>
+                <CardActions>
+                    <Button
+                        onClick={() => handleAddToDict()}
+                        size="small">Add to dict</Button>
+                </CardActions>
+            </Card>)
     )
 }

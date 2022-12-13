@@ -10,7 +10,8 @@ import {getProfileFetch, updateUserData} from "../store/users/actions";
 import {InputTextField} from "../components/fields";
 import {makeStyles} from "@material-ui/core/styles";
 import Languages from "../components/languages";
-import {useHistory} from "react-router";
+import {useNavigate} from 'react-router-dom';
+import Alert from '@mui/material/Alert';
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -35,6 +36,9 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(2),
         margin: 'normal',
         width: '100%', // Fix IE 11 issue.
+    },
+    alert: {
+        marginTop: theme.spacing(1),
     }
 }))
 
@@ -49,7 +53,7 @@ export default function Profile() {
     const dispatch = useDispatch()
     const {usersState} = useSelector(state => state);
     const classes = useStyles();
-    const history = useHistory();
+    const navigate = useNavigate();
     const [username, setUsername] = useState('');
 
     useEffect(() => {
@@ -65,7 +69,7 @@ export default function Profile() {
             name: username,
             native_language_id: usersState.native_language_id,
             target_language_id: usersState.target_language_id
-        }, history))
+        }, navigate))
     };
 
     return (
@@ -88,7 +92,10 @@ export default function Profile() {
                         />)
                     }
                     <Languages/>
-                    {usersState.err_message ? <Typography> {usersState.err_message} </Typography> : null}
+                    {usersState.err_message ?
+                        <Alert variant="outlined" severity="error" className={classes.alert}>
+                            {usersState.err_message}
+                        </Alert> : null}
                     <Button
                         type="submit"
                         fullWidth

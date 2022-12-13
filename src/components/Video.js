@@ -7,7 +7,7 @@ const useStyles = makeStyles({
     }
 });
 
-export default function YoutubeEmbed (props) {
+export default function YoutubeEmbed(props) {
     const classes = useStyles();
 
     return (

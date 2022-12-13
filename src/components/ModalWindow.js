@@ -31,27 +31,27 @@ export default function (props) {
 
     return (
         <Dialog
-        open={isOpened}
-        TransitionComponent={Transition}
-        keepMounted
-        onClose={handleOpenClick}
-        aria-labelledby="alert-dialog-slide-title"
-        aria-describedby="alert-dialog-slide-description"
-    >
-        <DialogTitle id="alert-dialog-slide-title">{props.title}</DialogTitle>
-        <DialogContent>
-            <DialogContentText id="alert-dialog-slide-description">
-                {props.content}
-            </DialogContentText>
-        </DialogContent>
-        <DialogActions>
-            <Button onClick={handleOpenClick} color="primary">
-                Disagree
-            </Button>
-            <Button onClick={handleSubmit} color="primary">
-                Agree
-            </Button>
-        </DialogActions>
-    </Dialog>
+            open={isOpened}
+            TransitionComponent={Transition}
+            keepMounted
+            onClose={handleOpenClick}
+            aria-labelledby="alert-dialog-slide-title"
+            aria-describedby="alert-dialog-slide-description"
+        >
+            <DialogTitle id="alert-dialog-slide-title">{props.title}</DialogTitle>
+            <DialogContent>
+                <DialogContentText id="alert-dialog-slide-description">
+                    {props.content}
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={handleOpenClick} color="primary">
+                    Disagree
+                </Button>
+                <Button onClick={handleSubmit} color="primary">
+                    Agree
+                </Button>
+            </DialogActions>
+        </Dialog>
     )
 }

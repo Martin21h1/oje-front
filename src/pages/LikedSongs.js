@@ -11,8 +11,8 @@ export default function LikedSongsPage() {
         if (!songsState.likedSongs.length) {
             dispatch(fetchLikedSongs())
         }
-    })
+    }, [])
     return (
-        <SongsComponent songs={songsState.likedSongs} />
+        <SongsComponent songs={songsState.likedSongs}/>
     )
 }

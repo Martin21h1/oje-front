@@ -4,7 +4,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
 import {GetLanguages, getProfileFetch, setNativeLanguageId, setTargetLanguageId} from "../store/users/actions";
 
-const useStyles = makeStyles(theme=>({
+const useStyles = makeStyles(theme => ({
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
@@ -42,43 +42,43 @@ export default function Languages() {
     }, [usersState])
 
     return (
-            <div className={classes.paper}>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Native Language</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name="native_language_id"
-                            value={native_language_id}
-                            label="Native Language"
-                            onChange={event =>  dispatch(setNativeLanguageId(event.target.value))}
-                        >
-                            {usersState.native_languages &&
-                                usersState.native_languages.map((item) => {
-                                    return (
-                                        <MenuItem value={item.id}>{item.name}</MenuItem>
-                                    );
-                                })}
-                        </Select>
-                    </FormControl>
-                    <FormControl fullWidth>
-                        <InputLabel id="demo-simple-select-label">Target Language</InputLabel>
-                        <Select
-                            labelId="demo-simple-select-label"
-                            id="demo-simple-select"
-                            name="target_language_id"
-                            value={target_language_id}
-                            label="Target Language"
-                            onChange={event =>  dispatch(setTargetLanguageId(event.target.value))}
-                        >
-                            {usersState.target_languages &&
-                                usersState.target_languages.map((item) => {
-                                    return (
-                                        <MenuItem value={item.id}>{item.name}</MenuItem>
-                                    );
-                                })}
-                        </Select>
-                    </FormControl>
-            </div>
+        <div className={classes.paper}>
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Native Language</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="native_language_id"
+                    value={native_language_id}
+                    label="Native Language"
+                    onChange={event => dispatch(setNativeLanguageId(event.target.value))}
+                >
+                    {usersState.native_languages &&
+                        usersState.native_languages.map((item) => {
+                            return (
+                                <MenuItem value={item.id}>{item.name}</MenuItem>
+                            );
+                        })}
+                </Select>
+            </FormControl>
+            <FormControl fullWidth>
+                <InputLabel id="demo-simple-select-label">Target Language</InputLabel>
+                <Select
+                    labelId="demo-simple-select-label"
+                    id="demo-simple-select"
+                    name="target_language_id"
+                    value={target_language_id}
+                    label="Target Language"
+                    onChange={event => dispatch(setTargetLanguageId(event.target.value))}
+                >
+                    {usersState.target_languages &&
+                        usersState.target_languages.map((item) => {
+                            return (
+                                <MenuItem value={item.id}>{item.name}</MenuItem>
+                            );
+                        })}
+                </Select>
+            </FormControl>
+        </div>
     )
 }
