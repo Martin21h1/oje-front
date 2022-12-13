@@ -1,37 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="68e27e4b-3776-4443-afa2-d3572ecbd7cc" name="Default Changelist" comment="refactoring[p1]">
-      <change afterPath="$PROJECT_DIR$/src/components/Video.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
+    <list default="true" id="68e27e4b-3776-4443-afa2-d3572ecbd7cc" name="Default Changelist" comment="refactoring[p3]">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/api/index.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/api/index.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/Header.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Header.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/artists/Artists.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/artists/Artists.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dict/Dict.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dict/Dict.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/dict/Row.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/dict/Row.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/songs/Card.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Card.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/songs/Like.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/Like.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/songs/SearchForm.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/SearchForm.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/songs/Song.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/Song.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/songs/Songs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/Songs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/songs/Video.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/songs/songs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/songs/songs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/users/Profile.js" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/users/ResetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/ResetPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/users/SecondStep.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SecondStep.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/users/SetPassword.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SetPassword.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/users/SignIn.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SignIn.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/components/users/SignUp.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/components/users/SignUp.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/ArtistSongs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/ArtistSongs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/FoundSong.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/FoundSong.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/pages/LikedSongs.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/pages/LikedSongs.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/routes/router.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/routes/router.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/songs/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/songs/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/songs/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/songs/reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/users/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/users/actions.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/users/reducer.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/users/reducer.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/store/words/actions.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/store/words/actions.js" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -78,10 +49,10 @@
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$/src/components" />
+      <recent name="$PROJECT_DIR$/src/pages" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/docker" />
       <recent name="$PROJECT_DIR$/oje" />
-      <recent name="$PROJECT_DIR$/oje/src/components/artists" />
     </key>
   </component>
   <component name="RunManager" selected="Docker.docker-compose.yml: Compose Deployment">
@@ -141,7 +112,7 @@
       <workItem from="1669220639201" duration="11529000" />
       <workItem from="1669727824711" duration="2625000" />
       <workItem from="1669823124405" duration="36774000" />
-      <workItem from="1670618251083" duration="45651000" />
+      <workItem from="1670618251083" duration="102780000" />
     </task>
     <task id="LOCAL-00001" summary="Init">
       <created>1662483992655</created>
@@ -171,7 +142,42 @@
       <option name="project" value="LOCAL" />
       <updated>1670644159666</updated>
     </task>
-    <option name="localTasksCounter" value="5" />
+    <task id="LOCAL-00005" summary="refactoring[p2]">
+      <created>1670725955393</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1670725955393</updated>
+    </task>
+    <task id="LOCAL-00006" summary="refactoring[p2]">
+      <created>1670785178331</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1670785178331</updated>
+    </task>
+    <task id="LOCAL-00007" summary="refactoring[p3]">
+      <created>1670883862277</created>
+      <option name="number" value="00007" />
+      <option name="presentableId" value="LOCAL-00007" />
+      <option name="project" value="LOCAL" />
+      <updated>1670883862277</updated>
+    </task>
+    <task id="LOCAL-00008" summary="refactoring[p3]">
+      <created>1670894578770</created>
+      <option name="number" value="00008" />
+      <option name="presentableId" value="LOCAL-00008" />
+      <option name="project" value="LOCAL" />
+      <updated>1670894578770</updated>
+    </task>
+    <task id="LOCAL-00009" summary="refactoring[p3]">
+      <created>1670952937361</created>
+      <option name="number" value="00009" />
+      <option name="presentableId" value="LOCAL-00009" />
+      <option name="project" value="LOCAL" />
+      <updated>1670952937361</updated>
+    </task>
+    <option name="localTasksCounter" value="10" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -193,6 +199,9 @@
     <MESSAGE value="finished 2-d part" />
     <MESSAGE value="added docker files" />
     <MESSAGE value="refactoring[p1]" />
-    <option name="LAST_COMMIT_MESSAGE" value="refactoring[p1]" />
+    <MESSAGE value="refactoring[p2]" />
+    <MESSAGE value="refactoring[p3v2]" />
+    <MESSAGE value="refactoring[p3]" />
+    <option name="LAST_COMMIT_MESSAGE" value="refactoring[p3]" />
   </component>
 </project>
