@@ -11,9 +11,15 @@ const useStyles = makeStyles({
 
 export default function Like(props) {
     const classes = useStyles();
-    if (!props.like) {
-        return <ThumbUpAltIcon/>
-    } else {
-        return <div className={classes.like}><ThumbUpAltIcon/>{props.like}</div>
-    }
+    const {like = 0} = props;
+
+    return (
+        <>
+            {like > 0 ? (
+                <div className={classes.like}><ThumbUpAltIcon/>{like}</div>
+            ) : (
+                <ThumbUpAltIcon/>
+            )}
+        </>
+    );
 }

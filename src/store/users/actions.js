@@ -177,10 +177,15 @@ export const GetLanguages = () => {
 export const DeleteWord = (id) => {
     return dispatch => {
         return Api.deleteWord(id)
-            .then(data => data.json())
             .then(data => {
                 if (data.error) {
                 } else {
+                    dispatch(
+                        {
+                            type: 'DELETE_WORD',
+                            payload: id
+                        }
+                    )
                 }
             })
             .catch(error => {

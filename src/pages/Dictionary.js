@@ -26,8 +26,7 @@ export default function Dictionary() {
 
     useEffect(() => {
         dispatch(userGetDict())
-    }, [])
-
+    }, [usersState.words.length])
     return (
         <TableContainer component={Paper} className={classes.container}>
             <Table aria-label="simple table">
@@ -39,7 +38,7 @@ export default function Dictionary() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {usersState.words.map((row) => (
+                    {usersState.words && usersState.words.map((row) => (
                         <Row row={row}/>
                     ))}
                 </TableBody>

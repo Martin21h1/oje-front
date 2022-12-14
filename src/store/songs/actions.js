@@ -74,7 +74,7 @@ export const likeSong = (id) => {
             .then(payload => {
                 dispatch({
                     type: 'SET_LIKE_SONG',
-                    payload: payload,
+                    payload: id,
                 });
             })
             .catch(error => {

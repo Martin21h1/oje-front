@@ -24,6 +24,12 @@ export default function usersReducer(state = initialState, action) {
             return {...state, auth: {...action.payload}};
         case 'SET_DICT':
             return {...state, words: [...action.payload]};
+        case 'DELETE_WORD':
+            return {
+                ...state, words: state.words.filter(function (i) {
+                    return i.id !== action.payload
+                })
+            };
         case 'SET_LANGUAGES':
             return {
                 ...state,

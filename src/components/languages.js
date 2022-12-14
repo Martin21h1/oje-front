@@ -54,11 +54,13 @@ export default function Languages() {
                     onChange={event => dispatch(setNativeLanguageId(event.target.value))}
                 >
                     {usersState.native_languages &&
-                        usersState.native_languages.map((item) => {
-                            return (
-                                <MenuItem value={item.id}>{item.name}</MenuItem>
-                            );
-                        })}
+                        usersState.native_languages
+                            .filter(item => item.id !== target_language_id)
+                            .map((item) => {
+                                return (
+                                    <MenuItem value={item.id}>{item.name}</MenuItem>
+                                );
+                            })}
                 </Select>
             </FormControl>
             <FormControl fullWidth>
@@ -72,11 +74,13 @@ export default function Languages() {
                     onChange={event => dispatch(setTargetLanguageId(event.target.value))}
                 >
                     {usersState.target_languages &&
-                        usersState.target_languages.map((item) => {
-                            return (
-                                <MenuItem value={item.id}>{item.name}</MenuItem>
-                            );
-                        })}
+                        usersState.target_languages
+                            .filter(item => item.id !== native_language_id)
+                            .map((item) => {
+                                return (
+                                    <MenuItem value={item.id}>{item.name}</MenuItem>
+                                );
+                            })}
                 </Select>
             </FormControl>
         </div>

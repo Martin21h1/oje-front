@@ -9,8 +9,8 @@ const initialState = {
 };
 
 export default function songsReducer(state = initialState, action) {
-    // console.log('action', action);
-    // console.log('state', state);
+    console.log('action', action);
+    console.log('state', state);
 
     const {payload, type} = action;
     switch (type) {
@@ -21,21 +21,15 @@ export default function songsReducer(state = initialState, action) {
         case 'SET_LIKE_SONG':
             return {
                 ...state,
-                songs: state.songs.map(i => i.id === payload.id ? payload : i),
+                // songs: state.songs.map(i => i.id === action.payload ? action.payload : i),
                 likedSongs: state.likedSongs.filter(function (i) {
-                    return i.id !== payload.id
+                    return i.id !== action.payload
                 })
             };
         case 'SET_LIKED_SONG':
             return {
                 ...state,
                 likedSongs: [...action.payload]
-            };
-        case 'DELETE_POST':
-            return {
-                ...state, songs: state.songs.filter(function (i) {
-                    return i.id !== payload.id
-                })
             };
         case 'USER_SONG':
             return {
