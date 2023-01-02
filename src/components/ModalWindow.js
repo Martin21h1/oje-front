@@ -1,4 +1,6 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch} from "react-redux";
+
 import Button from '@material-ui/core/Button';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
@@ -6,27 +8,26 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
-import {useDispatch} from "react-redux";
 
 const Transition = React.forwardRef(function Transition(props, ref) {
     return <Slide direction="up" ref={ref} {...props} />;
 });
 
-export default function (props) {
-    const [isOpened, setOpen] = useState(false);
-    const dispatch = useDispatch()
+export default function ModalWindow (props) {
+    const [isOpened, setIsOpened] = useState(false);
+    const dispatch = useDispatch();
 
     const handleOpenClick = () => {
-        setOpen((isOpened) => !isOpened);
+        setIsOpened((isOpened) => !isOpened);
     };
 
     useEffect(() => {
-        setOpen((isOpened) => !isOpened);
-    }, [])
+        setIsOpened((isOpened) => !isOpened);
+    }, []);
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(props.onClick(props.id))
+        dispatch(props.onClick(props.id));
     };
 
     return (
@@ -53,5 +54,5 @@ export default function (props) {
                 </Button>
             </DialogActions>
         </Dialog>
-    )
-}
+    );
+};

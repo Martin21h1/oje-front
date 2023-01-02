@@ -1,11 +1,13 @@
 import React, {useState} from 'react';
+
+import Modal from "./ModalWindow";
+import {DeleteWord} from "../store/users/actions";
+
 import {makeStyles} from '@material-ui/core/styles';
 import TableCell from "@material-ui/core/TableCell";
 import TableRow from "@material-ui/core/TableRow";
-import {DeleteWord} from "../store/users/actions";
 import MenuItem from "@material-ui/core/MenuItem";
 import DeleteIcon from "@material-ui/icons/Delete";
-import Modal from "./ModalWindow";
 import MoreVertIcon from "@material-ui/icons/MoreVert";
 import Menu from "@material-ui/core/Menu";
 import IconButton from "@material-ui/core/IconButton";
@@ -23,16 +25,16 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export default function Row(props) {
-    const [isOpened, setOpen] = useState(false);
+    const [isOpened, setIsOpened] = useState(false);
     const [isOpenedModal, setOpenModal] = useState(false);
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const {row} = props;
 
     const classes = useStyles();
 
-    const row = props.row
 
     const handleOpenClick = event => {
-        setOpen((isOpened) => !isOpened);
+        setIsOpened((isOpened) => !isOpened);
         setAnchorEl(event.currentTarget);
     };
 
@@ -70,5 +72,5 @@ export default function Row(props) {
                 </Menu>
             </IconButton>
         </TableRow>
-    )
-}
+    );
+};

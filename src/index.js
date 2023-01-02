@@ -1,13 +1,10 @@
 import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import { Provider } from 'react-redux';
-import router from './routes/router'
-import store from './store/rootReducer'
+import { createRoot } from 'react-dom/client';
 
-ReactDOM.render(
-    <Provider store={store}>
-        {router}
-    </Provider>,
-    document.getElementById('root')
-);
+import './index.css';
+import App from "./App";
+
+
+const container = document.getElementById('root');
+const root = createRoot(container);
+root.render(<App tab="home" />);

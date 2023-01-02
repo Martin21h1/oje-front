@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {makeStyles} from "@material-ui/core/styles";
 
 const useStyles = makeStyles({
@@ -21,5 +22,5 @@ export default function YoutubeEmbed(props) {
                 title="Embedded youtube"
             />
         </div>
-    )
-}
+    );
+};

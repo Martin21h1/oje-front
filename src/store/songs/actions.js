@@ -1,5 +1,5 @@
-import Api from '../../api'
-import {setErrFields, setErrMessage} from "../users/actions";
+import Api from '../../api';
+import {error_handler, setErrorNull} from "../errors/actions";
 
 export const fetchSongs = (page, limit) => {
     return dispatch => {
@@ -17,12 +17,12 @@ export const fetchSongs = (page, limit) => {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 };
 
-export const fetchLikedSongs = () => {
+export const fetchLikedSongs = (page, limit) => {
     return dispatch => {
-        return Api.fetchLikedSongs()
+        return Api.fetchLikedSongs(page, limit)
             .then(data => data.json())
             .then(payload => {
                 if (payload.error) {
@@ -36,7 +36,7 @@ export const fetchLikedSongs = () => {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 };
 
 export const searchSong = (song, navigate) => {
@@ -46,14 +46,9 @@ export const searchSong = (song, navigate) => {
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    dispatch(setLoading(false))
-                    if (data.error.fields) {
-                        dispatch(setErrFields(data))
-                    }
-                    if (data.error.message) {
-                        dispatch(setErrMessage(data))
-                    }
+                    error_handler(dispatch, data)
                 } else {
+                    dispatch(setErrorNull())
                     dispatch(setLoading(false))
                     dispatch({
                         type: 'SET_FOUND_SONG',
@@ -65,7 +60,7 @@ export const searchSong = (song, navigate) => {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 };
 
 export const likeSong = (id) => {
@@ -80,12 +75,12 @@ export const likeSong = (id) => {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 };
 
-export const FetchSongsByArtist = (artist) => {
+export const FetchSongsByArtist = (artist, page, limit) => {
     return dispatch => {
-        return Api.fetchSongsByArtist(artist)
+        return Api.fetchSongsByArtist(artist, page, limit)
             .then(data => data.json())
             .then(payload => {
                 dispatch({
@@ -97,7 +92,7 @@ export const FetchSongsByArtist = (artist) => {
             .catch(error => {
                 console.log(error);
             })
-    }
+    };
 };
 
 

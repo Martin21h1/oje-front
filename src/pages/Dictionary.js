@@ -1,6 +1,10 @@
 import React, {useEffect} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
 import {useDispatch, useSelector} from 'react-redux';
+
+import {userGetDict} from "../store/users/actions";
+import Row from "../components/Row";
+
+import {makeStyles} from '@material-ui/core/styles';
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,8 +12,7 @@ import TableContainer from "@material-ui/core/Container";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
-import {userGetDict} from "../store/users/actions";
-import Row from "../components/Row";
+
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -21,12 +24,12 @@ const useStyles = makeStyles(theme => ({
 
 export default function Dictionary() {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const {usersState} = useSelector(state => state);
 
     useEffect(() => {
         dispatch(userGetDict())
-    }, [usersState.words.length])
+    }, [usersState.words.length]);
     return (
         <TableContainer component={Paper} className={classes.container}>
             <Table aria-label="simple table">
@@ -45,4 +48,4 @@ export default function Dictionary() {
             </Table>
         </TableContainer>
     );
-}
+};

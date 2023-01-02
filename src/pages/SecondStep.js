@@ -1,14 +1,16 @@
 import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+
+import Languages from "../components/languages";
+import {updateUserData} from "../store/users/actions";
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import Languages from "../components/languages";
-import {useNavigate} from 'react-router-dom';
-import {updateUserData} from "../store/users/actions";
 import Alert from "@mui/material/Alert";
 
 const useStyles = makeStyles(theme => ({
@@ -33,12 +35,13 @@ const useStyles = makeStyles(theme => ({
     alert: {
         marginTop: theme.spacing(1),
     }
-}))
+}));
 
 export default function SecondStep() {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const {usersState} = useSelector(state => state);
+    const {errorsState} = useSelector(state => state);
     const navigate = useNavigate();
 
     const handleSubmit = event => {
@@ -46,7 +49,7 @@ export default function SecondStep() {
         dispatch(updateUserData({
             native_language_id: usersState.native_language_id,
             target_language_id: usersState.target_language_id,
-        }, navigate))
+        }, navigate));
     };
 
     return (
@@ -59,9 +62,9 @@ export default function SecondStep() {
                 </Typography>
                 <form className={classes.form} onSubmit={handleSubmit}>
                     <Languages/>
-                    {usersState.err_message ?
+                    {usersState.message ?
                         <Alert variant="outlined" severity="error" className={classes.alert}>
-                            {usersState.err_message}
+                            {errorsState.message}
                         </Alert> : null}
                     <Button
                         type="submit"
@@ -78,4 +81,4 @@ export default function SecondStep() {
             </div>
         </Container>
     );
-}
+};

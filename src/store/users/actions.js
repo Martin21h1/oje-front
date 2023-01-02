@@ -1,31 +1,28 @@
 import Api from '../../api'
+import {error_handler, setErrMessage, setErrorNull} from "../errors/actions";
+
 
 export const signUpUser = (user, navigate) => {
-    return dispatch => {
-        return Api.createUser(user)
-            .then(data => data.json())
-            .then(data => {
-                if (data.error) {
-                    if (data.error.fields) {
-                        dispatch(setErrFields(data))
-                    }
-                    if (data.error.message) {
-                        dispatch(setErrMessage(data))
-                    }
-                } else {
-                    // dispatch(SetUserData(data));
-                    dispatch(setToken(data));
-                    localStorage.setItem('token', data.jwt);
-                    localStorage.setItem('refreshToken', data.refresh_jwt);
-                    // dispatch(setUsername(data.username));
-                    navigate('/secondStep/')
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }
+    return async dispatch => {
+        try {
+            const response = await Api.createUser(user)
+            const data = await response.json();
+            if (data.error) {
+                error_handler(dispatch, data)
+            } else {
+                dispatch(setErrorNull())
+                dispatch(setToken(data.jwt));
+                localStorage.setItem('token', data.jwt);
+                localStorage.setItem('refreshToken', data.refresh_jwt);
+                navigate('/secondStep/');
+            }
+        } catch (error) {
+            console.error(error);
+            dispatch(setErrMessage({ error: { message: 'There was an error creating the user. Please check your internet connection and try again.' } }));
+        }
+    };
 };
+
 
 export const signInUser = (user, navigate) => {
     return dispatch => {
@@ -33,17 +30,12 @@ export const signInUser = (user, navigate) => {
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields) {
-                        dispatch(setErrFields(data))
-                    }
-                    if (data.error.message) {
-                        dispatch(setErrMessage(data))
-                    }
+                    error_handler(dispatch, data)
                 } else {
+                    dispatch(setErrorNull())
                     localStorage.setItem('token', data.jwt);
                     localStorage.setItem('refreshToken', data.refresh_jwt);
                     dispatch(setToken(data.jwt));
-                    // dispatch(setUsername(data.username));
                     navigate('/')
                 }
             })
@@ -96,13 +88,9 @@ export const updateUserData = (data, navigate) => {
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields) {
-                        dispatch(setErrFields(data))
-                    }
-                    if (data.error.message) {
-                        dispatch(setErrMessage(data))
-                    }
+                    error_handler(dispatch, data)
                 } else {
+                    dispatch(setErrorNull())
                     navigate('/');
 
                     // dispatch(setUsername(user.username));
@@ -121,13 +109,9 @@ export const addToDict = (data) => {
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields) {
-                        dispatch(setErrFields(data))
-                    }
-                    if (data.error.message) {
-                        dispatch(setErrMessage(data))
-                    }
+                    error_handler(dispatch, data)
                 } else {
+                    dispatch(setErrorNull())
                 }
             })
             .catch(error => {
@@ -240,13 +224,9 @@ export const SetPasswordFetch = (user, navigate) => {
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields) {
-                        dispatch(setErrFields(data))
-                    }
-                    if (data.error.message) {
-                        dispatch(setErrMessage(data))
-                    }
+                    error_handler(dispatch, data)
                 } else {
+                    dispatch(setErrorNull())
                     navigate('/')
                 }
             })
@@ -262,13 +242,9 @@ export const ResetPasswordFetch = (user, navigate) => {
             .then(data => data.json())
             .then(data => {
                 if (data.error) {
-                    if (data.error.fields) {
-                        dispatch(setErrFields(data))
-                    }
-                    if (data.error.message) {
-                        dispatch(setErrMessage(data))
-                    }
+                    error_handler(dispatch, data)
                 } else {
+                    dispatch(setErrorNull())
                     navigate('/')
                 }
             })
@@ -283,28 +259,18 @@ export const setNativeLanguageId = (langId) => {
         type: 'SET_NATIVE_LANG',
         payload: langId
     }
-}
+};
 
 export const setTargetLanguageId = (langId) => {
     return {
         type: 'SET_TARGET_LANG',
         payload: langId
     }
-}
+};
 
 export const setUsername = username => ({
     type: 'SET_USERNAME',
     payload: username
-});
-
-export const setErrFields = data => ({
-    type: 'SET_ERR_FIELDS',
-    payload: data.error.fields
-});
-
-export const setErrMessage = data => ({
-    type: 'SET_ERR_MESSAGE',
-    payload: data.error.message
 });
 
 const SetUserData = userObj => ({

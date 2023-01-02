@@ -1,16 +1,17 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {Link, useNavigate} from "react-router-dom";
+
+import {getProfileFetch, updateUserData} from "../store/users/actions";
+import {InputTextField} from "../components/fields";
+import Languages from "../components/languages";
+
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
-import {Link} from "react-router-dom";
-import {getProfileFetch, updateUserData} from "../store/users/actions";
-import {InputTextField} from "../components/fields";
 import {makeStyles} from "@material-ui/core/styles";
-import Languages from "../components/languages";
-import {useNavigate} from 'react-router-dom';
 import Alert from '@mui/material/Alert';
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +41,7 @@ const useStyles = makeStyles(theme => ({
     alert: {
         marginTop: theme.spacing(1),
     }
-}))
+}));
 
 const FIELDS = [
     {
@@ -50,18 +51,20 @@ const FIELDS = [
 ];
 
 export default function Profile() {
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const {usersState} = useSelector(state => state);
+    const {errorsState} = useSelector(state => state);
+
     const classes = useStyles();
     const navigate = useNavigate();
     const [username, setUsername] = useState('');
 
     useEffect(() => {
         if (!usersState.username) {
-            dispatch(getProfileFetch())
+            dispatch(getProfileFetch());
         }
         setUsername(usersState.username)
-    }, [usersState.username])
+    }, [usersState.username]);
 
     const handleSubmit = event => {
         event.preventDefault();
@@ -69,7 +72,7 @@ export default function Profile() {
             name: username,
             native_language_id: usersState.native_language_id,
             target_language_id: usersState.target_language_id
-        }, navigate))
+        }, navigate));
     };
 
     return (
@@ -86,15 +89,15 @@ export default function Profile() {
                             name={name}
                             value={username}
                             onChange={(event) => setUsername(event.target.value)}
-                            error={usersState.err_fields[name] ? true : null}
-                            helperText={usersState.err_fields[name] ? usersState.err_fields[name] : null}
+                            error={errorsState.fields[name] ? true : null}
+                            helperText={errorsState.fields[name] || null}
                             className={classes.textField}
                         />)
                     }
                     <Languages/>
-                    {usersState.err_message ?
+                    {errorsState.message ?
                         <Alert variant="outlined" severity="error" className={classes.alert}>
-                            {usersState.err_message}
+                            {errorsState.message}
                         </Alert> : null}
                     <Button
                         type="submit"
@@ -114,4 +117,4 @@ export default function Profile() {
             </div>
         </Container>
     );
-}
+};

@@ -12,4 +12,4 @@ export default function wordsReducer(state = initialState, action) {
         default:
             return state;
     }
-}
+};

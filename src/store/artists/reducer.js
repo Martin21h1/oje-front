@@ -11,5 +11,5 @@ export default function artistsReducer(state = initialState, action) {
             };
         default:
             return state;
-    }
-}
+    };
+};

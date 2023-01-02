@@ -5,9 +5,7 @@ const initialState = {
     words: [],
     languages: [],
     native_language_id: null,
-    target_language_id: null,
-    err_fields: {},
-    err_message: ''
+    target_language_id: null
 };
 
 export default function usersReducer(state = initialState, action) {
@@ -56,17 +54,7 @@ export default function usersReducer(state = initialState, action) {
                 ...state,
                 target_language_id: action.payload,
             };
-        case 'SET_ERR_FIELDS':
-            return {
-                ...state,
-                err_fields: action.payload,
-            };
-        case 'SET_ERR_MESSAGE':
-            return {
-                ...state,
-                err_message: action.payload,
-            };
         default:
             return state;
     }
-}
+};

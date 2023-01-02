@@ -1,10 +1,12 @@
 import React, {useState} from 'react';
+import {useNavigate} from "react-router";
+import {useDispatch, useSelector} from "react-redux";
+
+import {InputTextField} from "./fields";
+import {searchSong} from "../store/songs/actions";
+
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
-import {InputTextField} from "./fields";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router";
-import {searchSong} from "../store/songs/actions";
 import Alert from "@mui/material/Alert";
 
 const FIELDS = [
@@ -36,23 +38,19 @@ const useStyles = makeStyles(theme => ({
 export default function SearchForm() {
     const classes = useStyles();
     const navigate = useNavigate();
-    const dispatch = useDispatch()
-    const {songsState} = useSelector(state => state);
+    const dispatch = useDispatch();
+    const {errorsState} = useSelector(state => state);
 
     const [state, setState] = useState('');
 
     const handleChange = (event) => {
-        const key = event.target.name;
-        const value = event.target.value;
-        setState(prev => ({
-            ...prev,
-            [key]: value
-        }))
-    }
+        const {name, value} = event.target;
+        setState({...state, [name]: value});
+    };
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(searchSong(state, navigate))
+        dispatch(searchSong(state, navigate));
     };
 
     return (
@@ -64,8 +62,8 @@ export default function SearchForm() {
                     name={name}
                     value={state.name}
                     onChange={handleChange}
-                    error={songsState.err_fields[name] ? true : null}
-                    helperText={songsState.err_fields[name] ? songsState.err_fields[name] : null}
+                    error={!!errorsState.fields[name] || null}
+                    helperText={errorsState.fields[name] || null}
                 />)
             }
             <Button
@@ -78,10 +76,10 @@ export default function SearchForm() {
             >
                 Search
             </Button>
-            {songsState.err_message ?
+            {errorsState.message ?
                 <Alert variant="outlined" severity="error" className={classes.alert}>
-                    {songsState.err_message}
+                    {errorsState.message}
                 </Alert> : null}
         </form>
     );
-}
+};

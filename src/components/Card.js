@@ -1,16 +1,18 @@
+import React, {useEffect, useState} from "react";
+import {useDispatch, useSelector} from "react-redux";
+import SwipeableViews from 'react-swipeable-views';
+
+import {translateWord} from "../store/words/actions";
+import {addToDict} from "../store/users/actions";
+
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
 import CardActions from "@material-ui/core/CardActions";
 import Button from "@material-ui/core/Button";
-import React, {useEffect, useState} from "react";
 import {Box, CircularProgress} from "@material-ui/core";
-import {useDispatch, useSelector} from "react-redux";
-import {translateWord} from "../store/words/actions";
-import {addToDict} from "../store/users/actions";
 import {red} from "@material-ui/core/colors";
 import {makeStyles} from "@material-ui/core/styles";
-import SwipeableViews from 'react-swipeable-views';
 
 const bull = (
     <Box
@@ -47,7 +49,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function WordCard(props) {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const [image, setImage] = useState(null);
     const [prevWord, setPrevWord] = useState(null);
     const {wordsState} = useSelector(state => state);
@@ -57,7 +59,7 @@ export default function WordCard(props) {
             dispatch(translateWord(props.word))
             setPrevWord(props.word)
         }
-    }, [props])
+    }, [])
 
     const handleAddToDict = () => {
         dispatch(addToDict(
@@ -107,4 +109,4 @@ export default function WordCard(props) {
                 </CardActions>
             </Card>)
     )
-}
+};

@@ -1,14 +1,15 @@
-import React, {Component} from 'react';
+import React from 'react';
+import { Provider } from 'react-redux';
+import store from "./store/rootReducer";
+import router from "./routes/router";
 
-class App extends Component {
+function App() {
+    return (
+        <Provider store={store}>
+            {router}
+        </Provider>
+    )
 
-    render() {
-        return (
-            <div>
-                Posts
-            </div>
-        )
-    }
 }
 
 export default App;

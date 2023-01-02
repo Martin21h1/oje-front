@@ -20,15 +20,13 @@ class ApiClass {
         const mergedData = mergeRecursive(_data, data);
 
         return fetch(url, mergedData)
-            .then(response => {
-                if (response.status <= 600) return response;
+
                 // return response.json().then(data => {
                 //     console.log(data.error)
                 //     if (response.status >= 300) return data.error
                 //     console.log(data)
                 //     return data;
                 // });
-            })
             .catch(Error);
     };
 
@@ -55,19 +53,19 @@ class ApiClass {
     loginWithGoogleUser = () => {
         return this.makeRequest({
             url: `${this.url}/login/google`
-        })
+        });
     };
 
     fetchTokenUser = () => {
         return this.makeRequest({
             url: `${this.url}/getToken`
-        })
+        });
     };
 
     fetchArtists = () => {
         return this.makeRequest({
             url: `${this.url}/artists`
-        })
+        });
     };
 
     addToDict = (data) => {
@@ -77,7 +75,7 @@ class ApiClass {
                 method: 'POST',
                 body: JSON.stringify(data)
             }
-        })
+        });
     };
 
     fetchDict = () => {
@@ -89,7 +87,7 @@ class ApiClass {
     fetchLanguages = () => {
         return this.makeRequest({
             url: `${this.url}/languages`
-        })
+        });
     };
 
     deleteWord = (id) => {
@@ -98,20 +96,20 @@ class ApiClass {
             data: {
                 method: 'DELETE'
             }
-        })
+        });
     };
 
     logOutUser = () => {
         return this.makeRequest({
             url: `${this.url}/logout`
-        })
+        });
     };
 
     fetchSongs = (page, limit) => {
         return this.makeRequest(
             {
                 url: `${this.url}/songs?page=${page}&limit=${limit}`
-            })
+            });
     };
 
     likeSong = id => {
@@ -126,31 +124,31 @@ class ApiClass {
     searchSong = (title, artist) => {
         return this.makeRequest({
             url: `${this.url}/songs/search?title=${title}&artist=${artist}`
-        })
+        });
     };
 
-    fetchLikedSongs = () => {
+    fetchLikedSongs = (page, limit) => {
         return this.makeRequest({
-            url: `${this.url}/songs/liked`
-        })
+            url: `${this.url}/songs/liked?page=${page}&limit=${limit}`
+        });
     };
 
-    fetchSongsByArtist = (artist) => {
+    fetchSongsByArtist = (artist, page, limit) => {
         return this.makeRequest({
-            url: `${this.url}/songs?artist=${artist}`
+            url: `${this.url}/songs?artist=${artist}&page=${page}&limit=${limit}`
         })
     };
 
     translateWord = (word) => {
         return this.makeRequest({
             url: `${this.url}/words/translate?word=${word}`
-        })
+        });
     };
 
     fetchDataUser = () => {
         return this.makeRequest({
             url: `${this.url}/user`
-        })
+        });
     };
 
     updateUserData = (data) => {
@@ -160,7 +158,7 @@ class ApiClass {
                 method: 'PATCH',
                 body: JSON.stringify(data)
             }
-        })
+        });
     };
 
     setPassword = (user) => {
@@ -172,7 +170,7 @@ class ApiClass {
                     password: user.password,
                 })
             }
-        })
+        });
     };
 
     resetPassword = (user) => {
@@ -185,7 +183,7 @@ class ApiClass {
                     old_password: user.old_password,
                 })
             }
-        })
+        });
     };
 }
 

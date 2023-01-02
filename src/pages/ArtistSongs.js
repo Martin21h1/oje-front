@@ -1,20 +1,21 @@
-import React, {useEffect} from 'react';
+import React from 'react';
+import {useParams} from "react-router";
 import {useSelector, useDispatch} from 'react-redux';
+
 import SongsComponent from "../components/songs";
 import {FetchSongsByArtist} from "../store/songs/actions";
-import {useParams} from "react-router";
 
-export default function ArtistSongsPage(props) {
+export default function ArtistSongsPage() {
     const dispatch = useDispatch();
     const {songsState} = useSelector(state => state);
     const {name} = useParams();
 
-    useEffect(() => {
-        console.log(props)
-        dispatch(FetchSongsByArtist(name))
-    }, [])
-
     return (
-        <SongsComponent songs={songsState.userSongs}/>
-    )
-}
+        <SongsComponent
+            dispatch={dispatch}
+            fetch={FetchSongsByArtist}
+            state={songsState.userSongs}
+            name={name}
+        />
+    );
+};

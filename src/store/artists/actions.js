@@ -15,6 +15,6 @@ export const ArtistsFetch = () => {
             })
             .catch(error => {
                 console.log(error);
-            })
-    }
+            });
+    };
 };

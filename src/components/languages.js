@@ -1,8 +1,10 @@
 import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+
+import {GetLanguages, getProfileFetch, setNativeLanguageId, setTargetLanguageId} from "../store/users/actions";
+
 import {makeStyles} from '@material-ui/core/styles';
 import {FormControl, InputLabel, MenuItem, Select} from "@material-ui/core";
-import {GetLanguages, getProfileFetch, setNativeLanguageId, setTargetLanguageId} from "../store/users/actions";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -24,7 +26,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Languages() {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const {usersState} = useSelector(state => state);
     const [native_language_id, setNativeLanguage] = useState('');
     const [target_language_id, setTargetLanguage] = useState('');
@@ -39,7 +41,7 @@ export default function Languages() {
             setNativeLanguage(usersState.native_language_id)
             setTargetLanguage(usersState.target_language_id)
         }
-    }, [usersState])
+    }, [usersState]);
 
     return (
         <div className={classes.paper}>
@@ -84,5 +86,5 @@ export default function Languages() {
                 </Select>
             </FormControl>
         </div>
-    )
-}
+    );
+};

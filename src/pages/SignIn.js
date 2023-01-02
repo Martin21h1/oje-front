@@ -1,4 +1,10 @@
 import React, {useState} from 'react';
+import {useDispatch, useSelector} from "react-redux";
+import {useNavigate} from 'react-router-dom';
+
+import {InputTextField} from "../components/fields";
+import {signInUser, userLoginWithGoogle} from "../store/users/actions";
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,10 +13,6 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
-import {signInUser, userLoginWithGoogle} from "../store/users/actions";
-import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from 'react-router-dom';
-import {InputTextField} from "../components/fields";
 import Alert from "@mui/material/Alert";
 
 const FIELDS = [
@@ -55,29 +57,122 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(1),
     }
 }));
+//
+// import { useState } from 'react';
+//
+// function MyForm() {
+//     const [formData, setFormData] = useState({
+//         name: '',
+//         email: '',
+//         password: '',
+//     });
+//     const [errors, setErrors] = useState({});
+//     const [backendError, setBackendError] = useState(null);
+//
+//     function handleChange(event) {
+//         const {name, value} = event.target;
+//         setFormData({...formData, [name]: value});
+//     }
+//
+//     function validateForm() {
+//         const newErrors = {};
+//
+//         if (!formData.name) {
+//             newErrors.name = 'Name is required';
+//         }
+//
+//         if (!formData.email) {
+//             newErrors.email = 'Email is required';
+//         }
+//
+//         if (!formData.password) {
+//             newErrors.password = 'Password is required';
+//         }
+//
+//         setErrors(newErrors);
+//         return Object.keys(newErrors).length === 0;
+//     }
+//
+//     async function handleSubmit(event) {
+//         event.preventDefault();
+//         if (validateForm()) {
+//             try {
+//                 const response = await fetch('/api/users', {
+//                     method: 'POST',
+//                     body: JSON.stringify(formData),
+//                     headers: {
+//                         'Content-Type': 'application/json'
+//                     }
+//                 });
+//                 const data = await response.json();
+//                 if (data.error) {
+//                     setBackendError(data.error);
+//                 } else {
+//                     // form was successfully submitted
+//                 }
+//             } catch (error) {
+//                 console.error(error);
+//                 setBackendError('There was an error submitting the form. Please check your internet connection and try again.');
+//             }
+//         }
+//     }
+//
+//     return (
+//         <form onSubmit={handleSubmit}>
+//             <label htmlFor="name">Name:</label>
+//             <input
+//                 type="text"
+//                 id="name"
+//                 name="name"
+//                 value={formData.name}
+//                 onChange={handleChange}
+//             />
+//             {errors.name && <p>{errors.name}</p>}
+//
+//             <label htmlFor="email">Email:</label>
+//             <input
+//                 type="email"
+//                 id="email"
+//                 name="email"
+//                 value={formData.email}
+//                 onChange={handleChange}
+//             />
+//             {errors.email && <p>{errors.email}</p>}
+//
+//             <label htmlFor="password">Password:</label>
+//             <input
+//                 type="password"
+//                 id="password"
+//                 name="password"
+//                 value={formData.password}
+//                 onChange={handleChange}
+//             />
+//             {errors.password && <p>{errors.password}</p>}
+//
+//             {backendError && <p>{backendError}</p>}
+//
+//             <button type="submit">Sign Up</button>
+//         </form>)
+// }
+//
+
 
 export default function SignIn() {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {usersState} = useSelector(state => state);
-
+    const {errorsState} = useSelector(state => state);
     const [state, setState] = useState('');
 
     const handleChange = (event) => {
-        const key = event.target.name;
-        const value = event.target.value;
-        setState(prev => ({
-            ...prev,
-            [key]: value
-        }))
+        const {name, value} = event.target;
+        setState({...state, [name]: value});
     }
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(signInUser(state, navigate))
+        dispatch(signInUser(state, navigate));
     };
-
 
     return (
         <Container component="main" maxWidth="xs">
@@ -96,14 +191,14 @@ export default function SignIn() {
                             name={name}
                             value={state.name}
                             onChange={handleChange}
-                            error={usersState.err_fields[name] ? true : null}
-                            helperText={usersState.err_fields[name] ? usersState.err_fields[name] : null}
+                            error={!!errorsState.fields[name] || null}
+                            helperText={errorsState.fields[name] || null}
                             className={classes.textField}
                         />)
                     }
-                    {usersState.err_message ?
+                    {errorsState.message ?
                         <Alert variant="outlined" severity="error" className={classes.alert}>
-                            {usersState.err_message}
+                            {errorsState.message}
                         </Alert> : null}
                     <Button
                         type="submit"
@@ -115,7 +210,6 @@ export default function SignIn() {
                         Sign In
                     </Button>
                     <Grid container>
-
                     </Grid>
                 </form>
             </div>
@@ -129,6 +223,5 @@ export default function SignIn() {
                 Sign In with Google
             </Button>
         </Container>
-    )
-}
-
+    );
+};

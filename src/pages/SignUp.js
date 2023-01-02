@@ -1,5 +1,10 @@
 import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
+import {useNavigate} from 'react-router-dom';
+
+import {signUpUser} from "../store/users/actions";
+import {InputTextField} from "../components/fields";
+
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -7,10 +12,7 @@ import Grid from '@material-ui/core/Grid';
 import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
-import {useNavigate} from 'react-router-dom';
-import {InputTextField} from "../components/fields";
 import {makeStyles} from "@material-ui/core/styles";
-import {signUpUser} from "../store/users/actions";
 import Alert from "@mui/material/Alert";
 
 const useStyles = makeStyles(theme => ({
@@ -63,24 +65,20 @@ const FIELDS = [
 
 export default function SignUp() {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const navigate = useNavigate();
-    const {usersState} = useSelector(state => state);
+    const {errorsState} = useSelector(state => state);
 
     const [state, setState] = useState('');
 
     const handleChange = (event) => {
-        const key = event.target.name;
-        const value = event.target.value;
-        setState(prev => ({
-            ...prev,
-            [key]: value
-        }))
+        const {name, value} = event.target;
+        setState({...state, [name]: value});
     }
 
     const handleSubmit = event => {
         event.preventDefault();
-        dispatch(signUpUser(state, navigate))
+        dispatch(signUpUser(state, navigate));
     };
 
     return (
@@ -100,14 +98,14 @@ export default function SignUp() {
                             name={name}
                             value={state.name}
                             onChange={handleChange}
-                            error={usersState.err_fields[name] ? true : null}
-                            helperText={usersState.err_fields[name] ? usersState.err_fields[name] : null}
+                            error={!!errorsState.fields[name] || null}
+                            helperText={errorsState.fields[name] || null}
                             className={classes.textField}
                         />)
                     }
-                    {usersState.err_message ?
+                    {errorsState.message ?
                         <Alert variant="outlined" severity="error" className={classes.alert}>
-                            {usersState.err_message}
+                            {errorsState.message}
                         </Alert> : null}
                     <Button
                         type="submit"
@@ -124,4 +122,4 @@ export default function SignUp() {
             </div>
         </Container>
     );
-}
+};

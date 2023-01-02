@@ -3,14 +3,12 @@ const initialState = {
     foundSong: [],
     userSongs: [],
     likedSongs: [],
-    loading: null,
-    err_fields: {},
-    err_message: ''
+    loading: null
 };
 
 export default function songsReducer(state = initialState, action) {
-    console.log('action', action);
-    console.log('state', state);
+    // console.log('action', action);
+    // console.log('state', state);
 
     const {payload, type} = action;
     switch (type) {
@@ -41,18 +39,7 @@ export default function songsReducer(state = initialState, action) {
             };
         case 'SET_LOADING':
             return {...state, loading: action.payload};
-
-        case 'SET_ERR_FIELDS':
-            return {
-                ...state,
-                err_fields: action.payload,
-            };
-        case 'SET_ERR_MESSAGE':
-            return {
-                ...state,
-                err_message: action.payload,
-            };
         default:
             return state;
     }
-}
+};

@@ -1,9 +1,11 @@
 import {applyMiddleware, createStore, combineReducers, compose} from "redux";
 import thunk from "redux-thunk";
-import usersReducer from './users/reducer'
-import songsReducer from './songs/reducer'
-import wordsReducer from './words/reducer'
-import artistsReducer from "./artists/reducer";
+
+import usersReducer from './users/reducer';
+import songsReducer from './songs/reducer';
+import wordsReducer from './words/reducer';
+import artistsReducer from './artists/reducer';
+import errorsReducer from "./errors/reducer";
 
 const middleware = compose(
     applyMiddleware(thunk),
@@ -15,6 +17,7 @@ const rootReducer = combineReducers({
     songsState: songsReducer,
     wordsState: wordsReducer,
     artistsState: artistsReducer,
+    errorsState: errorsReducer,
 });
 
 const store = createStore(rootReducer, middleware);

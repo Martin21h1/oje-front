@@ -1,11 +1,14 @@
 import React, {useEffect} from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from 'react-redux';
+
+import {ArtistsFetch} from "../store/artists/actions";
+
+import {makeStyles} from '@material-ui/core/styles';
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
-import {ArtistsFetch} from "../store/artists/actions";
-import {useNavigate} from "react-router";
+
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -20,11 +23,11 @@ const useStyles = makeStyles(theme => ({
         width: 56,
         height: 56
     }
-}))
+}));
 
 export default function Artists() {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const {artistsState} = useSelector(state => state);
     const navigate = useNavigate();
 
@@ -33,7 +36,7 @@ export default function Artists() {
         if (!artistsState.artists.length) {
             dispatch(ArtistsFetch())
         }
-    }, [artistsState.artists.length])
+    }, [artistsState.artists.length]);
 
     return (
         <Container component="main" className={classes.container}>
@@ -52,4 +55,4 @@ export default function Artists() {
                 })}
         </Container>
     );
-}
+};

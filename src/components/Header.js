@@ -1,4 +1,9 @@
 import React, {useEffect, useState} from 'react';
+import {useDispatch} from "react-redux";
+import {useNavigate} from "react-router";
+
+import {LogoutUser, getToken} from "../store/users/actions";
+
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -9,9 +14,7 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-import {LogoutUser, getToken} from "../store/users/actions"
-import {useDispatch} from "react-redux";
-import {useNavigate} from "react-router";
+
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -27,7 +30,7 @@ const useStyles = makeStyles(theme => ({
 
 export default function Header() {
     const classes = useStyles();
-    const dispatch = useDispatch()
+    const dispatch = useDispatch();
     const navigate = useNavigate();
     const [isOpened, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
@@ -36,11 +39,14 @@ export default function Header() {
         if (!localStorage.token) {
             dispatch(getToken());
         }
-    }, [])
+    }, []);
 
-    const handleOpenClick = event => {
+    const handleOpenClick = (event, path) => {
         setOpen((isOpened) => !isOpened);
         setAnchorEl(event.currentTarget);
+        if (path){
+            navigate(path);
+        }
     };
 
     return (
@@ -69,16 +75,16 @@ export default function Header() {
                                 anchorEl={anchorEl}
                                 open={isOpened}
                             >
-                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/profile"))}>
+                                <MenuItem onClick={(event) => handleOpenClick(event, '/profile')}>
                                     Profile
                                 </MenuItem>
-                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/artists"))}>
+                                <MenuItem onClick={(event) => handleOpenClick(event, "/artists")}>
                                     Artists
                                 </MenuItem>
-                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/dict"))}>
+                                <MenuItem onClick={(event) => handleOpenClick(event, "/dict")}>
                                     My Dictionary
                                 </MenuItem>
-                                <MenuItem onClick={(event) => handleOpenClick(event, navigate("/likedSongs"))}>
+                                <MenuItem onClick={(event) => handleOpenClick(event, "/likedSongs")}>
                                     Liked Songs
                                 </MenuItem>
                                 <MenuItem onClick={() => dispatch(LogoutUser(navigate))}>Sign out</MenuItem>
@@ -93,4 +99,4 @@ export default function Header() {
             </AppBar>
         </div>
     );
-}
+};
