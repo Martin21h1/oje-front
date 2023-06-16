@@ -3,8 +3,8 @@ import {useDispatch, useSelector} from 'react-redux';
 import {Link, useNavigate} from "react-router-dom";
 
 import {getProfileFetch, updateUserData} from "../store/users/actions";
-import {InputTextField} from "../components/fields";
-import Languages from "../components/languages";
+import {InputTextField} from "../components/Fields";
+import Languages from "../components/Languages";
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Typography from '@material-ui/core/Typography';
@@ -13,6 +13,7 @@ import Button from "@material-ui/core/Button";
 import Grid from "@material-ui/core/Grid";
 import {makeStyles} from "@material-ui/core/styles";
 import Alert from '@mui/material/Alert';
+import {setErrorNull} from "../store/errors/actions";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -75,6 +76,10 @@ export default function Profile() {
         }, navigate));
     };
 
+    useEffect(() => {
+        dispatch(setErrorNull())
+    }, []);
+
     return (
         <Container component="main" maxWidth="xs">
             <CssBaseline/>
@@ -86,6 +91,7 @@ export default function Profile() {
                     {
                         FIELDS.map(({name, label}) => <InputTextField
                             label={label}
+                            key={`${name}-${label}`}
                             name={name}
                             value={username}
                             onChange={(event) => setUsername(event.target.value)}
@@ -109,8 +115,13 @@ export default function Profile() {
                         Save
                     </Button>
                     <Grid container>
-                        <Link to={'/resetPassword'}>
-                            Reset Password
+                        <Link to={'/setPassword'}>
+                            Set Password
+                        </Link>
+                    </Grid>
+                    <Grid container>
+                        <Link to={'/changePassword'}>
+                            Change Password
                         </Link>
                     </Grid>
                 </form>

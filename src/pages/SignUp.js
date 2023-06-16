@@ -1,9 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 
-import {signUpUser} from "../store/users/actions";
-import {InputTextField} from "../components/fields";
+import {InputTextField} from "../components/Fields";
 
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
@@ -14,6 +13,8 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from "@material-ui/core/styles";
 import Alert from "@mui/material/Alert";
+import {signUpUser} from "../store/auth/actions";
+import {setErrorNull} from "../store/errors/actions";
 
 const useStyles = makeStyles(theme => ({
     '@global': {
@@ -60,6 +61,10 @@ const FIELDS = [
     {
         name: 'password',
         label: 'Password',
+    },
+    {
+        name: 'password',
+        label: 'Repeat password',
     }
 ];
 
@@ -80,6 +85,10 @@ export default function SignUp() {
         event.preventDefault();
         dispatch(signUpUser(state, navigate));
     };
+
+    useEffect(() => {
+        dispatch(setErrorNull())
+    }, []);
 
     return (
         <Container component="main" maxWidth="xs">

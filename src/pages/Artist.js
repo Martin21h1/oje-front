@@ -8,6 +8,7 @@ import {makeStyles} from '@material-ui/core/styles';
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
 import Typography from "@material-ui/core/Typography";
+import {Stack} from "@mui/material";
 
 
 const useStyles = makeStyles(theme => ({
@@ -40,19 +41,25 @@ export default function Artists() {
 
     return (
         <Container component="main" className={classes.container}>
-            {artistsState.artists &&
-                artistsState.artists.map((item) => {
-                    return (
-                        <div>
-                            <Avatar aria-label="recipe"
-                                    className={classes.avatar}
-                                    onClick={() => navigate(`/artist/${item.name}/`)}
-                                    src={item.image_url}
-                            />
-                            <Typography paragraph>{item.name}</Typography>
-                        </div>
-                    );
-                })}
+            <Stack direction="row" spacing={3}
+                   justifyContent="flex-star"
+                   alignItems="center"
+            >
+                {artistsState.artists &&
+                    artistsState.artists.map((item) => {
+                        return (
+                            <div>
+                                <Avatar aria-label="recipe"
+                                        className={classes.avatar}
+                                        onClick={() => navigate(`/artist/${item.name}/`)}
+                                        src={item.image_url}
+                                        alt={item.name}
+                                />
+                                <Typography paragraph>{item.name}</Typography>
+                            </div>
+                        );
+                    })}
+            </Stack>
         </Container>
     );
 };

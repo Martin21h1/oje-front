@@ -1,7 +1,7 @@
 import React from 'react';
 import {useSelector, useDispatch} from 'react-redux';
 
-import SongsComponent from "../components/songs";
+import SongsComponent from "../components/Songs";
 import {fetchLikedSongs} from "../store/songs/actions";
 
 export default function LikedSongsPage() {

@@ -12,12 +12,12 @@ export default function errorsReducer(state = initialState, action) {
         case 'SET_ERR_FIELDS':
             return {
                 ...state,
-                fields: action.payload,
+                fields: payload,
             };
         case 'SET_ERR_MESSAGE':
             return {
                 ...state,
-                message: action.payload,
+                message: payload,
             };
         case 'SET_ERROR_NULL':
             return {

@@ -6,6 +6,7 @@ import songsReducer from './songs/reducer';
 import wordsReducer from './words/reducer';
 import artistsReducer from './artists/reducer';
 import errorsReducer from "./errors/reducer";
+import authReducer from "./auth/reducer";
 
 const middleware = compose(
     applyMiddleware(thunk),
@@ -18,6 +19,7 @@ const rootReducer = combineReducers({
     wordsState: wordsReducer,
     artistsState: artistsReducer,
     errorsState: errorsReducer,
+    authState: authReducer,
 });
 
 const store = createStore(rootReducer, middleware);

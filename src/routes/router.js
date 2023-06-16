@@ -1,4 +1,6 @@
 import React from "react";
+import {useSelector} from "react-redux";
+
 import {
     BrowserRouter as Router
     , Routes, Route
@@ -18,27 +20,34 @@ import Artists from "../pages/Artist";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
 
-const router = (
-    <Router history={history}>
+
+export default function MainRouter() {
+    const {authState} = useSelector(state => state);
+
+    return (<Router history={history}>
         <div>
             <div>
                 <Header/>
             </div>
-            <Routes>
-                <Route exact path="/" element={<Songs/>}/>
-                <Route path="/login/" element={<SignIn/>}/>
-                <Route path="/artists/" element={<Artists/>}/>
-                <Route path="/signup/" element={<SignUp/>}/>
-                <Route path="/profile/" element={<Profile/>}/>
-                <Route path="/likedSongs/" element={<LikedSongsPage/>}/>
-                <Route path='/artist/:name' element={<ArtistSongsPage/>}/>
-                <Route path='/song/:songName/artist/:artistName' element={<FoundSongPage/>}/>
-                <Route path='/dict/' element={<Dictionary/>}/>
-                <Route path='/setPassword/' element={<SetPassword/>}/>
-                <Route path='/resetPassword/' element={<ResetPassword/>}/>
-                <Route path='/secondStep/' element={<SecondStep/>}/>
-            </Routes>
+            {authState.token ?
+                <Routes>
+                    <Route exact path="/" element={<Songs/>}/>
+                    <Route path="/artists/" element={<Artists/>}/>
+                    <Route path="/profile/" element={<Profile/>}/>
+                    <Route path="/likedSongs/" element={<LikedSongsPage/>}/>
+                    <Route path='/artist/:name' element={<ArtistSongsPage/>}/>
+                    <Route path='/song/:songName/artist/:artistName' element={<FoundSongPage/>}/>
+                    <Route path='/dict/' element={<Dictionary/>}/>
+                    <Route path='/setPassword/' element={<SetPassword/>}/>
+                    <Route path='/changePassword/' element={<ResetPassword/>}/>
+                    <Route path='/secondStep/' element={<SecondStep/>}/>
+                </Routes> :
+                <Routes>
+                    <Route exact path="/" element={<Songs/>}/>
+                    <Route path='/artist/:name' element={<ArtistSongsPage/>}/>
+                    <Route path="/login/" element={<SignIn/>}/>
+                    <Route path="/signup/" element={<SignUp/>}/>
+                </Routes>}
         </div>
-    </Router>);
-
-export default router
+    </Router>)
+}

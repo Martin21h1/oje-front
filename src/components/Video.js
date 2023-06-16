@@ -19,7 +19,7 @@ export default function YoutubeEmbed(props) {
                 src={`https://www.youtube.com/embed/${props.embedId}`}
                 allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
                 allowFullScreen
-                title="Embedded youtube"
+                title="Youtube"
             />
         </div>
     );

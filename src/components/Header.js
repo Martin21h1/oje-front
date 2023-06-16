@@ -1,8 +1,8 @@
 import React, {useEffect, useState} from 'react';
-import {useDispatch} from "react-redux";
+import {useDispatch, useSelector} from "react-redux";
 import {useNavigate} from "react-router";
 
-import {LogoutUser, getToken} from "../store/users/actions";
+import {getToken, LogoutUser} from "../store/auth/actions";
 
 import {makeStyles} from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -14,7 +14,9 @@ import AccountCircle from '@material-ui/icons/AccountCircle';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Button from '@material-ui/core/Button';
-
+import {Divider} from "@mui/material";
+import Avatar from "@material-ui/core/Avatar";
+import logo from "../static/logo.jpg";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -34,32 +36,44 @@ export default function Header() {
     const navigate = useNavigate();
     const [isOpened, setOpen] = useState(false);
     const [anchorEl, setAnchorEl] = useState(null);
+    const {authState} = useSelector(state => state);
 
     useEffect(() => {
-        if (!localStorage.token) {
+        if (!authState.token) {
             dispatch(getToken());
         }
+
     }, []);
 
     const handleOpenClick = (event, path) => {
         setOpen((isOpened) => !isOpened);
         setAnchorEl(event.currentTarget);
-        if (path){
+        if (path) {
             navigate(path);
         }
+    };
+
+    const handleCloseClick = (event) => {
+        setOpen((isOpened) => !isOpened);
+        setAnchorEl(event.currentTarget);
     };
 
     return (
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                        <MenuIcon/>
-                    </IconButton>
+                    {/*<IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">*/}
+                    {/*    <MenuIcon/>*/}
+                    {/*</IconButton>*/}
+
+                    <Avatar aria-label="recipe" alt="logo" src={logo} onClick={() => navigate("/")} >
+                    </Avatar>
+
+
                     <Typography variant="h6" onClick={() => navigate("/")} className={classes.title}>
-                        Project oje
+                        {/*Project oje*/}
                     </Typography>
-                    {localStorage.token ?
+                    {authState.token ?
                         <div>
                             <IconButton
                                 aria-label="account of current user"
@@ -71,7 +85,7 @@ export default function Header() {
                                 <AccountCircle/>
                             </IconButton>
                             <Menu
-                                onClose={handleOpenClick}
+                                onClose={handleCloseClick}
                                 anchorEl={anchorEl}
                                 open={isOpened}
                             >
@@ -87,6 +101,7 @@ export default function Header() {
                                 <MenuItem onClick={(event) => handleOpenClick(event, "/likedSongs")}>
                                     Liked Songs
                                 </MenuItem>
+                                <Divider />
                                 <MenuItem onClick={() => dispatch(LogoutUser(navigate))}>Sign out</MenuItem>
                             </Menu>
                         </div> :

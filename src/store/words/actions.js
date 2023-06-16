@@ -1,13 +1,12 @@
 import Api from '../../api'
 
-export const translateWord = (word) => {
+export const translateWord = (word, navigate) => {
     return dispatch => {
         dispatch(setLoading(true));
         return Api.translateWord(word)
-            .then(data => data.json())
             .then(data => {
                 if (data.error) {
-
+                    navigate('/login')
                 } else {
                     dispatch(setLoading(false));
                     dispatch({
@@ -21,7 +20,6 @@ export const translateWord = (word) => {
             })
     }
 };
-
 
 const setLoading = (payload) => ({
     type: 'SET_LOADING',

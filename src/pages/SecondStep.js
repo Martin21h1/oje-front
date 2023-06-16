@@ -2,7 +2,7 @@ import React from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 
-import Languages from "../components/languages";
+import Languages from "../components/Languages";
 import {updateUserData} from "../store/users/actions";
 
 import CssBaseline from '@material-ui/core/CssBaseline';

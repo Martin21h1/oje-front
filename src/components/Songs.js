@@ -5,6 +5,7 @@ import Song from './Song';
 
 import Container from "@material-ui/core/Container";
 import {makeStyles} from '@material-ui/core/styles';
+import {setErrorNull} from "../store/errors/actions";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -14,31 +15,26 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-
 export default function SongsComponent(props) {
     const classes = useStyles();
 
     const [hasMore, setHasMore] = useState(true);
     const [page, setPage] = useState(1);
-    const [songs, setSongs] = useState([]);
-    const limit = 10
+    const [amountSongs, setAmountSongs] = useState(0);
+    const limit = 5
     const {dispatch, fetch, state, name} = props
 
     const fetchMoreData = () => {
-        console.log('songs', songs)
-        console.log('songs', state)
-        const currPage = page + 1
-
-        if (songs !== state) {
-            if (name) {
-                dispatch(fetch(name, page, limit))
-            } else {
-                dispatch(fetch(page, limit))
-            }            setPage(currPage)
-            setSongs([...songs, ...state])
+        setPage(page + 1)
+        const currAmountSongs = amountSongs + state.length
+        setAmountSongs(currAmountSongs)
+        if (name) {
+            dispatch(fetch(name, page, limit))
+        } else {
+            dispatch(fetch(page, limit))
         }
 
-        if (!state.length) {
+        if (state.length === currAmountSongs) {
             setHasMore(false)
         }
     }
@@ -49,22 +45,26 @@ export default function SongsComponent(props) {
         } else {
             dispatch(fetch(page, limit))
         }
-        if (songs !== state) {
-            setSongs([...songs, ...state])
-        }
+        setAmountSongs(state.length)
+        setPage(page + 1)
 
-    }, [state.length]);
+    }, []);
+
+    useEffect(() => {
+        dispatch(setErrorNull())
+    }, []);
+
 
     return (
         <InfiniteScroll
-            dataLength={songs.length}
+            dataLength={state.length}
             next={fetchMoreData}
             hasMore={hasMore}
             loader={<h4>Loading...</h4>}
         >
             <Container component="main" className={classes.container}>
-                {songs &&
-                    songs.map((item) => {
+                {!!state.length &&
+                    state.map((item) => {
                         return (
                             <Song
                                 key={item.id}

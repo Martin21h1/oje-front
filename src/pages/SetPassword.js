@@ -1,8 +1,8 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 
-import {InputTextField} from "../components/fields";
+import {InputTextField} from "../components/Fields";
 import {SetPasswordFetch} from '../store/users/actions';
 
 import Button from '@material-ui/core/Button';
@@ -12,6 +12,7 @@ import Typography from '@material-ui/core/Typography';
 import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import Alert from "@mui/material/Alert";
+import {setErrorNull} from "../store/errors/actions";
 
 const FIELDS = [
     {
@@ -69,6 +70,9 @@ export default function SetPassword() {
         event.preventDefault();
         dispatch(SetPasswordFetch(state, navigate));
     };
+    useEffect(() => {
+        dispatch(setErrorNull())
+    }, []);
 
     return (
         <Container component="main" maxWidth="xs">

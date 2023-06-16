@@ -2,7 +2,7 @@ import React from 'react';
 import {useParams} from "react-router";
 import {useSelector, useDispatch} from 'react-redux';
 
-import SongsComponent from "../components/songs";
+import SongsComponent from "../components/Songs";
 import {FetchSongsByArtist} from "../store/songs/actions";
 
 export default function ArtistSongsPage() {

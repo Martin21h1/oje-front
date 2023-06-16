@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
-import {InputTextField} from "./fields";
+import {InputTextField} from "./Fields";
 import {searchSong} from "../store/songs/actions";
 
 import Button from '@material-ui/core/Button';
@@ -58,6 +58,7 @@ export default function SearchForm() {
             {
                 FIELDS.map(({name, label}) => <InputTextField
                     className={classes.textField}
+                    key={`${name}-${label}`}
                     label={label}
                     name={name}
                     value={state.name}

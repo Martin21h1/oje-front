@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from 'react-router-dom';
 
-import {InputTextField} from "../components/fields";
+import {InputTextField} from "../components/Fields";
 import {ResetPasswordFetch} from '../store/users/actions';
 
 import Button from '@material-ui/core/Button';

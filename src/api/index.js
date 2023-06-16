@@ -19,18 +19,17 @@ class ApiClass {
 
         const mergedData = mergeRecursive(_data, data);
 
-        return fetch(url, mergedData)
+        return fetch(url, mergedData).then(data => data.json())
 
-                // return response.json().then(data => {
-                //     console.log(data.error)
-                //     if (response.status >= 300) return data.error
-                //     console.log(data)
-                //     return data;
-                // });
-            .catch(Error);
+        // return response.json().then(data => {
+        //     console.log(data.error)
+        //     if (response.status >= 300) return data.error
+        //     console.log(data)
+        //     return data;
+        // });
     };
 
-    createUser = user => {
+    signUp = user => {
         return this.makeRequest({
             url: `${this.url}/signUp`,
             data: {
@@ -117,6 +116,29 @@ class ApiClass {
             url: `${this.url}/songs/${id}/like`,
             data: {
                 method: 'POST',
+            }
+        })
+    };
+
+    likeImage = (imageId, songId, wordId) => {
+        return this.makeRequest({
+            url: `${this.url}/likeImage`,
+            data: {
+                method: 'POST',
+                body: JSON.stringify({
+                    song_id: songId,
+                    image_id: imageId,
+                    word_id: wordId,
+                })
+            }
+        })
+    };
+
+    fetchImages = (word, songId, page) => {
+        return this.makeRequest({
+            url: `${this.url}/images?word=${word}&song_id=${songId}&page=${page}`,
+            data: {
+                method: 'GET'
             }
         })
     };
