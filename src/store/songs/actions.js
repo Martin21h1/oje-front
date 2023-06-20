@@ -66,7 +66,6 @@ export const likeSong = (id, navigate) => {
         return Api.likeSong(id)
             .then(data => {
                 if (data.error) {
-                    console.log('data', data)
                     navigate('/login')
                 } else {
                     dispatch({

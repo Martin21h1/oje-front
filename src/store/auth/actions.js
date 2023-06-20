@@ -56,7 +56,6 @@ export const getToken = () => {
             .then(data => {
                 if (data.error) {
                 } else {
-                    console.log(data.jwt)
                     dispatch(setToken(data.jwt))
                 }
             })

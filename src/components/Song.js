@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch} from 'react-redux';
 import {useNavigate} from "react-router";
 
@@ -42,6 +42,17 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+function Highlighter({word, highlight, wordIndex, pIndex}) {
+    const highlightedWord = highlight && wordIndex && pIndex ? (
+        <span style={{backgroundColor: '#08F5D9FF', cursor: highlight ? 'pointer' : 'auto'}}>{word}</span>
+    ) : (
+        word
+    );
+
+    return <span>{highlightedWord}</span>;
+}
+
+
 export default function Song(props) {
     const navigate = useNavigate();
     const classes = useStyles();
@@ -53,6 +64,38 @@ export default function Song(props) {
     const [isVisible, setisVisible] = useState(false);
 
     const item = props.item;
+    const cardRef = useRef(null);
+
+
+    const [highlightedWord, setHighlightedWord] = useState('');
+    const [indexdWord, setIndexdWord] = useState(null);
+    const [pIndex, setpIndex] = useState(null);
+
+
+    useEffect(() => {
+        const handleDocumentMouseDown = (event) => {
+            if (
+                cardRef.current &&
+                !cardRef.current.contains(event.target)
+            ) {
+                setisVisible(false);
+            }
+        };
+
+        if (isVisible) {
+            document.addEventListener('mousedown', handleDocumentMouseDown);
+        }
+
+        return () => {
+            document.removeEventListener('mousedown', handleDocumentMouseDown);
+        };
+    }, [isVisible]);
+
+
+    const handleMouseLeave = () => {
+        setHighlightedWord('');
+        setIndexdWord(null);
+    };
 
     const textSelection = () => {
         const selection = window.getSelection();
@@ -71,6 +114,21 @@ export default function Song(props) {
             translatedWord: dispatch(translateWord(selectedText))
         });
     };
+
+    const handleClick = (word, event) => {
+        const cleanedWord = word.trim().replace(',', '');
+
+        const {top, left} = event.target.getBoundingClientRect();
+        const cal2 = document.getElementById('cal2');
+
+        setisVisible(true);
+        setPopUpData({
+            LeftoffSet: left,
+            TopoffSet: Math.abs(cal2.getBoundingClientRect().top) + top + 20,
+            selectedTextstate: cleanedWord,
+            translatedWord: dispatch(translateWord(cleanedWord))
+        });
+    };
     const CalculatePopupPos = () => {
         return {
             left: `${popUpData.LeftoffSet}px`,
@@ -81,6 +139,17 @@ export default function Song(props) {
     const handleClose = () => {
         setisVisible(false);
     };
+
+    const handleMouseEnter = (word, wordIndex, index) => {
+        if (word && !/^[' ,.?!"']+$/.test(word)){
+            setHighlightedWord(word);
+            setIndexdWord(wordIndex);
+            setpIndex(index);
+        } else {
+            setHighlightedWord('');
+        }
+    };
+
 
     return (
         <Card className={classes.card}>
@@ -98,21 +167,78 @@ export default function Song(props) {
             <YoutubeEmbed embedId={item.url}/>
             <CardContent>
                 <Typography
-                    onClick={() => handleClose()}
+                    // onClick={() => handleClose()}
                     onDoubleClick={textSelection}
                     paragraph={true}
                     constiant="body2"
                     color="textSecondary"
                     component="p">
 
-                    {item.lyrics.split("\n").map((i) => {
-                        return <div>{i}</div>;
-                    })}
+                    <div>
+                        {item.words_items.map((item, index) => {
+                            for (const key in item) {
+                                const sentence = item[key];
+
+                                return (
+                                    <p key={index}>
+                                        {sentence.map((wordObj, wordIndex) => {
+                                            const wordKey = Object.keys(wordObj)[0];
+                                            const word = wordObj[wordKey];
+                                            const isHighlighted = highlightedWord === word;
+                                            const isSameWordIndex = indexdWord === wordIndex;
+                                            const isSamedIndex = pIndex === index;
+                                            return (
+                                                <React.Fragment key={wordIndex}>
+                    <span
+                        onMouseEnter={() => handleMouseEnter(word, wordIndex, index)}
+                        onMouseLeave={handleMouseLeave}
+                        onClick={(event) => handleClick(word, event)}
+
+                    >
+                      <Highlighter word={word} highlight={isHighlighted} wordIndex={isSameWordIndex}
+                                   pIndex={isSamedIndex}/>
+                    </span>
+                                                </React.Fragment>
+                                            );
+                                        })}
+                                    </p>
+                                );
+                            }
+                        })}
+                    </div>
+
+
+                    {/*{item.lyrics.split("\n").map((words) => {*/}
+                    {/*    return <div>*/}
+                    {/*        {*/}
+                    {/*            words.split(" ").map((word, index) => {*/}
+                    {/*                const formattedWord = word.replace(/[.,!?]/g, ''); // Remove signs like commas, periods, etc.*/}
+
+                    {/*                return <span*/}
+                    {/*                    key={index}*/}
+                    {/*                    onClick={(event) => handleClick(formattedWord, event)}*/}
+                    {/*                    onMouseOver={() => handleMouseOver(formattedWord, index)}*/}
+                    {/*                    onMouseLeave={handleMouseLeave}*/}
+                    {/*                    style={{*/}
+                    {/*                        backgroundColor: indexdWord === index && highlightedWord === formattedWord ? 'yellow' : 'transparent',*/}
+                    {/*                        cursor: formattedWord ? 'pointer' : 'auto',*/}
+
+                    {/*                    }}*/}
+                    {/*                >*/}
+                    {/*            {word} {' '}*/}
+                    {/*            </span>*/}
+                    {/*                })*/}
+                    {/*        }*/}
+
+                    {/*    </div>;*/}
+                    {/*})}*/}
                 </Typography>
-                {isVisible && <div style={{
-                    position: "absolute",
-                    ...CalculatePopupPos()
-                }}>
+                {isVisible && <div
+                    ref={cardRef}
+                    style={{
+                        position: "absolute",
+                        ...CalculatePopupPos()
+                    }}>
                     <WordCard song={item} word={popUpData.selectedTextstate}/>
                 </div>}
 
@@ -123,13 +249,6 @@ export default function Song(props) {
                 }}/>
             </CardContent>
             <CardActions disableSpacing>
-                {/*<AvatarGroup max={4}>*/}
-                {/*    <Avatar alt="Remy Sharp" src="/static/images/avatar/1.jpg" />*/}
-                {/*    <Avatar alt="Travis Howard" src="/static/images/avatar/2.jpg" />*/}
-                {/*    <Avatar alt="Cindy Baker" src="/static/images/avatar/3.jpg" />*/}
-                {/*    <Avatar alt="Agnes Walker" src="/static/images/avatar/4.jpg" />*/}
-                {/*    <Avatar alt="Trevor Henderson" src="/static/images/avatar/5.jpg" />*/}
-                {/*</AvatarGroup>*/}
                 <IconButton
                     aria-label="add to favorites"
                     onClick={() => dispatch(likeSong(item.id, navigate))}>
