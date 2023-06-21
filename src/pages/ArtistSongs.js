@@ -14,7 +14,7 @@ export default function ArtistSongsPage() {
         <SongsComponent
             dispatch={dispatch}
             fetch={FetchSongsByArtist}
-            state={songsState.userSongs}
+            state={songsState.artistSongs}
             name={name}
         />
     );

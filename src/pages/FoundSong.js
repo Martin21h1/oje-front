@@ -24,19 +24,18 @@ export default function FoundSongPage() {
     const {songsState} = useSelector(state => state);
     const {artistName, songName} = useParams();
     const classes = useStyles();
+    const navigate = useNavigate()
 
     useEffect(() => {
-
         if (!songsState.foundSong) {
-            dispatch(searchSong({title: songName, artist: artistName}))
+            dispatch(searchSong({title: songName, artist: artistName}, navigate))
         }
     }, []);
 
 
     return (
         <Container component="main" className={classes.container}>
-
-            {songsState && !songsState.foundSong ? CircularProgress:  <Song item={songsState.foundSong}/>}
+            {songsState && !songsState.foundSong ? <CircularProgress /> : <Song item={songsState.foundSong} />}
         </Container>
 
     );

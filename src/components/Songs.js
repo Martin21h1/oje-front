@@ -60,19 +60,16 @@ export default function SongsComponent(props) {
             dataLength={state.length}
             next={fetchMoreData}
             hasMore={hasMore}
-            loader={<h4>Loading...</h4>}
+            loader={<div/>}
         >
             <Container component="main" className={classes.container}>
-                {!!state.length &&
-                    state.map((item) => {
-                        return (
-                            <Song
-                                key={item.id}
-                                item={item}
-                                classes={classes}
-                            />
-                        );
-                    })}
+                {state.length > 0 ? (
+                    state.map((item) => (
+                        <Song key={item.id} item={item} classes={classes} />
+                    ))
+                ) : (
+                    <h4 align="center" >There are no songs yet.</h4>
+                )}
             </Container>
         </InfiniteScroll>
     );

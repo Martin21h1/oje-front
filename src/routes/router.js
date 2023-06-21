@@ -43,6 +43,7 @@ export default function MainRouter() {
                     <Route path='/secondStep/' element={<SecondStep/>}/>
                 </Routes> :
                 <Routes>
+                    <Route path='/song/:songName/artist/:artistName' element={<FoundSongPage/>}/>
                     <Route exact path="/" element={<Songs/>}/>
                     <Route path='/artist/:name' element={<ArtistSongsPage/>}/>
                     <Route path="/login/" element={<SignIn/>}/>

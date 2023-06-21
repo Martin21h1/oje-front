@@ -1,8 +1,8 @@
 const initialState = {
     songs: [],
     images: [],
-    foundSong: [],
-    userSongs: [],
+    foundSong: null,
+    artistSongs: [],
     likedSongs: [],
     loading: null
 };
@@ -14,8 +14,14 @@ export default function songsReducer(state = initialState, action) {
     const {payload, type} = action;
     switch (type) {
         case 'LIST_SONGS':
+            const newSongs = payload.filter((song) => {
+                // Check if the song is already present in songs
+                return !state.songs.some((existingSong) => existingSong.id === song.id);
+            });
+
             return {
-                ...state, songs: [...state.songs, ...payload],
+                ...state,
+                songs: [...state.songs, ...newSongs]
             };
         case 'SET_LIKE_SONG':
             return {
@@ -26,13 +32,22 @@ export default function songsReducer(state = initialState, action) {
                 })
             };
         case 'SET_LIKED_SONG':
+            const newLikedSongs = payload.filter((song) => {
+                // Check if the song is already present in likedSongs
+                return !state.likedSongs.some((likedSong) => likedSong.id === song.id);
+            });
             return {
                 ...state,
-                likedSongs: [...state.likedSongs, ...payload]
+                likedSongs: [...state.likedSongs, ...newLikedSongs]
             };
-        case 'USER_SONG':
+        case 'ARTIST_SONG':
+            const newUserSongs = payload.filter((song) => {
+                // Check if the song is already present in userSongs
+                return !state.artistSongs.some((existingSong) => existingSong.id === song.id);
+            });
             return {
-                ...state, userSongs: [...state.userSongs, ...payload],
+                ...state,
+                artistSongs: [...state.artistSongs, ...newUserSongs]
             };
         case 'SET_FOUND_SONG':
             return {

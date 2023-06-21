@@ -41,11 +41,17 @@ export default function Dictionary() {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {usersState.words && usersState.words.map((row) => (
-                        <Row row={row}/>
-                    ))}
+                    {usersState.words.length > 0 ? (
+                        usersState.words.map((row) => <Row row={row} />)
+                    ) : (
+                        <TableRow>
+                            <TableCell colSpan={3} align="center">
+                                No words available.
+                            </TableCell>
+                        </TableRow>
+                    )}
                 </TableBody>
             </Table>
         </TableContainer>
     );
-};
+}

@@ -62,6 +62,7 @@ export default function Song(props) {
         TopoffSet: null,
     });
     const [isVisible, setisVisible] = useState(false);
+    const [isLiked, setIsLiked] = useState(false); // State variable to track the liked state for each song item
 
     const item = props.item;
     const cardRef = useRef(null);
@@ -151,6 +152,11 @@ export default function Song(props) {
     };
 
 
+    const handleLike = () => {
+        dispatch(likeSong(item.id, navigate)); // Dispatch the likeSong action with the song ID and navigate function
+        setIsLiked(true); // Set the liked state to true when the button is clicked
+    };
+
     return (
         <Card className={classes.card}>
             <CardHeader
@@ -175,7 +181,7 @@ export default function Song(props) {
                     component="p">
 
                     <div>
-                        {item.words_items.map((item, index) => {
+                        {item.words_items && item.words_items.map((item, index) => {
                             for (const key in item) {
                                 const sentence = item[key];
 
@@ -251,8 +257,8 @@ export default function Song(props) {
             <CardActions disableSpacing>
                 <IconButton
                     aria-label="add to favorites"
-                    onClick={() => dispatch(likeSong(item.id, navigate))}>
-                    <Like like={item.likes}/>
+                    onClick={handleLike}>
+                    {isLiked ? <Like className={classes.like} like={item.likes}/> : <Like like={item.likes}/>}
                 </IconButton>
             </CardActions>
         </Card>

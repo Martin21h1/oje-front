@@ -85,7 +85,7 @@ export const FetchSongsByArtist = (artist, page, limit) => {
         return Api.fetchSongsByArtist(artist, page, limit)
             .then(payload => {
                 dispatch({
-                    type: 'USER_SONG',
+                    type: 'ARTIST_SONG',
                     payload: payload.data
                 });
                 return payload;
