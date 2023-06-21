@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import {useParams} from "react-router";
+import {useNavigate, useParams} from "react-router";
 import {useSelector, useDispatch} from 'react-redux';
 
 import {searchSong} from "../store/songs/actions";
@@ -7,6 +7,7 @@ import Song from "../components/Song";
 
 import Container from "@material-ui/core/Container";
 import {makeStyles} from "@material-ui/core/styles";
+import {CircularProgress} from "@material-ui/core";
 
 
 const useStyles = makeStyles(theme => ({
@@ -25,16 +26,17 @@ export default function FoundSongPage() {
     const classes = useStyles();
 
     useEffect(() => {
-        dispatch(searchSong({title: songName, artist: artistName}));
+
+        if (!songsState.foundSong) {
+            dispatch(searchSong({title: songName, artist: artistName}))
+        }
     }, []);
 
 
     return (
         <Container component="main" className={classes.container}>
 
-            <Song
-                item={songsState.foundSong[0]}
-            />
+            {songsState && !songsState.foundSong ? CircularProgress:  <Song item={songsState.foundSong}/>}
         </Container>
 
     );

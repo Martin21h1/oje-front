@@ -44,13 +44,12 @@ export const searchSong = (song, navigate) => {
             .then(data => {
                 if (data.error) {
                     error_handler(dispatch, data)
-                    navigate('/login')
                 } else {
                     dispatch(setErrorNull())
                     dispatch(setLoading(false))
                     dispatch({
                         type: 'SET_FOUND_SONG',
-                        payload: data.data,
+                        payload: data.data[0],
                     });
                     navigate(`/song/${song.title}/artist/${song.artist}`)
                 }

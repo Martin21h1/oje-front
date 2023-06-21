@@ -12,13 +12,13 @@ import ResetPassword from "../pages/ResetPassword";
 import SecondStep from "../pages/SecondStep";
 import LikedSongsPage from "../pages/LikedSongs";
 import ArtistSongsPage from "../pages/ArtistSongs";
-import FoundSongPage from "../pages/FoundSong";
 import Profile from "../pages/Profile";
 import Songs from "../pages/Home";
 import Dictionary from "../pages/Dictionary";
 import Artists from "../pages/Artist";
 import SignIn from "../pages/SignIn";
 import SignUp from "../pages/SignUp";
+import FoundSongPage from "../pages/FoundSong";
 
 
 export default function MainRouter() {

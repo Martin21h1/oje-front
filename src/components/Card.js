@@ -19,7 +19,7 @@ import StarBorderIcon from '@mui/icons-material/StarBorder';
 import StarIcon from '@mui/icons-material/Star';
 import IconButton from "@material-ui/core/IconButton";
 import {clearImages, fetchImages, LikeImage} from "../store/songs/actions";
-import {ImageList, ImageListItem} from "@mui/material";
+import {ImageList, ImageListItem, useMediaQuery, useTheme} from "@mui/material";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
@@ -35,7 +35,7 @@ const bull = (
 
 const useStyles = makeStyles(theme => ({
     card: {
-        maxWidth: 500,
+        maxWidth: '100%',
         marginTop: theme.spacing(5),
     },
     media: {
@@ -55,10 +55,30 @@ const useStyles = makeStyles(theme => ({
     avatar: {
         backgroundColor: red[500],
     },
-}))
+    imageList: {
+        maxWidth: 500,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-between',
+        marginBottom: theme.spacing(2),
+    },
+    imageListItem: {
+        width: '100%',
+        marginBottom: theme.spacing(2),
+        [theme.breakpoints.up('sm')]: {
+            width: '50%',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '33.33%',
+        },
+    },
+}));
 
 export default function WordCard(props) {
     const classes = useStyles();
+    const theme = useTheme();
+    const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+
     const dispatch = useDispatch();
     const [image, setImage] = useState(null);
     const [prevWord, setPrevWord] = useState(null);
@@ -158,7 +178,8 @@ export default function WordCard(props) {
 
     return (
         wordsState.loading ? (<CircularProgress/>) :
-            (<Card sx={{minWidth: 275}}>
+            (<Card sx={{minWidth: 275}}
+                   className={classes.card}>
                 <InfiniteScroll
                     dataLength={songsState.images.length}
                     next={fetchMoreImages}
@@ -166,12 +187,15 @@ export default function WordCard(props) {
                     loader={<div/>}
                     scrollableTarget="scrollable-box"
                 >
-                    <Box sx={{width: 500, height: 350, overflowY: 'scroll'}} id="scrollable-box">
+                    <Box sx={{width: '100%', height: 350, overflowY: 'scroll'}} id="scrollable-box">
                         <ImageList variant="masonry"
-                                   cols={3}
-                                   gap={8}>
+                                   cols={isSmallScreen ? 1 : 3}
+                                   gap={isSmallScreen ? 4 : 8}
+                                   className={classes.imageList}
+                        >
                             {songsState.images ? sortedImages.map((item, index) => (
-                                <ImageListItem key={item.id || index}>
+                                <ImageListItem
+                                    key={item.id || index}>
                                     <img
                                         src={item.url}
                                         srcSet={item.url}

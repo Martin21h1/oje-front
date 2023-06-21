@@ -51,6 +51,7 @@ export default function SearchForm() {
     const handleSubmit = event => {
         event.preventDefault();
         dispatch(searchSong(state, navigate));
+
     };
 
     return (

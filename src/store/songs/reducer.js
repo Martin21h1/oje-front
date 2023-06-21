@@ -36,7 +36,7 @@ export default function songsReducer(state = initialState, action) {
             };
         case 'SET_FOUND_SONG':
             return {
-                ...state, foundSong: [...payload],
+                ...state, foundSong: payload
             };
         case 'SET_LOADING':
             return {...state, loading: payload};
