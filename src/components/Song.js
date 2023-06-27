@@ -3,7 +3,6 @@ import {useDispatch} from 'react-redux';
 import {useNavigate} from "react-router";
 
 import {likeSong} from '../store/songs/actions';
-import Like from './Like';
 import WordCard from './Card';
 import YoutubeEmbed from "./Video";
 import {translateWord} from "../store/words/actions";
@@ -17,7 +16,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import {red} from '@material-ui/core/colors';
 import {makeStyles} from '@material-ui/core/styles';
-import {AvatarGroup} from "@mui/material";
+import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -39,7 +38,11 @@ const useStyles = makeStyles(theme => ({
     },
     avatar: {
         backgroundColor: red[500],
-    }
+    },
+    like: {
+        display: 'flex',
+        alignItems: 'center',
+    },
 }));
 
 function Highlighter({word, highlight, wordIndex, pIndex}) {
@@ -61,10 +64,12 @@ export default function Song(props) {
         LeftoffSet: null,
         TopoffSet: null,
     });
-    const [isVisible, setisVisible] = useState(false);
-    const [isLiked, setIsLiked] = useState(false); // State variable to track the liked state for each song item
-
     const item = props.item;
+
+    const [isVisible, setisVisible] = useState(false);
+    const [isLiked, setIsLiked] = useState(item.is_liked);
+
+    const [likesAmount, setLikesAmount] = useState(item.likes);
     const cardRef = useRef(null);
 
 
@@ -142,7 +147,7 @@ export default function Song(props) {
     };
 
     const handleMouseEnter = (word, wordIndex, index) => {
-        if (word && !/^[' ,.?!"']+$/.test(word)){
+        if (word && !/^[' ,.?!"']+$/.test(word)) {
             setHighlightedWord(word);
             setIndexdWord(wordIndex);
             setpIndex(index);
@@ -151,10 +156,17 @@ export default function Song(props) {
         }
     };
 
-
     const handleLike = () => {
-        dispatch(likeSong(item.id, navigate)); // Dispatch the likeSong action with the song ID and navigate function
-        setIsLiked(true); // Set the liked state to true when the button is clicked
+        dispatch(likeSong(item.id, navigate));
+
+        if (isLiked === 'false') {
+            setIsLiked('true');
+            setLikesAmount(likesAmount + 1)
+        } else {
+            setIsLiked('false');
+            setLikesAmount(likesAmount - 1)
+        }
+
     };
 
     return (
@@ -258,7 +270,13 @@ export default function Song(props) {
                 <IconButton
                     aria-label="add to favorites"
                     onClick={handleLike}>
-                    {isLiked ? <Like className={classes.like} like={item.likes}/> : <Like like={item.likes}/>}
+                    {
+                        likesAmount > 0 ? (
+                            <div className={classes.like}><ThumbUpAltIcon
+                                color={isLiked === 'true' ? 'primary' : ''}/>{likesAmount}</div>
+                        ) : (
+                            <ThumbUpAltIcon/>)
+                    }
                 </IconButton>
             </CardActions>
         </Card>
