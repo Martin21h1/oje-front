@@ -149,6 +149,12 @@ class ApiClass {
         });
     };
 
+    progressSong = (id) => {
+        return this.makeRequest({
+            url: `${this.url}/songs/${id}/progress`
+        });
+    };
+
     fetchLikedSongs = (page, limit) => {
         return this.makeRequest({
             url: `${this.url}/songs/liked?page=${page}&limit=${limit}`

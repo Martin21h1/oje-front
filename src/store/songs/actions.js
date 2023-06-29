@@ -59,6 +59,24 @@ export const searchSong = (song, navigate) => {
             })
     };
 };
+export const progressSong = (song) => {
+    return dispatch => {
+        return Api.progressSong(song.id)
+            .then(data => {
+                if (data.error) {
+                    error_handler(dispatch, data)
+                } else {
+                    dispatch({
+                        type: 'SET_PROGRESS',
+                        payload: data.data,
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    };
+};
 
 export const likeSong = (id, navigate) => {
     return dispatch => {

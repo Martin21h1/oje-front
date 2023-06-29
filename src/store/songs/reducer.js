@@ -2,6 +2,7 @@ const initialState = {
     songs: [],
     images: [],
     foundSong: null,
+    progress: null,
     artistSongs: [],
     likedSongs: [],
     loading: null
@@ -52,6 +53,10 @@ export default function songsReducer(state = initialState, action) {
         case 'SET_FOUND_SONG':
             return {
                 ...state, foundSong: payload
+            };
+            case 'SET_PROGRESS':
+            return {
+                ...state, progress: payload
             };
         case 'SET_LOADING':
             return {...state, loading: payload};

@@ -1,8 +1,8 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {useDispatch} from 'react-redux';
+import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from "react-router";
 
-import {likeSong} from '../store/songs/actions';
+import {likeSong, progressSong} from '../store/songs/actions';
 import WordCard from './Card';
 import YoutubeEmbed from "./Video";
 import {translateWord} from "../store/words/actions";
@@ -17,6 +17,10 @@ import Typography from '@material-ui/core/Typography';
 import {red} from '@material-ui/core/colors';
 import {makeStyles} from '@material-ui/core/styles';
 import ThumbUpAltIcon from "@material-ui/icons/ThumbUpAlt";
+import {LinearProgress} from "@mui/material";
+import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {MenuItem} from "@material-ui/core";
+import Menu from "@mui/material/Menu";
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -45,11 +49,15 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-function Highlighter({word, highlight, wordIndex, pIndex}) {
+function Highlighter({word, highlight, wordIndex, pIndex, isProgress, wordList}) {
+    const isWordInList = isProgress && wordList && wordList.includes(word.toLowerCase());
+
     const highlightedWord = highlight && wordIndex && pIndex ? (
         <span style={{backgroundColor: '#08F5D9FF', cursor: highlight ? 'pointer' : 'auto'}}>{word}</span>
     ) : (
-        word
+        isWordInList ?
+            <span style={{backgroundColor: '#f5ce09', cursor: highlight ? 'pointer' : 'auto'}}>{word}</span> :
+            word
     );
 
     return <span>{highlightedWord}</span>;
@@ -76,6 +84,17 @@ export default function Song(props) {
     const [highlightedWord, setHighlightedWord] = useState('');
     const [indexdWord, setIndexdWord] = useState(null);
     const [pIndex, setpIndex] = useState(null);
+    const [isProgress, setProgress] = useState(false);
+
+    const [anchorEl, setAnchorEl] = React.useState(null);
+    const open = Boolean(anchorEl);
+    const handleClickMenu = (event) => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleCloseMenu = () => {
+        setAnchorEl(null);
+    };
+    const {songsState} = useSelector(state => state);
 
 
     useEffect(() => {
@@ -159,15 +178,27 @@ export default function Song(props) {
     const handleLike = () => {
         dispatch(likeSong(item.id, navigate));
 
-        if (isLiked === 'false') {
-            setIsLiked('true');
+        if (!isLiked) {
+            setIsLiked(true);
             setLikesAmount(likesAmount + 1)
         } else {
-            setIsLiked('false');
+            setIsLiked(false);
             setLikesAmount(likesAmount - 1)
         }
 
     };
+
+    const handleOpenProgress = () => {
+        setAnchorEl(null);
+        if (isProgress) {
+            setProgress(false)
+        } else {
+            dispatch(progressSong(item))
+            setProgress(true)
+
+        }
+
+    }
 
     return (
         <Card className={classes.card}>
@@ -180,10 +211,38 @@ export default function Song(props) {
                         src={item.image_url}>
                     </Avatar>
                 }
+                action={
+                    <IconButton aria-label="settings">
+                        <MoreVertIcon
+                            aria-controls={open ? 'basic-menu' : undefined}
+                            aria-haspopup="true"
+                            aria-expanded={open ? 'true' : undefined}
+                            onClick={handleClickMenu}
+                        />
+                        <Menu
+                            id="basic-menu"
+                            anchorEl={anchorEl}
+                            open={open}
+                            onClose={handleCloseMenu}
+                            MenuListProps={{
+                                'aria-labelledby': 'basic-button',
+                            }}
+                        >
+                            {isProgress ? <MenuItem onClick={handleOpenProgress}>Hide Progress</MenuItem> :
+                                <MenuItem onClick={handleOpenProgress}>Show Progress</MenuItem>
+                            }
+
+                        </Menu>
+                    </IconButton>
+                }
                 title={item.title}
             />
             <YoutubeEmbed embedId={item.url}/>
             <CardContent>
+                {isProgress ? <LinearProgress
+                    variant="determinate"
+                    value={songsState.progress ? songsState.progress.percentages: null}/> : null}
+
                 <Typography
                     // onClick={() => handleClose()}
                     onDoubleClick={textSelection}
@@ -214,7 +273,7 @@ export default function Song(props) {
 
                     >
                       <Highlighter word={word} highlight={isHighlighted} wordIndex={isSameWordIndex}
-                                   pIndex={isSamedIndex}/>
+                                   pIndex={isSamedIndex} isProgress={isProgress} wordList={songsState.progress ? songsState.progress.remaining_words: null}/>
                     </span>
                                                 </React.Fragment>
                                             );
@@ -273,7 +332,7 @@ export default function Song(props) {
                     {
                         likesAmount > 0 ? (
                             <div className={classes.like}><ThumbUpAltIcon
-                                color={isLiked === 'true' ? 'primary' : ''}/>{likesAmount}</div>
+                                color={isLiked ? 'primary' : ''}/>{likesAmount}</div>
                         ) : (
                             <ThumbUpAltIcon/>)
                     }

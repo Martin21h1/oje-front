@@ -13,7 +13,7 @@ import {CircularProgress} from "@material-ui/core";
 const FIELDS = [
     {
         name: 'title',
-        label: 'Title',
+        label: 'Name',
     }, {
         name: 'artist',
         label: 'Artist',
