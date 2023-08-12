@@ -13,6 +13,8 @@ import Button from '@material-ui/core/Button';
 import Avatar from "@material-ui/core/Avatar";
 import logo from "../static/logo.jpg";
 import AccountMenu from "./AccountMenu";
+import LanguageSelect from "./LanguageSelectComponent";
+import GadgetDialog from "./DialogComponent";
 
 const useStyles = makeStyles(theme => ({
     root: {
@@ -47,13 +49,14 @@ export default function Header() {
                     {/*    <MenuIcon/>*/}
                     {/*</IconButton>*/}
 
-                    <Avatar aria-label="recipe" alt="logo" src={logo} onClick={() => navigate("/")} >
+                    <Avatar aria-label="recipe" alt="logo" src={logo} onClick={() => navigate("/")}>
                     </Avatar>
 
 
                     <Typography variant="h6" onClick={() => navigate("/")} className={classes.title}>
                         {/*Project oje*/}
                     </Typography>
+                    <LanguageSelect/>
                     {authState.token ?
                         <div>
                             <AccountMenu/>
@@ -65,6 +68,8 @@ export default function Header() {
                     }
                 </Toolbar>
             </AppBar>
+            <GadgetDialog/>
+
         </div>
     );
 };

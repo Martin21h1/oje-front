@@ -21,13 +21,14 @@ const useStyles = makeStyles(theme => ({
 export default function Songs() {
     const dispatch = useDispatch()
     const {songsState} = useSelector(state => state);
-    const {authState} = useSelector(state => state);
+    // const {authState} = useSelector(state => state);
     const classes = useStyles();
 
     return (
         <Container component="main" className={classes.container}>
-            {authState.token ? <SearchForm onSubmit={searchSong}/> : null}
-            <SongsComponent dispatch={dispatch} fetch={fetchSongs} state={songsState.songs}  />
+            <SearchForm onSubmit={searchSong}/>
+            {/*{authState.token ? <SearchForm onSubmit={searchSong}/> : null}*/}
+            <SongsComponent dispatch={dispatch} fetch={fetchSongs} state={songsState.songs}/>
         </Container>
     )
 }

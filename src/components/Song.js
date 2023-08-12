@@ -151,7 +151,7 @@ export default function Song(props) {
             LeftoffSet: left,
             TopoffSet: Math.abs(cal2.getBoundingClientRect().top) + top + 20,
             selectedTextstate: cleanedWord,
-            translatedWord: dispatch(translateWord(cleanedWord))
+            // translatedWord: translatedWord
         });
     };
     const CalculatePopupPos = () => {
@@ -235,13 +235,13 @@ export default function Song(props) {
                         </Menu>
                     </IconButton>
                 }
-                title={item.title}
+                title={`${item.name} - ${item.title}`}
             />
             <YoutubeEmbed embedId={item.url}/>
             <CardContent>
                 {isProgress ? <LinearProgress
                     variant="determinate"
-                    value={songsState.progress ? songsState.progress.percentages: null}/> : null}
+                    value={songsState.progress ? songsState.progress.percentages : null}/> : null}
 
                 <Typography
                     // onClick={() => handleClose()}
@@ -257,7 +257,9 @@ export default function Song(props) {
                                 const sentence = item[key];
 
                                 return (
-                                    <p key={index}>
+                                    <p key={index}
+                                        // onMouseEnter={() => console.log({sentence})}
+                                    >
                                         {sentence.map((wordObj, wordIndex) => {
                                             const wordKey = Object.keys(wordObj)[0];
                                             const word = wordObj[wordKey];
@@ -273,11 +275,22 @@ export default function Song(props) {
 
                     >
                       <Highlighter word={word} highlight={isHighlighted} wordIndex={isSameWordIndex}
-                                   pIndex={isSamedIndex} isProgress={isProgress} wordList={songsState.progress ? songsState.progress.remaining_words: null}/>
+                                   pIndex={isSamedIndex} isProgress={isProgress}
+                                   wordList={songsState.progress ? songsState.progress.remaining_words : null}/>
                     </span>
                                                 </React.Fragment>
                                             );
                                         })}
+
+                                        {/*<IconButton aria-label="settings">*/}
+                                        {/*    <MoreVertIcon*/}
+                                        {/*        aria-controls={open ? 'basic-menu' : undefined}*/}
+                                        {/*        aria-haspopup="true"*/}
+                                        {/*        aria-expanded={open ? 'true' : undefined}*/}
+                                        {/*        onClick={handleClickMenu}*/}
+                                        {/*    />*/}
+                                        {/*</IconButton>*/}
+
                                     </p>
                                 );
                             }

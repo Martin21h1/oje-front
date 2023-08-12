@@ -13,10 +13,10 @@ import {CircularProgress} from "@material-ui/core";
 const FIELDS = [
     {
         name: 'title',
-        label: 'Name',
+        label: 'Song title',
     }, {
         name: 'artist',
-        label: 'Artist',
+        label: 'Artist name',
     }
 ];
 
@@ -28,11 +28,18 @@ const useStyles = makeStyles(theme => ({
 
     },
     submit: {
-        margin: theme.spacing(3, 3, 2),
+        margin: theme.spacing(3, 1, 0), // Adjusted the margin to match other elements
+        width: '90%', // Make the button span the whole width
+        [theme.breakpoints.up('sm')]: {
+            width: '50%',
+        },
+        [theme.breakpoints.up('md')]: {
+            width: '10%',
+        },
     },
     textField: {
         margin: theme.spacing(2, 1, 0),
-        width: '100%',
+        width: '90%',
         [theme.breakpoints.up('sm')]: {
             width: '50%',
         },
@@ -54,8 +61,8 @@ export default function SearchForm() {
     const [state, setState] = useState('');
 
     const handleChange = event => {
-        const { name, value } = event.target;
-        setState({ ...state, [name]: value });
+        const {name, value} = event.target;
+        setState({...state, [name]: value});
     };
 
     const handleSubmit = event => {

@@ -35,12 +35,12 @@ export default function usersReducer(state = initialState, action) {
                 native_language_id: payload.native_language_id,
                 target_language_id: payload.target_language_id,
             };
-        case 'SET_NATIVE_LANG':
+        case 'SET_NATIVE_LANG_ID':
             return {
                 ...state,
                 native_language_id: payload,
             };
-        case 'SET_TARGET_LANG':
+        case 'SET_TARGET_LANG_ID':
             return {
                 ...state,
                 target_language_id: payload,

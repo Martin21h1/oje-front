@@ -97,6 +97,8 @@ export const getProfileFetch = () => {
             .then(data => {
                 if (data.error) {
                 } else {
+                    localStorage.setItem('langId', data.data.native_language_id);
+
                     dispatch(setUsername(data.data.username));
                     dispatch({
                         type: 'SET_USER_DATA',
@@ -144,14 +146,19 @@ export const ResetPasswordFetch = (user, navigate) => {
     }
 };
 
-export const setNativeLanguageId = langId => ({
-    type: 'SET_NATIVE_LANG',
-    payload: langId
+export const setNativeLanguageId = langId => {
+    return dispatch => {
+        localStorage.setItem('langId', langId);
 
-});
+        return dispatch({
+            type: 'SET_NATIVE_LANG_ID',
+            payload: langId
+        });
+    }
+};
 
 export const setTargetLanguageId = langId => ({
-    type: 'SET_TARGET_LANG',
+    type: 'SET_TARGET_LANG_ID',
     payload: langId
 });
 

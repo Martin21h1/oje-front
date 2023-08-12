@@ -167,9 +167,9 @@ class ApiClass {
         })
     };
 
-    translateWord = (word) => {
+    translateWord = (word, langId, songId) => {
         return this.makeRequest({
-            url: `${this.url}/words/translate?word=${word}`
+            url: `${this.url}/words/translate?word=${word}&langId=${langId}&songId=${songId}`
         });
     };
 

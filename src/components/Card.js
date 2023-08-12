@@ -1,16 +1,12 @@
 import React, {useEffect, useRef, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import SwipeableViews from 'react-swipeable-views';
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
 import {translateWord} from "../store/words/actions";
-import {addToDict} from "../store/users/actions";
 
 import Card from "@material-ui/core/Card";
 import CardContent from "@material-ui/core/CardContent";
 import Typography from "@material-ui/core/Typography";
-import CardActions from "@material-ui/core/CardActions";
-import Button from "@material-ui/core/Button";
 import {Box, CircularProgress} from "@material-ui/core";
 import {red} from "@material-ui/core/colors";
 import {makeStyles} from "@material-ui/core/styles";
@@ -23,6 +19,9 @@ import {ImageList, ImageListItem, useMediaQuery, useTheme} from "@mui/material";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
 import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
+import LanguageSelect from "./LanguageSelectComponent";
+import LoginDialog from "./DialogLoginComponent";
+import AddToDict from "./AddToDictComponent";
 
 const bull = (
     <Box
@@ -78,22 +77,23 @@ export default function WordCard(props) {
     const classes = useStyles();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
+    const {usersState} = useSelector(state => state);
 
     const dispatch = useDispatch();
     const [image, setImage] = useState(null);
     const [prevWord, setPrevWord] = useState(null);
     const {wordsState, songsState} = useSelector(state => state);
     const navigate = useNavigate();
-    // const [index, setIndex] = useState(0);
     const [page, setPage] = useState(1);
-    const [addDict, setAddedDict] = useState(null);
-    // const [hasMore, setHasMore] = useState(true);
 
     useEffect(() => {
         dispatch(clearImages())
 
+        if (usersState.native_language_id && usersState.native_language_id !== props.song.language_id && props.word !== prevWord) {
+            dispatch(translateWord(props.word, navigate, usersState.native_language_id, props.song.id))
+        }
+
         if (props.word !== prevWord) {
-            dispatch(translateWord(props.word, navigate))
             dispatch(fetchImages(props.word, props.song.id, 1))
             setPage(page + 1)
             setPrevWord(props.word)
@@ -108,16 +108,6 @@ export default function WordCard(props) {
         })
     }, [])
 
-    const handleAddToDict = () => {
-        const image_to_dict = image ? image : songsState.images[0].url
-        dispatch(addToDict(
-            {
-                word_id: wordsState.word.id,
-                prime_picture: image_to_dict,
-                song_id: props.song.id
-            }))
-        setAddedDict(true)
-    };
     // useEffect(() => {
     //     // Intersection Observer callback
     //     const handleObserver = (entries) => {
@@ -278,16 +268,23 @@ export default function WordCard(props) {
                 {/*</SwipeableViews>*/}
                 <CardContent>
                     <Typography variant="h5" component="div">
-                        {bull}{wordsState.word.translate}{bull}
-                        {addDict ? <IconButton
-                            sx={{marginRight: 'auto'}}
-                            color="primary">
-                            <PlaylistAddCheckIcon icon={PlaylistAddCheckIcon}/>
-                        </IconButton> : <IconButton
-                            sx={{marginRight: 'auto'}}
-                            onClick={() => handleAddToDict()}>
-                            <PlaylistAddIcon icon={PlaylistAddIcon}/>
-                        </IconButton>}
+                        {usersState.native_language_id && usersState.native_language_id !== props.song.language_id ?
+                            wordsState.word.translate
+                            : props.word
+                        }
+                        {/*{addDict ? <IconButton*/}
+                        {/*    sx={{marginRight: 'auto'}}*/}
+                        {/*    color="primary">*/}
+                        {/*    <PlaylistAddCheckIcon icon={PlaylistAddCheckIcon}/>*/}
+                        {/*</IconButton> : <IconButton*/}
+                        {/*    sx={{marginRight: 'auto'}}*/}
+                        {/*    onClick={() => handleAddToDict()}>*/}
+                        {/*    <PlaylistAddIcon icon={PlaylistAddIcon}/>*/}
+                        {/*</IconButton>}*/}
+
+                        <AddToDict image={image}
+                                   song={props.song}
+                        />
                     </Typography>
                 </CardContent>
                 {/*    <CardActions>*/}
