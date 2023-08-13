@@ -173,6 +173,16 @@ class ApiClass {
         });
     };
 
+    translateSentence = (data) => {
+        return this.makeRequest({
+            url: `${this.url}/words/translateSentence`,
+            data: {
+                method: 'POST',
+                body: JSON.stringify(data)
+            }
+        });
+    };
+
     fetchDataUser = () => {
         return this.makeRequest({
             url: `${this.url}/user`

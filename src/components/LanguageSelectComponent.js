@@ -1,7 +1,7 @@
 import * as React from 'react';
 import InputLabel from '@mui/material/InputLabel';
 import FormControl from '@mui/material/FormControl';
-import {GetLanguages, setNativeLanguage, setNativeLanguageId, updateUserData} from "../store/users/actions";
+import {GetLanguages, setNativeLanguageId, updateUserData} from "../store/users/actions";
 import {useDispatch, useSelector} from "react-redux";
 import {useEffect} from "react";
 import LanguageIcon from '@mui/icons-material/Language';
@@ -14,7 +14,7 @@ export default function LanguageSelect() {
     const {usersState, authState} = useSelector(state => state);
     const localStorageKey = 'langId';
 
-        // const langId = localStorage.getItem(localStorageKey);
+    // const langId = localStorage.getItem(localStorageKey);
 
     useEffect(() => {
         if (!usersState.target_languages) {
@@ -26,13 +26,11 @@ export default function LanguageSelect() {
     const handleChange = (event) => {
         dispatch(setNativeLanguageId(event.target.value))
 
-        if (authState.token ) {
+        if (authState.token) {
             dispatch(updateUserData({
                 native_language_id: event.target.value,
             }));
         }
-
-
     };
 
     return (

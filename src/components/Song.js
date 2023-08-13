@@ -5,7 +5,7 @@ import {useNavigate} from "react-router";
 import {likeSong, progressSong} from '../store/songs/actions';
 import WordCard from './Card';
 import YoutubeEmbed from "./Video";
-import {translateWord} from "../store/words/actions";
+import {translateSentence, translateWord} from "../store/words/actions";
 
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -80,21 +80,37 @@ export default function Song(props) {
     const [likesAmount, setLikesAmount] = useState(item.likes);
     const cardRef = useRef(null);
 
+    const {songsState, usersState, wordsState} = useSelector(state => state);
 
     const [highlightedWord, setHighlightedWord] = useState('');
+    const [Sentence, setSentence] = useState('');
     const [indexdWord, setIndexdWord] = useState(null);
     const [pIndex, setpIndex] = useState(null);
     const [isProgress, setProgress] = useState(false);
 
     const [anchorEl, setAnchorEl] = React.useState(null);
+    const [anchorElP, setAnchorElP] = React.useState(null);
     const open = Boolean(anchorEl);
+    const openP = Boolean(anchorElP);
+
     const handleClickMenu = (event) => {
         setAnchorEl(event.currentTarget);
     };
     const handleCloseMenu = () => {
         setAnchorEl(null);
     };
-    const {songsState} = useSelector(state => state);
+    const handleClickMenuP = (event) => {
+        dispatch(translateSentence(Sentence, usersState.native_language_id, item.id))
+
+        setAnchorElP(event.currentTarget);
+    };
+    const handleCloseMenuP = () => {
+        setAnchorElP(null);
+    };
+
+
+    useEffect(() => {
+    }, [wordsState.sentence])
 
 
     useEffect(() => {
@@ -174,6 +190,19 @@ export default function Song(props) {
             setHighlightedWord('');
         }
     };
+
+    const handleMouseEnterP = (sentence, index) => {
+        const result = sentence.map(obj => Object.values(obj)[0]).join('');
+
+        setSentence(result);
+        setpIndex(index);
+    }
+
+    const translateSent = () => {
+        dispatch(translateSentence(Sentence))
+
+    }
+
 
     const handleLike = () => {
         dispatch(likeSong(item.id, navigate));
@@ -258,7 +287,8 @@ export default function Song(props) {
 
                                 return (
                                     <p key={index}
-                                        // onMouseEnter={() => console.log({sentence})}
+                                       onMouseEnter={() => handleMouseEnterP(sentence, index)}
+                                        // onMouseLeave={handleMouseLeave}
                                     >
                                         {sentence.map((wordObj, wordIndex) => {
                                             const wordKey = Object.keys(wordObj)[0];
@@ -272,8 +302,8 @@ export default function Song(props) {
                         onMouseEnter={() => handleMouseEnter(word, wordIndex, index)}
                         onMouseLeave={handleMouseLeave}
                         onClick={(event) => handleClick(word, event)}
-
                     >
+
                       <Highlighter word={word} highlight={isHighlighted} wordIndex={isSameWordIndex}
                                    pIndex={isSamedIndex} isProgress={isProgress}
                                    wordList={songsState.progress ? songsState.progress.remaining_words : null}/>
@@ -281,6 +311,32 @@ export default function Song(props) {
                                                 </React.Fragment>
                                             );
                                         })}
+
+                                        {index === pIndex && (
+                                            <IconButton aria-label="settings" size='small'>
+                                                <MoreVertIcon
+                                                    aria-controls={'basic-menu'}
+                                                    aria-haspopup="true"
+                                                    aria-expanded={true}
+                                                    onClick={handleClickMenuP}
+                                                />
+
+                                                <Menu
+                                                    id="basic-menu"
+                                                    anchorEl={anchorElP}
+                                                    open={openP}
+                                                    onClose={handleCloseMenuP}
+                                                    MenuListProps={{
+                                                        'aria-labelledby': 'basic-button',
+                                                    }}
+                                                >
+                                                    <div>
+                                                        {wordsState.sentence ? wordsState.sentence : Sentence}
+                                                    </div>
+                                                </Menu>
+
+                                            </IconButton>
+                                        )}
 
                                         {/*<IconButton aria-label="settings">*/}
                                         {/*    <MoreVertIcon*/}
@@ -323,14 +379,16 @@ export default function Song(props) {
                     {/*    </div>;*/}
                     {/*})}*/}
                 </Typography>
-                {isVisible && <div
-                    ref={cardRef}
-                    style={{
-                        position: "absolute",
-                        ...CalculatePopupPos()
-                    }}>
-                    <WordCard song={item} word={popUpData.selectedTextstate}/>
-                </div>}
+                {isVisible &&
+                    <div
+                        ref={cardRef}
+                        style={{
+                            position: "absolute",
+                            ...CalculatePopupPos()
+                        }}>
+                        <WordCard song={item} word={popUpData.selectedTextstate}/>
+                    </div>
+                }
 
                 <div id="cal2" style={{
                     position: "absolute",
