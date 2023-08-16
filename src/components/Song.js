@@ -27,9 +27,7 @@ const useStyles = makeStyles(theme => ({
         maxWidth: 745,
         marginTop: theme.spacing(5),
     },
-    media: {
-        paddingTop: '56.25%', // 16:9
-    },
+
     expand: {
         transform: 'rotate(0deg)',
         marginLeft: 'auto',
@@ -92,6 +90,7 @@ export default function Song(props) {
     const [anchorElP, setAnchorElP] = React.useState(null);
     const open = Boolean(anchorEl);
     const openP = Boolean(anchorElP);
+    const localStorageKey = 'langId';
 
     const handleClickMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -100,7 +99,7 @@ export default function Song(props) {
         setAnchorEl(null);
     };
     const handleClickMenuP = (event) => {
-        dispatch(translateSentence(Sentence, usersState.native_language_id, item.id))
+        dispatch(translateSentence(Sentence, localStorage.getItem(localStorageKey), item.id))
 
         setAnchorElP(event.currentTarget);
     };

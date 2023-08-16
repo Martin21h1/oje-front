@@ -3,10 +3,13 @@ import {error_handler, setErrorNull} from "../errors/actions";
 
 export const fetchSongs = (page, limit) => {
     return dispatch => {
+        dispatch(setLoading(true))
+
         return Api.fetchSongs(page, limit)
             .then(payload => {
                 if (payload.error) {
                 } else {
+                    dispatch(setLoading(false))
                     dispatch({
                         type: 'LIST_SONGS',
                         payload: payload.data,
@@ -39,14 +42,14 @@ export const fetchLikedSongs = (page, limit) => {
 
 export const searchSong = (song, navigate) => {
     return dispatch => {
-        dispatch(setLoading(true))
+        dispatch(setSearchLoading(true))
         return Api.searchSong(song.title, song.artist)
             .then(data => {
                 if (data.error) {
                     error_handler(dispatch, data)
                 } else {
                     dispatch(setErrorNull())
-                    dispatch(setLoading(false))
+                    dispatch(setSearchLoading(false))
                     dispatch({
                         type: 'SET_FOUND_SONG',
                         payload: data.data[0],
@@ -155,5 +158,9 @@ export const clearImages = () => {
 
 const setLoading = (payload) => ({
     type: 'SET_LOADING',
+    payload: payload
+});
+const setSearchLoading = (payload) => ({
+    type: 'SET_SEARCH_LOADING',
     payload: payload
 });

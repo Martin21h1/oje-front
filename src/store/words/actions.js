@@ -23,7 +23,6 @@ export const translateWord = (word, navigate, langId, songId) => {
 
 export const translateSentence = (sentence, langId, songId) => {
     return dispatch => {
-        dispatch(setLoading(true));
         return Api.translateSentence({
             "sentence": sentence,
             "langId": langId,
@@ -32,8 +31,6 @@ export const translateSentence = (sentence, langId, songId) => {
             .then(data => {
                 if (data.error) {
                 } else {
-                    console.log(data.data)
-                    dispatch(setLoading(false));
                     dispatch({
                         type: 'SENTENCE',
                         payload: data.data.translate

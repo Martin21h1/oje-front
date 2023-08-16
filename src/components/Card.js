@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from "react";
+import React, {useEffect, useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
 import ImageListItemBar from '@mui/material/ImageListItemBar';
 
@@ -17,10 +17,6 @@ import IconButton from "@material-ui/core/IconButton";
 import {clearImages, fetchImages, LikeImage} from "../store/songs/actions";
 import {ImageList, ImageListItem, useMediaQuery, useTheme} from "@mui/material";
 import InfiniteScroll from 'react-infinite-scroll-component';
-import PlaylistAddIcon from '@mui/icons-material/PlaylistAdd';
-import PlaylistAddCheckIcon from '@mui/icons-material/PlaylistAddCheck';
-import LanguageSelect from "./LanguageSelectComponent";
-import LoginDialog from "./DialogLoginComponent";
 import AddToDict from "./AddToDictComponent";
 
 const bull = (
@@ -272,15 +268,6 @@ export default function WordCard(props) {
                             wordsState.word.translate
                             : props.word
                         }
-                        {/*{addDict ? <IconButton*/}
-                        {/*    sx={{marginRight: 'auto'}}*/}
-                        {/*    color="primary">*/}
-                        {/*    <PlaylistAddCheckIcon icon={PlaylistAddCheckIcon}/>*/}
-                        {/*</IconButton> : <IconButton*/}
-                        {/*    sx={{marginRight: 'auto'}}*/}
-                        {/*    onClick={() => handleAddToDict()}>*/}
-                        {/*    <PlaylistAddIcon icon={PlaylistAddIcon}/>*/}
-                        {/*</IconButton>}*/}
 
                         <AddToDict image={image}
                                    song={props.song}

@@ -93,9 +93,9 @@ export default function SearchForm() {
                 margin="normal"
                 size="large"
                 className={classes.submit}
-                disabled={songsState.loading}
+                disabled={songsState.searchLoading}
             >
-                {songsState.loading ? <CircularProgress size={24} /> : 'Search'}
+                {songsState.searchLoading ? <CircularProgress size={24} /> : 'Search'}
             </Button>
             {errorsState.message && (
                 <Alert variant="outlined" severity="error" className={classes.alert}>

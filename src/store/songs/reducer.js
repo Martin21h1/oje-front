@@ -5,7 +5,8 @@ const initialState = {
     progress: null,
     artistSongs: [],
     likedSongs: [],
-    loading: null
+    loading: null,
+    searchLoading: null
 };
 
 export default function songsReducer(state = initialState, action) {
@@ -60,6 +61,8 @@ export default function songsReducer(state = initialState, action) {
             };
         case 'SET_LOADING':
             return {...state, loading: payload};
+            case 'SET_SEARCH_LOADING':
+            return {...state, searchLoading: payload};
         case 'SET_IMAGES':
             return {
                 ...state, images: [...state.images,...payload],

@@ -2,10 +2,12 @@ import React, {useEffect, useState} from 'react';
 import InfiniteScroll from "react-infinite-scroll-component";
 
 import Song from './Song';
+import CardSkeleton from "./SkeletonComponent";
 
 import Container from "@material-ui/core/Container";
 import {makeStyles} from '@material-ui/core/styles';
 import {setErrorNull} from "../store/errors/actions";
+import {useSelector} from "react-redux";
 
 const useStyles = makeStyles(theme => ({
     container: {
@@ -23,6 +25,7 @@ export default function SongsComponent(props) {
     const [amountSongs, setAmountSongs] = useState(0);
     const limit = 5
     const {dispatch, fetch, state, name} = props
+    const {songsState} = useSelector(state => state);
 
     const fetchMoreData = () => {
         setPage(page + 1)
@@ -60,15 +63,16 @@ export default function SongsComponent(props) {
             dataLength={state.length}
             next={fetchMoreData}
             hasMore={hasMore}
-            loader={<div/>}
+            loader={songsState.loading ?
+                <Container component="main" className={classes.container}> <CardSkeleton/> </Container> : null}
         >
             <Container component="main" className={classes.container}>
                 {state.length > 0 ? (
                     state.map((item) => (
-                        <Song key={item.id} item={item} classes={classes} />
+                        <Song key={item.id} item={item} classes={classes}/>
                     ))
                 ) : (
-                    <h4 align="center" >There are no songs yet.</h4>
+                    songsState.loading ? null : <h4 align="center">There are no songs yet.</h4>
                 )}
             </Container>
         </InfiniteScroll>
