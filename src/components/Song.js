@@ -272,6 +272,7 @@ export default function Song(props) {
                     </IconButton>
                 }
                 title={`${item.name} - ${item.title}`}
+                // title=<div onClick={navigate()}>{`${item.name} - ${item.title}`}</div>
             />
             <YoutubeEmbed embedId={item.url}/>
             <CardContent>

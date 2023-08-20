@@ -120,6 +120,8 @@ export default function SignIn() {
                     </Button>
                     <Grid container>
                     </Grid>
+
+
                 </form>
             </div>
             <GoogleButton
@@ -127,6 +129,13 @@ export default function SignIn() {
                     userLoginWithGoogle()
                 }}
             />
+            <Typography component="h4" variant="h15">
+                Don't have an account? <Link to="/SignUp">Sign Up</Link>
+            </Typography>
+            <Typography component="h4" variant="h15">
+                Forgot yor password? Reset it  <Link to="/SignUp">here</Link>
+            </Typography>
+
         </Container>
     );
 };
