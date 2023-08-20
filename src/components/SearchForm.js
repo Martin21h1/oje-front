@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
 import Alert from "@mui/material/Alert";
 import {CircularProgress} from "@material-ui/core";
+import SnackbarComponent from "./snackBar";
+import {setErrorNull} from "../store/errors/actions";
 
 const FIELDS = [
     {
@@ -67,6 +69,7 @@ export default function SearchForm() {
 
     const handleSubmit = event => {
         event.preventDefault();
+        dispatch(setErrorNull())
         dispatch(searchSong(state, navigate));
     };
 
@@ -98,9 +101,11 @@ export default function SearchForm() {
                 {songsState.searchLoading ? <CircularProgress size={24} /> : 'Search'}
             </Button>
             {errorsState.message && (
-                <Alert variant="outlined" severity="error" className={classes.alert}>
-                    {errorsState.message}
-                </Alert>
+                <SnackbarComponent severity="error"
+                                   message={errorsState.message}/>
+                // <Alert variant="outlined" severity="error" className={classes.alert}>
+                //     {errorsState.message}
+                // </Alert>
             )}
         </form>
     );

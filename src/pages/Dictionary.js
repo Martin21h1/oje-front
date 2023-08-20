@@ -36,7 +36,7 @@ export default function Dictionary() {
                 <TableHead>
                     <TableRow>
                         <TableCell align="left">Words</TableCell>
-                        <TableCell align="left">Translate</TableCell>
+                        <TableCell align="left">Translation</TableCell>
                         <TableCell align="left">Images</TableCell>
                     </TableRow>
                 </TableHead>
@@ -46,7 +46,7 @@ export default function Dictionary() {
                     ) : (
                         <TableRow>
                             <TableCell colSpan={3} align="center">
-                                No words available.
+                                You have not added any words to dictionary. Let's do it!
                             </TableCell>
                         </TableRow>
                     )}

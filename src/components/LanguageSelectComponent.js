@@ -43,7 +43,7 @@ export default function LanguageSelect() {
                 labelId="demo-select-small-label"
                 id="demo-select-small"
                 value={localStorage.getItem(localStorageKey)}
-                label="Age"
+                label="Language"
                 onChange={handleChange}
                 style={{color: 'white'}}
             >

@@ -47,6 +47,8 @@ export const searchSong = (song, navigate) => {
             .then(data => {
                 if (data.error) {
                     error_handler(dispatch, data)
+                    dispatch(setSearchLoading(false))
+
                 } else {
                     dispatch(setErrorNull())
                     dispatch(setSearchLoading(false))

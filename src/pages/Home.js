@@ -14,9 +14,8 @@ const useStyles = makeStyles(theme => ({
         marginTop: theme.spacing(2),
         flexDirection: 'column',
         alignItems: 'center',
-    }
+    },
 }));
-
 
 export default function Songs() {
     const dispatch = useDispatch()

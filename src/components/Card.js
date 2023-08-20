@@ -73,7 +73,6 @@ export default function WordCard(props) {
     const classes = useStyles();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-    const {usersState} = useSelector(state => state);
 
     const dispatch = useDispatch();
     const [image, setImage] = useState(null);
@@ -82,11 +81,14 @@ export default function WordCard(props) {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
 
+    const langId = localStorage.getItem('langId')
+
+
     useEffect(() => {
         dispatch(clearImages())
 
-        if (usersState.native_language_id && usersState.native_language_id !== props.song.language_id && props.word !== prevWord) {
-            dispatch(translateWord(props.word, navigate, usersState.native_language_id, props.song.id))
+        if (langId && langId !== props.song.language_id && props.word !== prevWord) {
+            dispatch(translateWord(props.word, navigate, langId, props.song.id))
         }
 
         if (props.word !== prevWord) {
@@ -264,7 +266,7 @@ export default function WordCard(props) {
                 {/*</SwipeableViews>*/}
                 <CardContent>
                     <Typography variant="h5" component="div">
-                        {usersState.native_language_id && usersState.native_language_id !== props.song.language_id ?
+                        {langId && langId !== props.song.language_id ?
                             wordsState.word.translate
                             : props.word
                         }

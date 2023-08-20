@@ -21,6 +21,7 @@ import {LinearProgress} from "@mui/material";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import {MenuItem} from "@material-ui/core";
 import Menu from "@mui/material/Menu";
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -91,6 +92,13 @@ export default function Song(props) {
     const open = Boolean(anchorEl);
     const openP = Boolean(anchorElP);
     const localStorageKey = 'langId';
+    const [expanded, setExpanded] = useState(false);
+
+    const handleExpandClick = () => {
+        setExpanded(!expanded);
+    };
+
+
 
     const handleClickMenu = (event) => {
         setAnchorEl(event.currentTarget);
@@ -270,7 +278,6 @@ export default function Song(props) {
                 {isProgress ? <LinearProgress
                     variant="determinate"
                     value={songsState.progress ? songsState.progress.percentages : null}/> : null}
-
                 <Typography
                     // onClick={() => handleClose()}
                     onDoubleClick={textSelection}
@@ -280,7 +287,7 @@ export default function Song(props) {
                     component="p">
 
                     <div>
-                        {item.words_items && item.words_items.map((item, index) => {
+                        {item.words_items && item.words_items.slice(0, expanded ? item.words_items.length : 10).map((item, index) => {
                             for (const key in item) {
                                 const sentence = item[key];
 
@@ -303,8 +310,11 @@ export default function Song(props) {
                         onClick={(event) => handleClick(word, event)}
                     >
 
-                      <Highlighter word={word} highlight={isHighlighted} wordIndex={isSameWordIndex}
-                                   pIndex={isSamedIndex} isProgress={isProgress}
+                      <Highlighter word={word}
+                                   highlight={isHighlighted}
+                                   wordIndex={isSameWordIndex}
+                                   pIndex={isSamedIndex}
+                                   isProgress={isProgress}
                                    wordList={songsState.progress ? songsState.progress.remaining_words : null}/>
                     </span>
                                                 </React.Fragment>
@@ -312,14 +322,13 @@ export default function Song(props) {
                                         })}
 
                                         {index === pIndex && (
-                                            <IconButton aria-label="settings" size='small'>
+                                            <IconButton aria-label="settings" size='small' style={{ fontSize: '0px', padding: '0px' }}>
                                                 <MoreVertIcon
                                                     aria-controls={'basic-menu'}
                                                     aria-haspopup="true"
                                                     aria-expanded={true}
                                                     onClick={handleClickMenuP}
                                                 />
-
                                                 <Menu
                                                     id="basic-menu"
                                                     anchorEl={anchorElP}
@@ -333,63 +342,41 @@ export default function Song(props) {
                                                         {wordsState.sentence ? wordsState.sentence : Sentence}
                                                     </div>
                                                 </Menu>
-
                                             </IconButton>
                                         )}
-
-                                        {/*<IconButton aria-label="settings">*/}
-                                        {/*    <MoreVertIcon*/}
-                                        {/*        aria-controls={open ? 'basic-menu' : undefined}*/}
-                                        {/*        aria-haspopup="true"*/}
-                                        {/*        aria-expanded={open ? 'true' : undefined}*/}
-                                        {/*        onClick={handleClickMenu}*/}
-                                        {/*    />*/}
-                                        {/*</IconButton>*/}
-
                                     </p>
                                 );
                             }
                         })}
                     </div>
-
-
-                    {/*{item.lyrics.split("\n").map((words) => {*/}
-                    {/*    return <div>*/}
-                    {/*        {*/}
-                    {/*            words.split(" ").map((word, index) => {*/}
-                    {/*                const formattedWord = word.replace(/[.,!?]/g, ''); // Remove signs like commas, periods, etc.*/}
-
-                    {/*                return <span*/}
-                    {/*                    key={index}*/}
-                    {/*                    onClick={(event) => handleClick(formattedWord, event)}*/}
-                    {/*                    onMouseOver={() => handleMouseOver(formattedWord, index)}*/}
-                    {/*                    onMouseLeave={handleMouseLeave}*/}
-                    {/*                    style={{*/}
-                    {/*                        backgroundColor: indexdWord === index && highlightedWord === formattedWord ? 'yellow' : 'transparent',*/}
-                    {/*                        cursor: formattedWord ? 'pointer' : 'auto',*/}
-
-                    {/*                    }}*/}
-                    {/*                >*/}
-                    {/*            {word} {' '}*/}
-                    {/*            </span>*/}
-                    {/*                })*/}
-                    {/*        }*/}
-
-                    {/*    </div>;*/}
-                    {/*})}*/}
+                    {!expanded && (
+                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <IconButton
+                                aria-label="expand more"
+                                size="small"
+                                onClick={handleExpandClick}
+                            >
+                                <ExpandMoreIcon />
+                            </IconButton>
+                        </div>
+                    )}
                 </Typography>
                 {isVisible &&
                     <div
                         ref={cardRef}
                         style={{
                             position: "absolute",
-                            ...CalculatePopupPos()
+                            ...CalculatePopupPos(),
+                            zIndex: 1, // Set a higher z-index for the WordCard to cover other components
+
                         }}>
-                        <WordCard song={item} word={popUpData.selectedTextstate}/>
+                        <WordCard song={item}
+                                  word={popUpData.selectedTextstate}/>
                     </div>
                 }
 
-                <div id="cal2" style={{
+                <div id="cal2"
+                     style={{
                     position: "absolute",
                     top: 0,
                     left: 0
@@ -397,6 +384,7 @@ export default function Song(props) {
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton
+
                     aria-label="add to favorites"
                     onClick={handleLike}>
                     {
