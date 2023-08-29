@@ -157,12 +157,23 @@ export const clearImages = () => {
     };
 };
 
-
 const setLoading = (payload) => ({
     type: 'SET_LOADING',
     payload: payload
 });
+
 const setSearchLoading = (payload) => ({
     type: 'SET_SEARCH_LOADING',
     payload: payload
 });
+
+export const setSong = (item) => {
+    return dispatch => {
+
+        dispatch({
+            type: 'SET_SONG',
+            payload: item
+        })
+
+    };
+};

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from "react-router";
 import {useDispatch, useSelector} from "react-redux";
 
@@ -7,7 +7,6 @@ import {searchSong} from "../store/songs/actions";
 
 import Button from '@material-ui/core/Button';
 import {makeStyles} from '@material-ui/core/styles';
-import Alert from "@mui/material/Alert";
 import {CircularProgress} from "@material-ui/core";
 import SnackbarComponent from "./snackBar";
 import {setErrorNull} from "../store/errors/actions";

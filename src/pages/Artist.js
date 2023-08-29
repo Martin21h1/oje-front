@@ -33,6 +33,7 @@ export default function Artists() {
 
     useEffect(() => {
         if (!artistsState.artists.length) {
+            console.log(artistsState.artists.length)
             dispatch(ArtistsFetch());
         }
     }, [artistsState.artists.length]);

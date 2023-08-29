@@ -1,6 +1,7 @@
-import React from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 
 import {makeStyles} from "@material-ui/core/styles";
+import YouTube from 'react-youtube';
 
 const useStyles = makeStyles({
     videoResponsive: {
@@ -18,20 +19,59 @@ const useStyles = makeStyles({
     },
 });
 
+const lyrics = [
+    {
+        "start": 4.492,
+        "end": 30.431,
+        "text": " I spend my nights on overdrive I live my life so overtired And there's nowhere I can hide Now I live my life on overdrive"
+    },
+]
+
+
 export default function YoutubeEmbed(props) {
     const classes = useStyles();
+    const [currentTime, setCurrentTime] = useState(0);
+
+    const youtubeRef = useRef(null);
+
+    useEffect(() => {
+        const interval = setInterval(async () => {
+            if (youtubeRef.current) {
+                const player = youtubeRef.current.internalPlayer;
+                const time = await player.getCurrentTime();
+                setCurrentTime(time);
+            }
+        }, 1000);
+
+        return () => clearInterval(interval);
+    }, []);
+
+
+    const func = () => {
+        console.log(currentTime)
+    }
+    const currentLyric = lyrics.find(lyric => currentTime >= lyric.start && currentTime <= lyric.end);
+
+    const opts = {
+        height: '100%',
+        width: '100%'
+    };
 
     return (
-        <div className={classes.videoResponsive}>
-            <iframe
-                className={classes.iframe}
-                width="853"
-                height="480"
-                src={`https://www.youtube.com/embed/${props.embedId}`}
-                allow="accelerometer; autoplay; clipboard-write; gyroscope; picture-in-picture"
-                allowFullScreen
-                title="Youtube"
-            />
+        <div>
+            <div className={classes.videoResponsive}>
+                <YouTube
+                    ref={youtubeRef}
+                    className={classes.iframe}
+                    videoId={props.embedId}
+                    onPlay={func}
+                    opts={opts}
+                />
+            </div>
+            <div className="lyrics">
+                {currentLyric && currentLyric.text}
+            </div>
         </div>
+
     );
 };

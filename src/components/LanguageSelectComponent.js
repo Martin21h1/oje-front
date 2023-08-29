@@ -51,7 +51,7 @@ export default function LanguageSelect() {
                     usersState.native_languages
                         .map((item) => {
                             return (
-                                <MenuItem value={item.id}>{item.name}</MenuItem>
+                                <MenuItem key={item.name} value={item.id}>{item.name}</MenuItem>
                             );
                         })}
             </Select>

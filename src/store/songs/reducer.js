@@ -1,4 +1,5 @@
 const initialState = {
+    song: null,
     songs: [],
     images: [],
     foundSong: null,
@@ -54,6 +55,10 @@ export default function songsReducer(state = initialState, action) {
         case 'SET_FOUND_SONG':
             return {
                 ...state, foundSong: payload
+            };
+            case 'SET_SONG':
+            return {
+                ...state, song: payload
             };
             case 'SET_PROGRESS':
             return {

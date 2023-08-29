@@ -81,13 +81,17 @@ export default function WordCard(props) {
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
 
-    const langId = localStorage.getItem('langId')
+    const langId = parseInt(localStorage.getItem('langId'))
 
 
     useEffect(() => {
         dispatch(clearImages())
 
         if (langId && langId !== props.song.language_id && props.word !== prevWord) {
+            console.log('langId', langId)
+            console.log('language_id', props.song.language_id)
+            console.log('language_id', langId !== props.song.language_id)
+
             dispatch(translateWord(props.word, navigate, langId, props.song.id))
         }
 

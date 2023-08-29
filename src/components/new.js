@@ -4,7 +4,6 @@ import StarIcon from "@mui/icons-material/Star";
 import StarBorderIcon from "@mui/icons-material/StarBorder";
 import React, {useState} from "react";
 import {useDispatch, useSelector} from "react-redux";
-import {useNavigate} from "react-router";
 import {LikeImage} from "../store/songs/actions";
 
 

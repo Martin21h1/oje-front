@@ -90,10 +90,10 @@ export default function AccountMenu() {
           {/*<Avatar /> Profile*/}
            Profile
         </MenuItem>
-        <MenuItem onClick={() => handleOpenClick("/artists")}>
-          {/*<Avatar /> Artists*/}
-           Artists
-        </MenuItem>
+          {/*<MenuItem onClick={() => handleOpenClick("/artists")}>*/}
+          {/*  /!*<Avatar /> Artists*!/*/}
+          {/*   Artists*/}
+          {/*</MenuItem>*/}
         <MenuItem onClick={() => handleOpenClick("/dict")}>
           {/*<ListItemIcon>*/}
           {/*  <PersonAdd fontSize="small" />*/}

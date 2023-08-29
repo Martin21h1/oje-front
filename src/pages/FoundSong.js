@@ -37,6 +37,5 @@ export default function FoundSongPage() {
         <Container component="main" className={classes.container}>
             {songsState && !songsState.foundSong ? <CircularProgress /> : <Song item={songsState.foundSong} />}
         </Container>
-
     );
 };

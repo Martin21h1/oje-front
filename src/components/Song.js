@@ -2,7 +2,7 @@ import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {useNavigate} from "react-router";
 
-import {likeSong, progressSong} from '../store/songs/actions';
+import {likeSong, progressSong, setSong} from '../store/songs/actions';
 import WordCard from './Card';
 import YoutubeEmbed from "./Video";
 import {translateSentence, translateWord} from "../store/words/actions";
@@ -97,7 +97,6 @@ export default function Song(props) {
     const handleExpandClick = () => {
         setExpanded(!expanded);
     };
-
 
 
     const handleClickMenu = (event) => {
@@ -210,7 +209,6 @@ export default function Song(props) {
 
     }
 
-
     const handleLike = () => {
         dispatch(likeSong(item.id, navigate));
 
@@ -231,16 +229,21 @@ export default function Song(props) {
         } else {
             dispatch(progressSong(item))
             setProgress(true)
-
         }
-
     }
+
+    const redirectToSong = (item) => {
+        dispatch(setSong(item))
+        navigate(`artist/${item.name}/song/${item.title}`)
+    }
+
 
     return (
         <Card className={classes.card}>
             <CardHeader
                 avatar={
                     <Avatar
+                        style={{cursor: 'pointer'}}
                         aria-label="recipe"
                         className={classes.avatar}
                         onClick={() => navigate(`/artist/${item.name}/`)}
@@ -264,15 +267,18 @@ export default function Song(props) {
                                 'aria-labelledby': 'basic-button',
                             }}
                         >
-                            {isProgress ? <MenuItem onClick={handleOpenProgress}>Hide Progress</MenuItem> :
-                                <MenuItem onClick={handleOpenProgress}>Show Progress</MenuItem>
+                            {
+                                isProgress ? <MenuItem onClick={handleOpenProgress}>Hide Progress</MenuItem> :
+                                    <MenuItem onClick={handleOpenProgress}>Show Progress</MenuItem>
                             }
 
                         </Menu>
                     </IconButton>
                 }
-                title={`${item.name} - ${item.title}`}
-                // title=<div onClick={navigate()}>{`${item.name} - ${item.title}`}</div>
+                // title={`${item.name} - ${item.title}`}
+                title={<div onClick={() => redirectToSong(item)}
+                            style={{cursor: 'pointer'}}
+                >{`${item.name} - ${item.title}`}</div>}
             />
             <YoutubeEmbed embedId={item.url}/>
             <CardContent>
@@ -321,9 +327,9 @@ export default function Song(props) {
                                                 </React.Fragment>
                                             );
                                         })}
-
                                         {index === pIndex && (
-                                            <IconButton aria-label="settings" size='small' style={{ fontSize: '0px', padding: '0px' }}>
+                                            <IconButton aria-label="settings" size='small'
+                                                        style={{fontSize: '0px', padding: '0px'}}>
                                                 <MoreVertIcon
                                                     aria-controls={'basic-menu'}
                                                     aria-haspopup="true"
@@ -351,13 +357,13 @@ export default function Song(props) {
                         })}
                     </div>
                     {!expanded && (
-                        <div style={{ display: 'flex', justifyContent: 'center' }}>
+                        <div style={{display: 'flex', justifyContent: 'center'}}>
                             <IconButton
                                 aria-label="expand more"
                                 size="small"
                                 onClick={handleExpandClick}
                             >
-                                <ExpandMoreIcon />
+                                <ExpandMoreIcon/>
                             </IconButton>
                         </div>
                     )}
@@ -378,14 +384,13 @@ export default function Song(props) {
 
                 <div id="cal2"
                      style={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0
-                }}/>
+                         position: "absolute",
+                         top: 0,
+                         left: 0
+                     }}/>
             </CardContent>
             <CardActions disableSpacing>
                 <IconButton
-
                     aria-label="add to favorites"
                     onClick={handleLike}>
                     {
@@ -393,7 +398,8 @@ export default function Song(props) {
                             <div className={classes.like}><ThumbUpAltIcon
                                 color={isLiked ? 'primary' : ''}/>{likesAmount}</div>
                         ) : (
-                            <ThumbUpAltIcon/>)
+                            <ThumbUpAltIcon/>
+                        )
                     }
                 </IconButton>
             </CardActions>
