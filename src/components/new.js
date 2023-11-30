@@ -7,7 +7,7 @@ import {useDispatch, useSelector} from "react-redux";
 import {LikeImage} from "../store/songs/actions";
 
 
-export default function New(props){
+export default function New(props) {
 
     const dispatch = useDispatch();
     const [image, setImage] = useState(null);
@@ -19,25 +19,17 @@ export default function New(props){
     };
 
 
-    return(
-        songsState.images ? songsState.images.map((step) => (
-                <div key={step.url}>
-                    <Box
-                        component="img"
-                        sx={{
-                            height: 255,
-                            display: 'block',
-                            maxWidth: 400,
-                            overflow: 'hidden',
-                            width: '100%',
-                        }}
-                        src={step.url}
-                        alt={step.url}
-                    />
-                    <IconButton onClick={() => handleCurrentImage(step)}>
-                        {step.url === image ? <StarIcon/> : < StarBorderIcon/>}
-                    </IconButton>
-                </div>
-            )) : null
-    )
+    return (songsState.images ? songsState.images.map((step) => (<div key={step.url}>
+        <Box
+            component="img"
+            sx={{
+                height: 255, display: 'block', maxWidth: 400, overflow: 'hidden', width: '100%',
+            }}
+            src={step.url}
+            alt={step.url}
+        />
+        <IconButton onClick={() => handleCurrentImage(step)}>
+            {step.url === image ? <StarIcon/> : < StarBorderIcon/>}
+        </IconButton>
+    </div>)) : null)
 }

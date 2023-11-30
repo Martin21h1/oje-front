@@ -10,8 +10,7 @@ export const translateWord = (word, navigate, langId, songId) => {
                 } else {
                     dispatch(setLoading(false));
                     dispatch({
-                        type: 'WORD',
-                        payload: data.data[0]
+                        type: 'WORD', payload: data.data[0]
                     });
                 }
             })
@@ -24,16 +23,13 @@ export const translateWord = (word, navigate, langId, songId) => {
 export const translateSentence = (sentence, langId, songId) => {
     return dispatch => {
         return Api.translateSentence({
-            "sentence": sentence,
-            "langId": langId,
-            "songId": songId
+            "sentence": sentence, "langId": langId, "songId": songId
         })
             .then(data => {
                 if (data.error) {
                 } else {
                     dispatch({
-                        type: 'SENTENCE',
-                        payload: data.data.translate
+                        type: 'SENTENCE', payload: data.data.translate
                     });
                 }
             })
@@ -44,6 +40,5 @@ export const translateSentence = (sentence, langId, songId) => {
 };
 
 const setLoading = (payload) => ({
-    type: 'SET_LOADING',
-    payload: payload
+    type: 'SET_LOADING', payload: payload
 });

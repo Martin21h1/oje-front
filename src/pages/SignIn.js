@@ -17,45 +17,29 @@ import {signInUser, userLoginWithGoogle} from "../store/auth/actions";
 import {setErrorNull} from "../store/errors/actions";
 import GoogleButton from "react-google-button";
 
-const FIELDS = [
-    {
-        name: 'email',
-        label: 'Email',
-    }, {
-        name: 'password',
-        label: 'Password',
-    }
-];
+const FIELDS = [{
+    name: 'email', label: 'Email',
+}, {
+    name: 'password', label: 'Password',
+}];
 
 const useStyles = makeStyles(theme => ({
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
         },
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
+    }, paper: {
+        marginTop: theme.spacing(8), display: 'flex', flexDirection: 'column', alignItems: 'center',
+    }, avatar: {
+        margin: theme.spacing(1), backgroundColor: theme.palette.secondary.main,
+    }, form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
-    },
-    submit: {
+    }, submit: {
         margin: theme.spacing(3, 0, 2),
-    },
-    textField: {
-        marginTop: theme.spacing(2),
-        margin: 'normal',
-        width: '100%', // Fix IE 11 issue.
-    },
-    alert: {
+    }, textField: {
+        marginTop: theme.spacing(2), margin: 'normal', width: '100%', // Fix IE 11 issue.
+    }, alert: {
         marginTop: theme.spacing(1),
     }
 }));
@@ -83,59 +67,54 @@ export default function SignIn() {
         dispatch(signInUser(state, navigate));
     };
 
-    return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
-                </Avatar>
-                <Typography component="h1" variant="h5">
+    return (<Container component="main" maxWidth="xs">
+        <CssBaseline/>
+        <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+                <LockOutlinedIcon/>
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Sign In
+            </Typography>
+            <form className={classes.form} onSubmit={handleSubmit}>
+                {FIELDS.map(({name, label}) => <InputTextField
+                    label={label}
+                    name={name}
+                    value={state.name}
+                    onChange={handleChange}
+                    error={!!errorsState.fields[name] || null}
+                    helperText={errorsState.fields[name] || null}
+                    className={classes.textField}
+                />)}
+                {errorsState.message ? <Alert variant="outlined" severity="error" className={classes.alert}>
+                    {errorsState.message}
+                </Alert> : null}
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                >
                     Sign In
-                </Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    {
-                        FIELDS.map(({name, label}) => <InputTextField
-                            label={label}
-                            name={name}
-                            value={state.name}
-                            onChange={handleChange}
-                            error={!!errorsState.fields[name] || null}
-                            helperText={errorsState.fields[name] || null}
-                            className={classes.textField}
-                        />)
-                    }
-                    {errorsState.message ?
-                        <Alert variant="outlined" severity="error" className={classes.alert}>
-                            {errorsState.message}
-                        </Alert> : null}
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign In
-                    </Button>
-                    <Grid container>
-                    </Grid>
+                </Button>
+                <Grid container>
+                </Grid>
 
 
-                </form>
-            </div>
-            <GoogleButton
-                onClick={() => {
-                    userLoginWithGoogle()
-                }}
-            />
-            <Typography component="h4" variant="h15">
-                Don't have an account? <Link to="/SignUp">Sign Up</Link>
-            </Typography>
-            <Typography component="h4" variant="h15">
-                Forgot yor password? Reset it  <Link to="/SignUp">here</Link>
-            </Typography>
+            </form>
+        </div>
+        <GoogleButton
+            onClick={() => {
+                userLoginWithGoogle()
+            }}
+        />
+        <Typography component="h4" variant="h15">
+            Don't have an account? <Link to="/SignUp">Sign Up</Link>
+        </Typography>
+        <Typography component="h4" variant="h15">
+            Forgot yor password? Reset it <Link to="/SignUp">here</Link>
+        </Typography>
 
-        </Container>
-    );
+    </Container>);
 };

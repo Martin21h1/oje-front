@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
-import {useNavigate} from "react-router";
+import {useLocation, useNavigate} from "react-router";
 
 import {likeSong, progressSong, setSong} from '../store/songs/actions';
 import WordCard from './Card';
@@ -25,39 +25,29 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 
 const useStyles = makeStyles(theme => ({
     card: {
-        maxWidth: 745,
-        marginTop: theme.spacing(5),
+        maxWidth: 745, marginTop: theme.spacing(5),
     },
 
     expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
+        transform: 'rotate(0deg)', marginLeft: 'auto', transition: theme.transitions.create('transform', {
             duration: theme.transitions.duration.shortest,
         }),
-    },
-    expandOpen: {
+    }, expandOpen: {
         transform: 'rotate(180deg)',
-    },
-    avatar: {
+    }, avatar: {
         backgroundColor: red[500],
-    },
-    like: {
-        display: 'flex',
-        alignItems: 'center',
+    }, like: {
+        display: 'flex', alignItems: 'center',
     },
 }));
 
 function Highlighter({word, highlight, wordIndex, pIndex, isProgress, wordList}) {
     const isWordInList = isProgress && wordList && wordList.includes(word.toLowerCase());
 
-    const highlightedWord = highlight && wordIndex && pIndex ? (
-        <span style={{backgroundColor: '#08F5D9FF', cursor: highlight ? 'pointer' : 'auto'}}>{word}</span>
-    ) : (
-        isWordInList ?
-            <span style={{backgroundColor: '#f5ce09', cursor: highlight ? 'pointer' : 'auto'}}>{word}</span> :
-            word
-    );
+    const highlightedWord = highlight && wordIndex && pIndex ? (<span style={{
+        backgroundColor: '#08F5D9FF', cursor: highlight ? 'pointer' : 'auto'
+    }}>{word}</span>) : (isWordInList ?
+        <span style={{backgroundColor: '#f5ce09', cursor: highlight ? 'pointer' : 'auto'}}>{word}</span> : word);
 
     return <span>{highlightedWord}</span>;
 }
@@ -68,10 +58,10 @@ export default function Song(props) {
     const classes = useStyles();
     const dispatch = useDispatch();
     const [popUpData, setPopUpData] = useState({
-        LeftoffSet: null,
-        TopoffSet: null,
+        LeftoffSet: null, TopoffSet: null,
     });
     const item = props.item;
+    const location = useLocation();
 
     const [isVisible, setisVisible] = useState(false);
     const [isLiked, setIsLiked] = useState(item.is_liked);
@@ -121,10 +111,7 @@ export default function Song(props) {
 
     useEffect(() => {
         const handleDocumentMouseDown = (event) => {
-            if (
-                cardRef.current &&
-                !cardRef.current.contains(event.target)
-            ) {
+            if (cardRef.current && !cardRef.current.contains(event.target)) {
                 setisVisible(false);
             }
         };
@@ -172,14 +159,12 @@ export default function Song(props) {
         setPopUpData({
             LeftoffSet: left,
             TopoffSet: Math.abs(cal2.getBoundingClientRect().top) + top + 20,
-            selectedTextstate: cleanedWord,
-            // translatedWord: translatedWord
+            selectedTextstate: cleanedWord, // translatedWord: translatedWord
         });
     };
     const CalculatePopupPos = () => {
         return {
-            left: `${popUpData.LeftoffSet}px`,
-            top: `${popUpData.TopoffSet}px`
+            left: `${popUpData.LeftoffSet}px`, top: `${popUpData.TopoffSet}px`
         };
     };
 
@@ -231,86 +216,81 @@ export default function Song(props) {
             setProgress(true)
         }
     }
-
     const redirectToSong = (item) => {
-        dispatch(setSong(item))
-        navigate(`artist/${item.name}/song/${item.title}`)
-    }
+        dispatch(setSong(item));
 
+        const targetUrl = `artist/${item.name}/song/${encodeURIComponent(item.title)}`;
 
-    return (
-        <Card className={classes.card}>
-            <CardHeader
-                avatar={
-                    <Avatar
-                        style={{cursor: 'pointer'}}
-                        aria-label="recipe"
-                        className={classes.avatar}
-                        onClick={() => navigate(`/artist/${item.name}/`)}
-                        src={item.image_url}>
-                    </Avatar>
-                }
-                action={
-                    <IconButton aria-label="settings">
-                        <MoreVertIcon
-                            aria-controls={open ? 'basic-menu' : undefined}
-                            aria-haspopup="true"
-                            aria-expanded={open ? 'true' : undefined}
-                            onClick={handleClickMenu}
-                        />
-                        <Menu
-                            id="basic-menu"
-                            anchorEl={anchorEl}
-                            open={open}
-                            onClose={handleCloseMenu}
-                            MenuListProps={{
-                                'aria-labelledby': 'basic-button',
-                            }}
-                        >
-                            {
-                                isProgress ? <MenuItem onClick={handleOpenProgress}>Hide Progress</MenuItem> :
-                                    <MenuItem onClick={handleOpenProgress}>Show Progress</MenuItem>
-                            }
+        if (location.pathname !== `/${targetUrl}`) {
+            navigate(targetUrl, { replace: true });
+        }
+    };
+    return (<Card className={classes.card}>
+        <CardHeader
+            avatar={<Avatar
+                style={{cursor: 'pointer'}}
+                aria-label="recipe"
+                className={classes.avatar}
+                onClick={() => navigate(`/artist/${item.name}/`)}
+                src={item.image_url}>
+            </Avatar>}
+            action={<IconButton aria-label="settings">
+                <MoreVertIcon
+                    aria-controls={open ? 'basic-menu' : undefined}
+                    aria-haspopup="true"
+                    aria-expanded={open ? 'true' : undefined}
+                    onClick={handleClickMenu}
+                />
+                <Menu
+                    id="basic-menu"
+                    anchorEl={anchorEl}
+                    open={open}
+                    onClose={handleCloseMenu}
+                    MenuListProps={{
+                        'aria-labelledby': 'basic-button',
+                    }}
+                >
+                    {isProgress ? <MenuItem onClick={handleOpenProgress}>Hide Progress</MenuItem> :
+                        <MenuItem onClick={handleOpenProgress}>Show Progress</MenuItem>}
 
-                        </Menu>
-                    </IconButton>
-                }
-                // title={`${item.name} - ${item.title}`}
-                title={<div onClick={() => redirectToSong(item)}
-                            style={{cursor: 'pointer'}}
-                >{`${item.name} - ${item.title}`}</div>}
-            />
-            <YoutubeEmbed embedId={item.url}/>
-            <CardContent>
-                {isProgress ? <LinearProgress
-                    variant="determinate"
-                    value={songsState.progress ? songsState.progress.percentages : null}/> : null}
-                <Typography
-                    // onClick={() => handleClose()}
-                    onDoubleClick={textSelection}
-                    paragraph={true}
-                    constiant="body2"
-                    color="textSecondary"
-                    component="p">
+                </Menu>
+            </IconButton>}
+            title={
+                <div onClick={() => redirectToSong(item)}
+                     style={{cursor: 'pointer'}}>
+                    {`${item.name} - ${item.title}`}
+                </div>
+            }
+        />
+        <YoutubeEmbed embedId={item.url}/>
+        <CardContent>
+            {isProgress ? <LinearProgress
+                variant="determinate"
+                value={songsState.progress ? songsState.progress.percentages : null}/> : null}
+            <Typography
+                // onClick={() => handleClose()}
+                onDoubleClick={textSelection}
+                paragraph={true}
+                constiant="body2"
+                color="textSecondary"
+                component="p">
 
-                    <div>
-                        {item.words_items && item.words_items.slice(0, expanded ? item.words_items.length : 10).map((item, index) => {
-                            for (const key in item) {
-                                const sentence = item[key];
+                <div>
+                    {item.words_items && item.words_items.slice(0, expanded ? item.words_items.length : 10).map((item, index) => {
+                        for (const key in item) {
+                            const sentence = item[key];
 
-                                return (
-                                    <p key={index}
+                            return (<p key={index}
                                        onMouseEnter={() => handleMouseEnterP(sentence, index)}
-                                        // onMouseLeave={handleMouseLeave}
-                                    >
-                                        {sentence.map((wordObj, wordIndex) => {
-                                            const wordKey = Object.keys(wordObj)[0];
-                                            const word = wordObj[wordKey];
-                                            const isHighlighted = highlightedWord === word;
-                                            const isSameWordIndex = indexdWord === wordIndex;
-                                            const isSamedIndex = pIndex === index;
-                                            return (
-                                                <React.Fragment key={wordIndex}>
+                                // onMouseLeave={handleMouseLeave}
+                            >
+                                {sentence.map((wordObj, wordIndex) => {
+                                    const wordKey = Object.keys(wordObj)[0];
+                                    const word = wordObj[wordKey];
+                                    const isHighlighted = highlightedWord === word;
+                                    const isSameWordIndex = indexdWord === wordIndex;
+                                    const isSamedIndex = pIndex === index;
+                                    return (<React.Fragment key={wordIndex}>
                     <span
                         onMouseEnter={() => handleMouseEnter(word, wordIndex, index)}
                         onMouseLeave={handleMouseLeave}
@@ -324,85 +304,66 @@ export default function Song(props) {
                                    isProgress={isProgress}
                                    wordList={songsState.progress ? songsState.progress.remaining_words : null}/>
                     </span>
-                                                </React.Fragment>
-                                            );
-                                        })}
-                                        {index === pIndex && (
-                                            <IconButton aria-label="settings" size='small'
-                                                        style={{fontSize: '0px', padding: '0px'}}>
-                                                <MoreVertIcon
-                                                    aria-controls={'basic-menu'}
-                                                    aria-haspopup="true"
-                                                    aria-expanded={true}
-                                                    onClick={handleClickMenuP}
-                                                />
-                                                <Menu
-                                                    id="basic-menu"
-                                                    anchorEl={anchorElP}
-                                                    open={openP}
-                                                    onClose={handleCloseMenuP}
-                                                    MenuListProps={{
-                                                        'aria-labelledby': 'basic-button',
-                                                    }}
-                                                >
-                                                    <div>
-                                                        {wordsState.sentence ? wordsState.sentence : Sentence}
-                                                    </div>
-                                                </Menu>
-                                            </IconButton>
-                                        )}
-                                    </p>
-                                );
-                            }
-                        })}
-                    </div>
-                    {!expanded && (
-                        <div style={{display: 'flex', justifyContent: 'center'}}>
-                            <IconButton
-                                aria-label="expand more"
-                                size="small"
-                                onClick={handleExpandClick}
-                            >
-                                <ExpandMoreIcon/>
-                            </IconButton>
-                        </div>
-                    )}
-                </Typography>
-                {isVisible &&
-                    <div
-                        ref={cardRef}
-                        style={{
-                            position: "absolute",
-                            ...CalculatePopupPos(),
-                            zIndex: 1, // Set a higher z-index for the WordCard to cover other components
+                                    </React.Fragment>);
+                                })}
+                                {index === pIndex && (<IconButton aria-label="settings" size='small'
+                                                                  style={{fontSize: '0px', padding: '0px'}}>
+                                    <MoreVertIcon
+                                        aria-controls={'basic-menu'}
+                                        aria-haspopup="true"
+                                        aria-expanded={true}
+                                        onClick={handleClickMenuP}
+                                    />
+                                    <Menu
+                                        id="basic-menu"
+                                        anchorEl={anchorElP}
+                                        open={openP}
+                                        onClose={handleCloseMenuP}
+                                        MenuListProps={{
+                                            'aria-labelledby': 'basic-button',
+                                        }}
+                                    >
+                                        <div>
+                                            {wordsState.sentence ? wordsState.sentence : Sentence}
+                                        </div>
+                                    </Menu>
+                                </IconButton>)}
+                            </p>);
+                        }
+                    })}
+                </div>
+                {!expanded && (<div style={{display: 'flex', justifyContent: 'center'}}>
+                    <IconButton
+                        aria-label="expand more"
+                        size="small"
+                        onClick={handleExpandClick}
+                    >
+                        <ExpandMoreIcon/>
+                    </IconButton>
+                </div>)}
+            </Typography>
+            {isVisible && <div
+                ref={cardRef}
+                style={{
+                    position: "absolute", ...CalculatePopupPos(), zIndex: 1, // Set a higher z-index for the WordCard to cover other components
 
-                        }}>
-                        <WordCard song={item}
-                                  word={popUpData.selectedTextstate}/>
-                    </div>
-                }
+                }}>
+                <WordCard song={item}
+                          word={popUpData.selectedTextstate}/>
+            </div>}
 
-                <div id="cal2"
-                     style={{
-                         position: "absolute",
-                         top: 0,
-                         left: 0
-                     }}/>
-            </CardContent>
-            <CardActions disableSpacing>
-                <IconButton
-                    aria-label="add to favorites"
-                    onClick={handleLike}>
-                    {
-                        likesAmount > 0 ? (
-                            <div className={classes.like}><ThumbUpAltIcon
-                                color={isLiked ? 'primary' : ''}/>{likesAmount}</div>
-                        ) : (
-                            <ThumbUpAltIcon/>
-                        )
-                    }
-                </IconButton>
-            </CardActions>
-        </Card>
-    );
+            <div id="cal2"
+                 style={{
+                     position: "absolute", top: 0, left: 0
+                 }}/>
+        </CardContent>
+        <CardActions disableSpacing>
+            <IconButton
+                aria-label="add to favorites"
+                onClick={handleLike}>
+                {likesAmount > 0 ? (<div className={classes.like}><ThumbUpAltIcon
+                    color={isLiked ? 'primary' : ''}/>{likesAmount}</div>) : (<ThumbUpAltIcon/>)}
+            </IconButton>
+        </CardActions>
+    </Card>);
 };

@@ -19,51 +19,36 @@ import {ImageList, ImageListItem, useMediaQuery, useTheme} from "@mui/material";
 import InfiniteScroll from 'react-infinite-scroll-component';
 import AddToDict from "./AddToDictComponent";
 
-const bull = (
-    <Box
-        component="span"
-        sx={{display: 'inline-block', mx: '2px', transform: 'scale(0.8)'}}
-    >
-        •
-    </Box>
-);
+const bull = (<Box
+    component="span"
+    sx={{display: 'inline-block', mx: '2px', transform: 'scale(0.8)'}}
+>
+    •
+</Box>);
 
 const useStyles = makeStyles(theme => ({
     card: {
-        maxWidth: '100%',
-        marginTop: theme.spacing(5),
-    },
-    media: {
-        height: 0,
-        paddingTop: '56.25%', // 16:9
-    },
-    expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        transition: theme.transitions.create('transform', {
+        maxWidth: '100%', marginTop: theme.spacing(5),
+    }, media: {
+        height: 0, paddingTop: '56.25%', // 16:9
+    }, expand: {
+        transform: 'rotate(0deg)', marginLeft: 'auto', transition: theme.transitions.create('transform', {
             duration: theme.transitions.duration.shortest,
         }),
-    },
-    expandOpen: {
+    }, expandOpen: {
         transform: 'rotate(180deg)',
-    },
-    avatar: {
+    }, avatar: {
         backgroundColor: red[500],
-    },
-    imageList: {
+    }, imageList: {
         maxWidth: 500,
         display: 'flex',
         flexWrap: 'wrap',
         justifyContent: 'space-between',
         marginBottom: theme.spacing(2),
-    },
-    imageListItem: {
-        width: '100%',
-        marginBottom: theme.spacing(2),
-        [theme.breakpoints.up('sm')]: {
+    }, imageListItem: {
+        width: '100%', marginBottom: theme.spacing(2), [theme.breakpoints.up('sm')]: {
             width: '50%',
-        },
-        [theme.breakpoints.up('md')]: {
+        }, [theme.breakpoints.up('md')]: {
             width: '33.33%',
         },
     },
@@ -73,14 +58,12 @@ export default function WordCard(props) {
     const classes = useStyles();
     const theme = useTheme();
     const isSmallScreen = useMediaQuery(theme.breakpoints.down('sm'));
-
     const dispatch = useDispatch();
     const [image, setImage] = useState(null);
     const [prevWord, setPrevWord] = useState(null);
     const {wordsState, songsState} = useSelector(state => state);
     const navigate = useNavigate();
     const [page, setPage] = useState(1);
-
     const langId = parseInt(localStorage.getItem('langId'))
 
 
@@ -212,79 +195,74 @@ export default function WordCard(props) {
                                                 />}
                                             </IconButton>
 
-                                            // <IconButton
-                                            //     sx={{ color: 'white' }}
-                                            //     aria-label={`star ${item.title}`}
-                                            // >
-                                            //     <StarBorderIcon />
-                                            // </IconButton>
-                                        }
-                                        actionPosition="left"
-                                    />
-                                </ImageListItem>
-                            )) : null}
-                            {/*<div ref={loaderRef} style={{ height: '1px' }} /> /!* Reference to the bottom element *!/*/}
-
-                        </ImageList>
-                    </Box>
-                </InfiniteScroll>
-                {/*<ImageList variant="masonry" cols={3} gap={8}>*/}
-                {/*    {songsState.images ? songsState.images.map((item) => (*/}
-                {/*        <ImageListItem key={item.url}>*/}
-                {/*            <img*/}
-                {/*                src={item.url}*/}
-                {/*                srcSet={item.url}*/}
-                {/*                alt={item.url}*/}
-                {/*                loading="lazy"*/}
-                {/*            />*/}
-                {/*        </ImageListItem>*/}
-                {/*    )) : null}*/}
-                {/*</ImageList>*/}
-
-
-                {/*<SwipeableViews*/}
-                {/*    index={index}*/}
-                {/*    onChangeIndex={handleChangeIndex}*/}
-                {/*    className={classes.card}*/}
-                {/*    resistance*/}
-                {/*    enableMouseEvents>*/}
-                {/*    {songsState.images ? songsState.images.map((step) => (*/}
-                {/*        <div key={step.url}>*/}
-                {/*            <Box*/}
-                {/*                component="img"*/}
-                {/*                sx={{*/}
-                {/*                    height: 255,*/}
-                {/*                    display: 'block',*/}
-                {/*                    maxWidth: 400,*/}
-                {/*                    overflow: 'hidden',*/}
-                {/*                    width: '100%',*/}
-                {/*                }}*/}
-                {/*                src={step.url}*/}
-                {/*                alt={step.url}*/}
-                {/*            />*/}
-                {/*            <IconButton onClick={() => handleCurrentImage(step)}>*/}
-                {/*                {step.url === image ? <StarIcon/> : < StarBorderIcon/>}*/}
-                {/*            </IconButton>*/}
-                {/*        </div>*/}
-                {/*    )) : null}*/}
-                {/*</SwipeableViews>*/}
-                <CardContent>
-                    <Typography variant="h5" component="div">
-                        {langId && langId !== props.song.language_id ?
-                            wordsState.word.translate
-                            : props.word
-                        }
-
-                        <AddToDict image={image}
-                                   song={props.song}
+                                // <IconButton
+                                //     sx={{ color: 'white' }}
+                                //     aria-label={`star ${item.title}`}
+                                // >
+                                //     <StarBorderIcon />
+                                // </IconButton>
+                            }
+                            actionPosition="left"
                         />
-                    </Typography>
-                </CardContent>
-                {/*    <CardActions>*/}
-                {/*        <Button*/}
-                {/*            onClick={() => handleAddToDict()}*/}
-                {/*            size="small">Add to dict</Button>*/}
-                {/*    </CardActions>*/}
-            </Card>)
-    )
+                    </ImageListItem>)) : null}
+                    {/*<div ref={loaderRef} style={{ height: '1px' }} /> /!* Reference to the bottom element *!/*/}
+
+                </ImageList>
+            </Box>
+        </InfiniteScroll>
+        {/*<ImageList variant="masonry" cols={3} gap={8}>*/}
+        {/*    {songsState.images ? songsState.images.map((item) => (*/}
+        {/*        <ImageListItem key={item.url}>*/}
+        {/*            <img*/}
+        {/*                src={item.url}*/}
+        {/*                srcSet={item.url}*/}
+        {/*                alt={item.url}*/}
+        {/*                loading="lazy"*/}
+        {/*            />*/}
+        {/*        </ImageListItem>*/}
+        {/*    )) : null}*/}
+        {/*</ImageList>*/}
+
+
+        {/*<SwipeableViews*/}
+        {/*    index={index}*/}
+        {/*    onChangeIndex={handleChangeIndex}*/}
+        {/*    className={classes.card}*/}
+        {/*    resistance*/}
+        {/*    enableMouseEvents>*/}
+        {/*    {songsState.images ? songsState.images.map((step) => (*/}
+        {/*        <div key={step.url}>*/}
+        {/*            <Box*/}
+        {/*                component="img"*/}
+        {/*                sx={{*/}
+        {/*                    height: 255,*/}
+        {/*                    display: 'block',*/}
+        {/*                    maxWidth: 400,*/}
+        {/*                    overflow: 'hidden',*/}
+        {/*                    width: '100%',*/}
+        {/*                }}*/}
+        {/*                src={step.url}*/}
+        {/*                alt={step.url}*/}
+        {/*            />*/}
+        {/*            <IconButton onClick={() => handleCurrentImage(step)}>*/}
+        {/*                {step.url === image ? <StarIcon/> : < StarBorderIcon/>}*/}
+        {/*            </IconButton>*/}
+        {/*        </div>*/}
+        {/*    )) : null}*/}
+        {/*</SwipeableViews>*/}
+        <CardContent>
+            <Typography variant="h5" component="div">
+                {langId && langId !== props.song.language_id ? wordsState.word.translate : props.word}
+
+                <AddToDict image={image}
+                           song={props.song}
+                />
+            </Typography>
+        </CardContent>
+        {/*    <CardActions>*/}
+        {/*        <Button*/}
+        {/*            onClick={() => handleAddToDict()}*/}
+        {/*            size="small">Add to dict</Button>*/}
+        {/*    </CardActions>*/}
+    </Card>))
 };

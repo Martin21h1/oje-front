@@ -8,11 +8,9 @@ export default function LikedSongsPage() {
     const dispatch = useDispatch()
     const {songsState} = useSelector(state => state);
 
-    return (
-        <SongsComponent
-            dispatch={dispatch}
-            fetch={fetchLikedSongs}
-            state={songsState.likedSongs}
-        />
-    );
+    return (<SongsComponent
+        dispatch={dispatch}
+        fetch={fetchLikedSongs}
+        state={songsState.likedSongs}
+    />);
 };

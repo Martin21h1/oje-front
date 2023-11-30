@@ -16,9 +16,7 @@ import Paper from "@material-ui/core/Paper";
 
 const useStyles = makeStyles(theme => ({
     container: {
-        marginTop: theme.spacing(2),
-        flexDirection: 'column',
-        alignItems: 'center',
+        marginTop: theme.spacing(2), flexDirection: 'column', alignItems: 'center',
     }
 }));
 
@@ -30,28 +28,22 @@ export default function Dictionary() {
     useEffect(() => {
         dispatch(userGetDict())
     }, [usersState.words.length]);
-    return (
-        <TableContainer component={Paper} className={classes.container}>
-            <Table aria-label="simple table">
-                <TableHead>
-                    <TableRow>
-                        <TableCell align="left">Words</TableCell>
-                        <TableCell align="left">Translation</TableCell>
-                        <TableCell align="left">Images</TableCell>
-                    </TableRow>
-                </TableHead>
-                <TableBody>
-                    {usersState.words.length > 0 ? (
-                        usersState.words.map((row) => <Row row={row} />)
-                    ) : (
-                        <TableRow>
-                            <TableCell colSpan={3} align="center">
-                                You have not added any words to dictionary. Let's do it!
-                            </TableCell>
-                        </TableRow>
-                    )}
-                </TableBody>
-            </Table>
-        </TableContainer>
-    );
+    return (<TableContainer component={Paper} className={classes.container}>
+        <Table aria-label="simple table">
+            <TableHead>
+                <TableRow>
+                    <TableCell align="left">Words</TableCell>
+                    <TableCell align="left">Translation</TableCell>
+                    <TableCell align="left">Images</TableCell>
+                </TableRow>
+            </TableHead>
+            <TableBody>
+                {usersState.words.length > 0 ? (usersState.words.map((row) => <Row row={row}/>)) : (<TableRow>
+                    <TableCell colSpan={3} align="center">
+                        You have not added any words to dictionary. Let's do it!
+                    </TableCell>
+                </TableRow>)}
+            </TableBody>
+        </Table>
+    </TableContainer>);
 }

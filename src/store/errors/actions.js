@@ -1,6 +1,3 @@
-
-
-
 export function error_handler(dispatch, data) {
     if (data.error.fields) {
         dispatch(setErrFields(data));
@@ -11,13 +8,11 @@ export function error_handler(dispatch, data) {
 }
 
 export const setErrFields = data => ({
-    type: 'SET_ERR_FIELDS',
-    payload: data.error.fields
+    type: 'SET_ERR_FIELDS', payload: data.error.fields
 });
 
 export const setErrMessage = data => ({
-    type: 'SET_ERR_MESSAGE',
-    payload: data.error.message
+    type: 'SET_ERR_MESSAGE', payload: data.error.message
 });
 
 export const setErrorNull = () => ({

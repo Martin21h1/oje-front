@@ -8,13 +8,10 @@ class ApiClass {
 
     makeRequest = ({url, data}) => {
         const _data = {
-            method: 'GET',
-            headers: {
+            method: 'GET', headers: {
                 'Accept': 'application/json',
-                'Content-Type': 'application/json',
-                ...!!localStorage.token && {Authorization: `Bearer ${localStorage.token}`},
-            },
-            credentials: 'include',
+                'Content-Type': 'application/json', ...!!localStorage.token && {Authorization: `Bearer ${localStorage.token}`},
+            }, credentials: 'include',
         };
 
         const mergedData = mergeRecursive(_data, data);
@@ -31,20 +28,16 @@ class ApiClass {
 
     signUp = user => {
         return this.makeRequest({
-            url: `${this.url}/signUp`,
-            data: {
-                method: 'POST',
-                body: JSON.stringify(user)
+            url: `${this.url}/signUp`, data: {
+                method: 'POST', body: JSON.stringify(user)
             }
         })
     };
 
     loginUser = user => {
         return this.makeRequest({
-            url: `${this.url}/login`,
-            data: {
-                method: 'POST',
-                body: JSON.stringify(user)
+            url: `${this.url}/login`, data: {
+                method: 'POST', body: JSON.stringify(user)
             }
         })
     };
@@ -69,10 +62,8 @@ class ApiClass {
 
     addToDict = (data) => {
         return this.makeRequest({
-            url: `${this.url}/user/dict`,
-            data: {
-                method: 'POST',
-                body: JSON.stringify(data)
+            url: `${this.url}/user/dict`, data: {
+                method: 'POST', body: JSON.stringify(data)
             }
         });
     };
@@ -91,8 +82,7 @@ class ApiClass {
 
     deleteWord = (id) => {
         return this.makeRequest({
-            url: `${this.url}/user/dict?word_id=${id}`,
-            data: {
+            url: `${this.url}/user/dict?word_id=${id}`, data: {
                 method: 'DELETE'
             }
         });
@@ -105,16 +95,14 @@ class ApiClass {
     };
 
     fetchSongs = (page, limit) => {
-        return this.makeRequest(
-            {
-                url: `${this.url}/songs?page=${page}&limit=${limit}`
-            });
+        return this.makeRequest({
+            url: `${this.url}/songs?page=${page}&limit=${limit}`
+        });
     };
 
     likeSong = id => {
         return this.makeRequest({
-            url: `${this.url}/songs/${id}/like`,
-            data: {
+            url: `${this.url}/songs/${id}/like`, data: {
                 method: 'POST',
             }
         })
@@ -122,13 +110,9 @@ class ApiClass {
 
     likeImage = (imageId, songId, wordId) => {
         return this.makeRequest({
-            url: `${this.url}/likeImage`,
-            data: {
-                method: 'POST',
-                body: JSON.stringify({
-                    song_id: songId,
-                    image_id: imageId,
-                    word_id: wordId,
+            url: `${this.url}/likeImage`, data: {
+                method: 'POST', body: JSON.stringify({
+                    song_id: songId, image_id: imageId, word_id: wordId,
                 })
             }
         })
@@ -136,8 +120,7 @@ class ApiClass {
 
     fetchImages = (word, songId, page) => {
         return this.makeRequest({
-            url: `${this.url}/images?word=${word}&song_id=${songId}&page=${page}`,
-            data: {
+            url: `${this.url}/images?word=${word}&song_id=${songId}&page=${page}`, data: {
                 method: 'GET'
             }
         })
@@ -146,6 +129,12 @@ class ApiClass {
     searchSong = (title, artist) => {
         return this.makeRequest({
             url: `${this.url}/songs/search?title=${title}&artist=${artist}`
+        });
+    };
+
+    searchHeaderSong = (query, globalSearch) => {
+        return this.makeRequest({
+            url: `${this.url}/songs/searchHeader?q=${query}&g=${globalSearch}`
         });
     };
 
@@ -175,10 +164,8 @@ class ApiClass {
 
     translateSentence = (data) => {
         return this.makeRequest({
-            url: `${this.url}/words/translateSentence`,
-            data: {
-                method: 'POST',
-                body: JSON.stringify(data)
+            url: `${this.url}/words/translateSentence`, data: {
+                method: 'POST', body: JSON.stringify(data)
             }
         });
     };
@@ -191,20 +178,16 @@ class ApiClass {
 
     updateUserData = (data) => {
         return this.makeRequest({
-            url: `${this.url}/user`,
-            data: {
-                method: 'PATCH',
-                body: JSON.stringify(data)
+            url: `${this.url}/user`, data: {
+                method: 'PATCH', body: JSON.stringify(data)
             }
         });
     };
 
     setPassword = (user) => {
         return this.makeRequest({
-            url: `${this.url}/setPassword`,
-            data: {
-                method: 'POST',
-                body: JSON.stringify({
+            url: `${this.url}/setPassword`, data: {
+                method: 'POST', body: JSON.stringify({
                     password: user.password,
                 })
             }
@@ -213,12 +196,9 @@ class ApiClass {
 
     resetPassword = (user) => {
         return this.makeRequest({
-            url: `${this.url}/resetPassword`,
-            data: {
-                method: 'POST',
-                body: JSON.stringify({
-                    password: user.password,
-                    old_password: user.old_password,
+            url: `${this.url}/resetPassword`, data: {
+                method: 'POST', body: JSON.stringify({
+                    password: user.password, old_password: user.old_password,
                 })
             }
         });

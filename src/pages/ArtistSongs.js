@@ -10,12 +10,10 @@ export default function ArtistSongsPage() {
     const {songsState} = useSelector(state => state);
     const {name} = useParams();
 
-    return (
-        <SongsComponent
-            dispatch={dispatch}
-            fetch={FetchSongsByArtist}
-            state={songsState.artistSongs}
-            name={name}
-        />
-    );
+    return (<SongsComponent
+        dispatch={dispatch}
+        fetch={FetchSongsByArtist}
+        state={songsState.artistSongs}
+        name={name}
+    />);
 };
