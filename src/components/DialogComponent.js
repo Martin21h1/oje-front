@@ -19,18 +19,16 @@ const GadgetDialog = () => {
         setOpen(false);
         localStorage.setItem(localStorageKey, 'true');
     };
-    return (
-        <Dialog open={open} onClose={handleClose}>
-            {/*<DialogTitle>Gadget Dialog</DialogTitle>*/}
-            <DialogContent>
-                <DialogContentText>
-                    Find songs with the search upon.
-                    Click on words and select images.
-                    Select language for translation.
-                </DialogContentText>
-            </DialogContent>
-        </Dialog>
-    );
+    return (<Dialog open={open} onClose={handleClose}>
+        {/*<DialogTitle>Gadget Dialog</DialogTitle>*/}
+        <DialogContent>
+            <DialogContentText>
+                Find songs with the search upon.
+                Click on words and select images.
+                Select language for translation.
+            </DialogContentText>
+        </DialogContent>
+    </Dialog>);
 };
 
 export default GadgetDialog;

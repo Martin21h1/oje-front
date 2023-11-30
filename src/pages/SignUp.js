@@ -21,52 +21,31 @@ const useStyles = makeStyles(theme => ({
         body: {
             backgroundColor: theme.palette.common.white,
         },
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    avatar: {
-        margin: theme.spacing(1),
-        backgroundColor: theme.palette.secondary.main,
-    },
-    form: {
+    }, paper: {
+        marginTop: theme.spacing(8), display: 'flex', flexDirection: 'column', alignItems: 'center',
+    }, avatar: {
+        margin: theme.spacing(1), backgroundColor: theme.palette.secondary.main,
+    }, form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
-    },
-    submit: {
+    }, submit: {
         margin: theme.spacing(3, 0, 2),
-    },
-    textField: {
-        marginTop: theme.spacing(2),
-        margin: 'normal',
-        width: '100%', // Fix IE 11 issue.
-    },
-    alert: {
+    }, textField: {
+        marginTop: theme.spacing(2), margin: 'normal', width: '100%', // Fix IE 11 issue.
+    }, alert: {
         marginTop: theme.spacing(1),
     }
 }))
 
-const FIELDS = [
-    {
-        name: 'username',
-        label: 'Username',
-    },
-    {
-        name: 'email',
-        label: 'Email',
-    },
-    {
-        name: 'password',
-        label: 'Password',
-    },
-    {
-        name: 'password',
-        label: 'Repeat password',
-    }
-];
+const FIELDS = [{
+    name: 'username', label: 'Username',
+}, {
+    name: 'email', label: 'Email',
+}, {
+    name: 'password', label: 'Password',
+}, {
+    name: 'password', label: 'Repeat password',
+}];
 
 export default function SignUp() {
     const classes = useStyles();
@@ -90,45 +69,40 @@ export default function SignUp() {
         dispatch(setErrorNull())
     }, []);
 
-    return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <div className={classes.paper}>
-                <Avatar className={classes.avatar}>
-                    <LockOutlinedIcon/>
-                </Avatar>
-                <Typography component="h1" variant="h5">
+    return (<Container component="main" maxWidth="xs">
+        <CssBaseline/>
+        <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+                <LockOutlinedIcon/>
+            </Avatar>
+            <Typography component="h1" variant="h5">
+                Sign Up
+            </Typography>
+            <form className={classes.form} onSubmit={handleSubmit}>
+                {FIELDS.map(({name, label}) => <InputTextField
+                    label={label}
+                    name={name}
+                    value={state.name}
+                    onChange={handleChange}
+                    error={!!errorsState.fields[name] || null}
+                    helperText={errorsState.fields[name] || null}
+                    className={classes.textField}
+                />)}
+                {errorsState.message ? <Alert variant="outlined" severity="error" className={classes.alert}>
+                    {errorsState.message}
+                </Alert> : null}
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                >
                     Sign Up
-                </Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    {
-                        FIELDS.map(({name, label}) => <InputTextField
-                            label={label}
-                            name={name}
-                            value={state.name}
-                            onChange={handleChange}
-                            error={!!errorsState.fields[name] || null}
-                            helperText={errorsState.fields[name] || null}
-                            className={classes.textField}
-                        />)
-                    }
-                    {errorsState.message ?
-                        <Alert variant="outlined" severity="error" className={classes.alert}>
-                            {errorsState.message}
-                        </Alert> : null}
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Sign Up
-                    </Button>
-                    <Grid container>
-                    </Grid>
-                </form>
-            </div>
-        </Container>
-    );
+                </Button>
+                <Grid container>
+                </Grid>
+            </form>
+        </div>
+    </Container>);
 };

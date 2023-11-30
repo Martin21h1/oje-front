@@ -42,8 +42,7 @@ export const userGetDict = () => {
                 if (data.error) {
                 } else {
                     dispatch({
-                        type: 'SET_DICT',
-                        payload: data.data,
+                        type: 'SET_DICT', payload: data.data,
                     });
                 }
             })
@@ -60,8 +59,7 @@ export const GetLanguages = () => {
                 if (data.error) {
                 } else {
                     dispatch({
-                        type: 'SET_LANGUAGES',
-                        payload: data.data,
+                        type: 'SET_LANGUAGES', payload: data.data,
                     });
                 }
             })
@@ -77,12 +75,9 @@ export const DeleteWord = (id) => {
             .then(data => {
                 if (data.error) {
                 } else {
-                    dispatch(
-                        {
-                            type: 'DELETE_WORD',
-                            payload: id
-                        }
-                    )
+                    dispatch({
+                        type: 'DELETE_WORD', payload: id
+                    })
                 }
             })
             .catch(error => {
@@ -101,8 +96,7 @@ export const getProfileFetch = () => {
 
                     dispatch(setUsername(data.data.username));
                     dispatch({
-                        type: 'SET_USER_DATA',
-                        payload: data.data
+                        type: 'SET_USER_DATA', payload: data.data
                     });
                 }
             })
@@ -151,18 +145,15 @@ export const setNativeLanguageId = langId => {
         localStorage.setItem('langId', langId);
 
         return dispatch({
-            type: 'SET_NATIVE_LANG_ID',
-            payload: langId
+            type: 'SET_NATIVE_LANG_ID', payload: langId
         });
     }
 };
 
 export const setTargetLanguageId = langId => ({
-    type: 'SET_TARGET_LANG_ID',
-    payload: langId
+    type: 'SET_TARGET_LANG_ID', payload: langId
 });
 
 export const setUsername = username => ({
-    type: 'SET_USERNAME',
-    payload: username
+    type: 'SET_USERNAME', payload: username
 });

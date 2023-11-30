@@ -8,10 +8,7 @@ import artistsReducer from './artists/reducer';
 import errorsReducer from "./errors/reducer";
 import authReducer from "./auth/reducer";
 
-const middleware = compose(
-    applyMiddleware(thunk),
-    window.devToolsExtension ? window.devToolsExtension() : f => f
-);
+const middleware = compose(applyMiddleware(thunk), window.devToolsExtension ? window.devToolsExtension() : f => f);
 
 const rootReducer = combineReducers({
     usersState: usersReducer,

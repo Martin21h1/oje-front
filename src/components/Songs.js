@@ -11,9 +11,7 @@ import {useSelector} from "react-redux";
 
 const useStyles = makeStyles(theme => ({
     container: {
-        marginTop: theme.spacing(2),
-        flexDirection: 'column',
-        alignItems: 'center',
+        marginTop: theme.spacing(2), flexDirection: 'column', alignItems: 'center',
     }
 }));
 
@@ -58,23 +56,17 @@ export default function SongsComponent(props) {
     }, []);
 
 
-    return (
-        <InfiniteScroll
-            dataLength={state.length}
-            next={fetchMoreData}
-            hasMore={hasMore}
-            loader={songsState.loading ?
-                <Container component="main" className={classes.container}> <CardSkeleton/> </Container> : null}
-        >
-            <Container component="main" className={classes.container}>
-                {state.length > 0 ? (
-                    state.map((item) => (
-                        <Song key={item.id} item={item} classes={classes}/>
-                    ))
-                ) : (
-                    songsState.loading ? null : <h4 align="center">There are no songs yet.</h4>
-                )}
-            </Container>
-        </InfiniteScroll>
-    );
+    return (<InfiniteScroll
+        dataLength={state.length}
+        next={fetchMoreData}
+        hasMore={hasMore}
+        loader={songsState.loading ?
+            <Container component="main" className={classes.container}> <CardSkeleton/> </Container> : null}
+    >
+        <Container component="main" className={classes.container}>
+            {state.length > 0 ? (state.map((item) => (
+                <Song key={item.id} item={item} classes={classes}/>))) : (songsState.loading ? null :
+                <h4 align="center">There are no songs yet.</h4>)}
+        </Container>
+    </InfiniteScroll>);
 };

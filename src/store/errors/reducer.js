@@ -1,6 +1,5 @@
 const initialState = {
-    fields: {},
-    message: ''
+    fields: {}, message: ''
 };
 
 export default function errorsReducer(state = initialState, action) {
@@ -11,19 +10,15 @@ export default function errorsReducer(state = initialState, action) {
     switch (type) {
         case 'SET_ERR_FIELDS':
             return {
-                ...state,
-                fields: payload,
+                ...state, fields: payload,
             };
         case 'SET_ERR_MESSAGE':
             return {
-                ...state,
-                message: payload,
+                ...state, message: payload,
             };
         case 'SET_ERROR_NULL':
             return {
-                ...state,
-                fields: {},
-                message: ''
+                ...state, fields: {}, message: ''
             };
         default:
             return state;

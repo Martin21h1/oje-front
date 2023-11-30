@@ -25,13 +25,9 @@ export default function AddToDict(props) {
             // setLoginDialogVisible(true);
         } else {
             const image_to_dict = props.image ? props.image : songsState.images[0].url;
-            dispatch(
-                addToDict({
-                    word_id: wordsState.word.id,
-                    prime_picture: image_to_dict,
-                    song_id: props.song.id
-                })
-            );
+            dispatch(addToDict({
+                word_id: wordsState.word.id, prime_picture: image_to_dict, song_id: props.song.id
+            }));
             setAddedDict(true);
         }
     };
@@ -39,16 +35,10 @@ export default function AddToDict(props) {
         setLoginDialogVisible(false); // Close LoginDialog
     };
 
-    return (
-        <IconButton sx={{marginRight: 'auto'}}>
-            {addDict ? (
-                <PlaylistAddCheckIcon/>
-            ) : (
-                <div>
-                    <PlaylistAddIcon onClick={handleAddToDict}/>
-                    <LoginDialog open={loginDialogVisible} onClose={closeLoginDialog}/>
-                </div>
-            )}
-        </IconButton>
-    );
+    return (<IconButton sx={{marginRight: 'auto'}}>
+        {addDict ? (<PlaylistAddCheckIcon/>) : (<div>
+            <PlaylistAddIcon onClick={handleAddToDict}/>
+            <LoginDialog open={loginDialogVisible} onClose={closeLoginDialog}/>
+        </div>)}
+    </IconButton>);
 };
