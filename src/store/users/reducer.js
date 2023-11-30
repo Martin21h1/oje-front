@@ -1,9 +1,5 @@
 const initialState = {
-    username: null,
-    words: [],
-    languages: [],
-    native_language_id: null,
-    target_language_id: null
+    username: null, words: [], languages: [], native_language_id: null, target_language_id: null
 };
 
 export default function usersReducer(state = initialState, action) {
@@ -21,11 +17,9 @@ export default function usersReducer(state = initialState, action) {
             };
         case 'SET_LANGUAGES':
             return {
-                ...state,
-                target_languages: payload.filter(function (i) {
+                ...state, target_languages: payload.filter(function (i) {
                     return i.is_allow_target_language === true
-                }),
-                native_languages: payload.filter(function (i) {
+                }), native_languages: payload.filter(function (i) {
                     return i.is_allow_native_language === true
                 }),
             };
@@ -37,13 +31,11 @@ export default function usersReducer(state = initialState, action) {
             };
         case 'SET_NATIVE_LANG_ID':
             return {
-                ...state,
-                native_language_id: payload,
+                ...state, native_language_id: payload,
             };
         case 'SET_TARGET_LANG_ID':
             return {
-                ...state,
-                target_language_id: payload,
+                ...state, target_language_id: payload,
             };
         default:
             return state;

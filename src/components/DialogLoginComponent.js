@@ -1,9 +1,6 @@
 import React, {useEffect} from 'react';
 import {
-    Dialog,
-    DialogActions,
-    DialogContent,
-    DialogContentText
+    Dialog, DialogActions, DialogContent, DialogContentText
 } from '@mui/material';
 import SignIn from "../pages/SignIn";
 
@@ -14,17 +11,15 @@ export default function LoginDialog({open, onClose}) {
         // You can keep the useEffect to manage initial opening behavior if needed
     }, []);
 
-    return (
-        <div>
-            <Dialog open={open} onClose={onClose}>
-                <DialogContent dividers>
-                    <DialogContentText>
-                        <SignIn/>
-                    </DialogContentText>
-                </DialogContent>
-                <DialogActions>
-                </DialogActions>
-            </Dialog>
-        </div>
-    );
+    return (<div>
+        <Dialog open={open} onClose={onClose}>
+            <DialogContent dividers>
+                <DialogContentText>
+                    <SignIn/>
+                </DialogContentText>
+            </DialogContent>
+            <DialogActions>
+            </DialogActions>
+        </Dialog>
+    </div>);
 };

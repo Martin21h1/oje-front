@@ -10,9 +10,7 @@ import {CircularProgress} from "@material-ui/core";
 
 const useStyles = makeStyles(theme => ({
     container: {
-        marginTop: theme.spacing(2),
-        flexDirection: 'column',
-        alignItems: 'center',
+        marginTop: theme.spacing(2), flexDirection: 'column', alignItems: 'center',
     }
 }));
 export default function SongPage() {
@@ -20,10 +18,7 @@ export default function SongPage() {
     const classes = useStyles();
 
 
-
-    return (
-        <Container component="main" className={classes.container}>
-            {songsState && !songsState.song ? <CircularProgress /> : <Song item={songsState.song} />}
-        </Container>
-    );
+    return (<Container component="main" className={classes.container}>
+        {songsState && !songsState.song ? <CircularProgress/> : <Song item={songsState.song}/>}
+    </Container>);
 };

@@ -11,14 +11,9 @@ const useStyles = makeStyles(theme => ({
         body: {
             backgroundColor: theme.palette.common.white,
         },
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    form: {
+    }, paper: {
+        marginTop: theme.spacing(8), display: 'flex', flexDirection: 'column', alignItems: 'center',
+    }, form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
     }
@@ -43,8 +38,7 @@ export default function Languages() {
         }
     }, [usersState]);
 
-    return (
-        <div className={classes.paper}>
+    return (<div className={classes.paper}>
             <FormControl fullWidth>
                 <InputLabel id="demo-simple-select-label">Native Language</InputLabel>
                 <Select
@@ -55,14 +49,11 @@ export default function Languages() {
                     label="Native Language"
                     onChange={event => dispatch(setNativeLanguageId(event.target.value))}
                 >
-                    {usersState.native_languages &&
-                        usersState.native_languages
-                            .filter(item => item.id !== target_language_id)
-                            .map((item) => {
-                                return (
-                                    <MenuItem value={item.id}>{item.name}</MenuItem>
-                                );
-                            })}
+                    {usersState.native_languages && usersState.native_languages
+                        .filter(item => item.id !== target_language_id)
+                        .map((item) => {
+                            return (<MenuItem value={item.id}>{item.name}</MenuItem>);
+                        })}
                 </Select>
             </FormControl>
             <FormControl fullWidth>
@@ -75,16 +66,12 @@ export default function Languages() {
                     label="Target Language"
                     onChange={event => dispatch(setTargetLanguageId(event.target.value))}
                 >
-                    {usersState.target_languages &&
-                        usersState.target_languages
-                            .filter(item => item.id !== native_language_id)
-                            .map((item) => {
-                                return (
-                                    <MenuItem value={item.id}>{item.name}</MenuItem>
-                                );
-                            })}
+                    {usersState.target_languages && usersState.target_languages
+                        .filter(item => item.id !== native_language_id)
+                        .map((item) => {
+                            return (<MenuItem value={item.id}>{item.name}</MenuItem>);
+                        })}
                 </Select>
             </FormControl>
-        </div>
-    );
+        </div>);
 };

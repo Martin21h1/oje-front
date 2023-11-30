@@ -19,8 +19,7 @@ export default function SnackbarComponent(props) {
     };
 
 
-    return (
-        <Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
+    return (<Snackbar open={open} autoHideDuration={10000} onClose={handleClose}>
             <Alert onClose={handleClose} severity={props.severity} sx={{width: '100%'}}>
                 {props.message}
             </Alert>

@@ -7,8 +7,7 @@ export const ArtistsFetch = () => {
                 if (payload.error) {
                 } else {
                     dispatch({
-                        type: 'LIST_ARTISTS',
-                        payload: payload.data,
+                        type: 'LIST_ARTISTS', payload: payload.data,
                     });
                 }
             })

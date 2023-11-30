@@ -11,8 +11,7 @@ export const fetchSongs = (page, limit) => {
                 } else {
                     dispatch(setLoading(false))
                     dispatch({
-                        type: 'LIST_SONGS',
-                        payload: payload.data,
+                        type: 'LIST_SONGS', payload: payload.data,
                     });
                 }
             })
@@ -29,8 +28,7 @@ export const fetchLikedSongs = (page, limit) => {
                 if (payload.error) {
                 } else {
                     dispatch({
-                        type: 'SET_LIKED_SONG',
-                        payload: payload.data,
+                        type: 'SET_LIKED_SONG', payload: payload.data,
                     });
                 }
             })
@@ -53,10 +51,31 @@ export const searchSong = (song, navigate) => {
                     dispatch(setErrorNull())
                     dispatch(setSearchLoading(false))
                     dispatch({
-                        type: 'SET_FOUND_SONG',
-                        payload: data.data[0],
+                        type: 'SET_FOUND_SONG', payload: data.data[0],
                     });
                     navigate(`/song/${song.title}/artist/${song.artist}`)
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    };
+};
+export const searchHeaderSong = (query, globalSearch) => {
+    return dispatch => {
+        // dispatch(setSearchLoading(true))
+        return Api.searchHeaderSong(query, globalSearch)
+            .then(data => {
+                if (data.error) {
+                    error_handler(dispatch, data)
+                    // dispatch(setSearchLoading(false))
+
+                } else {
+                    // dispatch(setErrorNull())
+                    // dispatch(setSearchLoading(false))
+                    dispatch({
+                        type: 'SET_FOUND_HEADER_SONG', payload: data.data,
+                    });
                 }
             })
             .catch(error => {
@@ -72,8 +91,7 @@ export const progressSong = (song) => {
                     error_handler(dispatch, data)
                 } else {
                     dispatch({
-                        type: 'SET_PROGRESS',
-                        payload: data.data,
+                        type: 'SET_PROGRESS', payload: data.data,
                     });
                 }
             })
@@ -91,8 +109,7 @@ export const likeSong = (id, navigate) => {
                     navigate('/login')
                 } else {
                     dispatch({
-                        type: 'SET_LIKE_SONG',
-                        payload: id,
+                        type: 'SET_LIKE_SONG', payload: id,
                     });
                 }
 
@@ -108,8 +125,7 @@ export const FetchSongsByArtist = (artist, page, limit) => {
         return Api.fetchSongsByArtist(artist, page, limit)
             .then(payload => {
                 dispatch({
-                    type: 'ARTIST_SONG',
-                    payload: payload.data
+                    type: 'ARTIST_SONG', payload: payload.data
                 });
                 return payload;
             })
@@ -136,8 +152,7 @@ export const fetchImages = (word, songId, page) => {
         return Api.fetchImages(word, songId, page)
             .then(payload => {
                 dispatch({
-                    type: 'SET_IMAGES',
-                    payload: payload.data
+                    type: 'SET_IMAGES', payload: payload.data
                 })
                 return payload;
             })
@@ -158,21 +173,18 @@ export const clearImages = () => {
 };
 
 const setLoading = (payload) => ({
-    type: 'SET_LOADING',
-    payload: payload
+    type: 'SET_LOADING', payload: payload
 });
 
 const setSearchLoading = (payload) => ({
-    type: 'SET_SEARCH_LOADING',
-    payload: payload
+    type: 'SET_SEARCH_LOADING', payload: payload
 });
 
 export const setSong = (item) => {
     return dispatch => {
 
         dispatch({
-            type: 'SET_SONG',
-            payload: item
+            type: 'SET_SONG', payload: item
         })
 
     };

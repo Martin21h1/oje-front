@@ -14,13 +14,9 @@ import IconButton from "@material-ui/core/IconButton";
 
 const useStyles = makeStyles(theme => ({
     container: {
-        marginTop: theme.spacing(2),
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    card: {
-        maxWidth: 100,
-        marginTop: theme.spacing(1),
+        marginTop: theme.spacing(2), flexDirection: 'column', alignItems: 'center',
+    }, card: {
+        maxWidth: 100, marginTop: theme.spacing(1),
     },
 }));
 
@@ -42,35 +38,33 @@ export default function Row(props) {
         setOpenModal((isOpenedModal) => !isOpenedModal);
     };
 
-    return (
-        <TableRow key={row.id}>
-            <TableCell align="left">{row.word}</TableCell>
-            <TableCell align="left">{row.translate}</TableCell>
-            <TableCell align="left">
-                <img src={row.prime_picture} alt="picture" className={classes.card}/>
-            </TableCell>
-            <IconButton aria-label="settings">
-                <MoreVertIcon
-                    onClick={handleOpenClick}
-                />
-                <Menu
-                    open={isOpened}
-                    onClose={handleOpenClick}
-                    anchorEl={anchorEl}
-                >
-                    <MenuItem onClick={handleOpenClickModal}>
-                        <DeleteIcon
-                            onClose={handleOpenClickModal}
-                            open={isOpenedModal}
-                        />
-                        {isOpenedModal ? <Modal id={row.id}
-                                                onClick={DeleteWord}
-                                                title={`Delete Word ${row.word}`}
-                                                content={'Are you sure?'}
-                        /> : null}
-                    </MenuItem>
-                </Menu>
-            </IconButton>
-        </TableRow>
-    );
+    return (<TableRow key={row.id}>
+        <TableCell align="left">{row.word}</TableCell>
+        <TableCell align="left">{row.translate}</TableCell>
+        <TableCell align="left">
+            <img src={row.prime_picture} alt="picture" className={classes.card}/>
+        </TableCell>
+        <IconButton aria-label="settings">
+            <MoreVertIcon
+                onClick={handleOpenClick}
+            />
+            <Menu
+                open={isOpened}
+                onClose={handleOpenClick}
+                anchorEl={anchorEl}
+            >
+                <MenuItem onClick={handleOpenClickModal}>
+                    <DeleteIcon
+                        onClose={handleOpenClickModal}
+                        open={isOpenedModal}
+                    />
+                    {isOpenedModal ? <Modal id={row.id}
+                                            onClick={DeleteWord}
+                                            title={`Delete Word ${row.word}`}
+                                            content={'Are you sure?'}
+                    /> : null}
+                </MenuItem>
+            </Menu>
+        </IconButton>
+    </TableRow>);
 };

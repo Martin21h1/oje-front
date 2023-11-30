@@ -11,9 +11,7 @@ import Container from "@material-ui/core/Container";
 
 const useStyles = makeStyles(theme => ({
     container: {
-        marginTop: theme.spacing(2),
-        flexDirection: 'column',
-        alignItems: 'center',
+        marginTop: theme.spacing(2), flexDirection: 'column', alignItems: 'center',
     },
 }));
 
@@ -23,11 +21,9 @@ export default function Songs() {
     // const {authState} = useSelector(state => state);
     const classes = useStyles();
 
-    return (
-        <Container component="main" className={classes.container}>
-            <SearchForm onSubmit={searchSong}/>
-            {/*{authState.token ? <SearchForm onSubmit={searchSong}/> : null}*/}
-            <SongsComponent dispatch={dispatch} fetch={fetchSongs} state={songsState.songs}/>
-        </Container>
-    )
+    return (<Container component="main" className={classes.container}>
+        {/*<SearchForm onSubmit={searchSong}/>*/}
+        {/*{authState.token ? <SearchForm onSubmit={searchSong}/> : null}*/}
+        <SongsComponent dispatch={dispatch} fetch={fetchSongs} state={songsState.songs}/>
+    </Container>)
 }

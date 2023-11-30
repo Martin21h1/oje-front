@@ -13,46 +13,29 @@ import Container from '@material-ui/core/Container';
 import {makeStyles} from '@material-ui/core/styles';
 import Alert from "@mui/material/Alert";
 
-const FIELDS = [
-    {
-        name: 'old_password',
-        label: 'Old Password',
-    },
-    {
-        name: 'password',
-        label: 'Password',
-    },
-    {
-        name: 'password',
-        label: 'Repeat password',
-    }
-];
+const FIELDS = [{
+    name: 'old_password', label: 'Old Password',
+}, {
+    name: 'password', label: 'Password',
+}, {
+    name: 'password', label: 'Repeat password',
+}];
 
 const useStyles = makeStyles(theme => ({
     '@global': {
         body: {
             backgroundColor: theme.palette.common.white,
         },
-    },
-    paper: {
-        marginTop: theme.spacing(8),
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'center',
-    },
-    textField: {
-        marginTop: theme.spacing(2),
-        margin: 'normal',
-        width: '100%', // Fix IE 11 issue.
-    },
-    form: {
+    }, paper: {
+        marginTop: theme.spacing(8), display: 'flex', flexDirection: 'column', alignItems: 'center',
+    }, textField: {
+        marginTop: theme.spacing(2), margin: 'normal', width: '100%', // Fix IE 11 issue.
+    }, form: {
         width: '100%', // Fix IE 11 issue.
         marginTop: theme.spacing(1),
-    },
-    submit: {
+    }, submit: {
         margin: theme.spacing(3, 0, 2),
-    },
-    alert: {
+    }, alert: {
         marginTop: theme.spacing(1),
     }
 }));
@@ -75,42 +58,37 @@ export default function ResetPassword() {
         dispatch(ResetPasswordFetch(state, navigate));
     };
 
-    return (
-        <Container component="main" maxWidth="xs">
-            <CssBaseline/>
-            <div className={classes.paper}>
-                <Typography component="h1" variant="h5">
-                    Change password
-                </Typography>
-                <form className={classes.form} onSubmit={handleSubmit}>
-                    {
-                        FIELDS.map(({name, label}) => <InputTextField
-                            label={label}
-                            name={name}
-                            value={state.name}
-                            onChange={handleChange}
-                            error={!!errorsState.fields[name] || null}
-                            helperText={errorsState.fields[name] || null}
-                            className={classes.textField}
-                        />)
-                    }
-                    {errorsState.message ?
-                        <Alert variant="outlined" severity="error" className={classes.alert}>
-                            {errorsState.message}
-                        </Alert> : null}
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        color="primary"
-                        className={classes.submit}
-                    >
-                        Save
-                    </Button>
-                    <Grid container>
-                    </Grid>
-                </form>
-            </div>
-        </Container>
-    );
+    return (<Container component="main" maxWidth="xs">
+        <CssBaseline/>
+        <div className={classes.paper}>
+            <Typography component="h1" variant="h5">
+                Change password
+            </Typography>
+            <form className={classes.form} onSubmit={handleSubmit}>
+                {FIELDS.map(({name, label}) => <InputTextField
+                    label={label}
+                    name={name}
+                    value={state.name}
+                    onChange={handleChange}
+                    error={!!errorsState.fields[name] || null}
+                    helperText={errorsState.fields[name] || null}
+                    className={classes.textField}
+                />)}
+                {errorsState.message ? <Alert variant="outlined" severity="error" className={classes.alert}>
+                    {errorsState.message}
+                </Alert> : null}
+                <Button
+                    type="submit"
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    className={classes.submit}
+                >
+                    Save
+                </Button>
+                <Grid container>
+                </Grid>
+            </form>
+        </div>
+    </Container>);
 };

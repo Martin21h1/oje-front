@@ -82,10 +82,8 @@ export const LogoutUser = () => {
 };
 
 const setToken = (payload) => ({
-    type: 'SET_TOKEN',
-    payload
+    type: 'SET_TOKEN', payload
 });
 const logOut = (payload) => ({
-    type: 'LOGOUT_USER',
-    payload
+    type: 'LOGOUT_USER', payload
 });

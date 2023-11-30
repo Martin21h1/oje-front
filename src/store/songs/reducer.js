@@ -3,6 +3,7 @@ const initialState = {
     songs: [],
     images: [],
     foundSong: null,
+    foundHeaderSong: [],
     progress: null,
     artistSongs: [],
     likedSongs: [],
@@ -23,13 +24,11 @@ export default function songsReducer(state = initialState, action) {
             });
 
             return {
-                ...state,
-                songs: [...state.songs, ...newSongs]
+                ...state, songs: [...state.songs, ...newSongs]
             };
         case 'SET_LIKE_SONG':
             return {
-                ...state,
-                // songs: state.songs.map(i => i.id === action.payload ? action.payload : i),
+                ...state, // songs: state.songs.map(i => i.id === action.payload ? action.payload : i),
                 likedSongs: state.likedSongs.filter(function (i) {
                     return i.id !== payload
                 })
@@ -40,8 +39,7 @@ export default function songsReducer(state = initialState, action) {
                 return !state.likedSongs.some((likedSong) => likedSong.id === song.id);
             });
             return {
-                ...state,
-                likedSongs: [...state.likedSongs, ...newLikedSongs]
+                ...state, likedSongs: [...state.likedSongs, ...newLikedSongs]
             };
         case 'ARTIST_SONG':
             const newUserSongs = payload.filter((song) => {
@@ -49,30 +47,33 @@ export default function songsReducer(state = initialState, action) {
                 return !state.artistSongs.some((existingSong) => existingSong.id === song.id);
             });
             return {
-                ...state,
-                artistSongs: [...state.artistSongs, ...newUserSongs]
+                ...state, artistSongs: [...state.artistSongs, ...newUserSongs]
             };
         case 'SET_FOUND_SONG':
             return {
                 ...state, foundSong: payload
             };
-            case 'SET_SONG':
+        case 'SET_FOUND_HEADER_SONG':
+            return {
+                ...state, foundHeaderSong: payload
+            };
+        case 'SET_SONG':
             return {
                 ...state, song: payload
             };
-            case 'SET_PROGRESS':
+        case 'SET_PROGRESS':
             return {
                 ...state, progress: payload
             };
         case 'SET_LOADING':
             return {...state, loading: payload};
-            case 'SET_SEARCH_LOADING':
+        case 'SET_SEARCH_LOADING':
             return {...state, searchLoading: payload};
         case 'SET_IMAGES':
             return {
-                ...state, images: [...state.images,...payload],
+                ...state, images: [...state.images, ...payload],
             };
-            case 'CLEAR_IMAGES':
+        case 'CLEAR_IMAGES':
             return {
                 ...state, images: [],
             };
