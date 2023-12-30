@@ -4,7 +4,6 @@ import {error_handler, setErrorNull} from "../errors/actions";
 export const fetchSongs = (page, limit) => {
     return dispatch => {
         dispatch(setLoading(true))
-
         return Api.fetchSongs(page, limit)
             .then(payload => {
                 if (payload.error) {
@@ -12,6 +11,23 @@ export const fetchSongs = (page, limit) => {
                     dispatch(setLoading(false))
                     dispatch({
                         type: 'LIST_SONGS', payload: payload.data,
+                    });
+                }
+            })
+            .catch(error => {
+                console.log(error);
+            })
+    };
+};
+
+export const fetchLyricsRows = songId => {
+    return dispatch => {
+        return Api.fetchLyricsRows(songId)
+            .then(payload => {
+                if (payload.error) {
+                } else {
+                    dispatch({
+                        type: 'LYRICS_ROWS', payload: payload.data,
                     });
                 }
             })
@@ -63,16 +79,16 @@ export const searchSong = (song, navigate) => {
 };
 export const searchHeaderSong = (query, globalSearch) => {
     return dispatch => {
-        // dispatch(setSearchLoading(true))
+        dispatch(setSearchLoading(true))
         return Api.searchHeaderSong(query, globalSearch)
             .then(data => {
                 if (data.error) {
                     error_handler(dispatch, data)
-                    // dispatch(setSearchLoading(false))
+                    dispatch(setSearchLoading(false))
 
                 } else {
                     // dispatch(setErrorNull())
-                    // dispatch(setSearchLoading(false))
+                    dispatch(setSearchLoading(false))
                     dispatch({
                         type: 'SET_FOUND_HEADER_SONG', payload: data.data,
                     });
@@ -149,8 +165,10 @@ export const LikeImage = (imageId, songId, wordId) => {
 
 export const fetchImages = (word, songId, page) => {
     return dispatch => {
+        dispatch(setImageLoading(true))
         return Api.fetchImages(word, songId, page)
             .then(payload => {
+                dispatch(setImageLoading(false))
                 dispatch({
                     type: 'SET_IMAGES', payload: payload.data
                 })
@@ -174,6 +192,10 @@ export const clearImages = () => {
 
 const setLoading = (payload) => ({
     type: 'SET_LOADING', payload: payload
+});
+
+const setImageLoading = (payload) => ({
+    type: 'SET_IMAGE_LOADING', payload: payload
 });
 
 const setSearchLoading = (payload) => ({

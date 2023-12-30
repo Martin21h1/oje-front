@@ -1,6 +1,7 @@
 const initialState = {
     song: null,
     songs: [],
+    lyricsRows: [],
     images: [],
     foundSong: null,
     foundHeaderSong: [],
@@ -8,6 +9,7 @@ const initialState = {
     artistSongs: [],
     likedSongs: [],
     loading: null,
+    imageLoading: null,
     searchLoading: null
 };
 
@@ -49,6 +51,10 @@ export default function songsReducer(state = initialState, action) {
             return {
                 ...state, artistSongs: [...state.artistSongs, ...newUserSongs]
             };
+        case 'LYRICS_ROWS':
+            return {
+                ...state, lyricsRows: payload
+            };
         case 'SET_FOUND_SONG':
             return {
                 ...state, foundSong: payload
@@ -67,6 +73,8 @@ export default function songsReducer(state = initialState, action) {
             };
         case 'SET_LOADING':
             return {...state, loading: payload};
+        case 'SET_IMAGE_LOADING':
+            return {...state, imageLoading: payload};
         case 'SET_SEARCH_LOADING':
             return {...state, searchLoading: payload};
         case 'SET_IMAGES':

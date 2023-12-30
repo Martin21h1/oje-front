@@ -7,15 +7,31 @@ import {ArtistsFetch} from "../store/artists/actions";
 import {makeStyles} from '@material-ui/core/styles';
 import Container from "@material-ui/core/Container";
 import Avatar from "@material-ui/core/Avatar";
-import Typography from "@material-ui/core/Typography";
-import {Stack} from "@mui/material";
+import {ListItemAvatar} from "@mui/material";
+import List from "@mui/material/List";
+import ListItem from "@mui/material/ListItem";
+import ListItemText from "@mui/material/ListItemText";
 
 const useStyles = makeStyles(theme => ({
     container: {
-        marginTop: theme.spacing(2), flexDirection: 'column', alignItems: 'center',
-    }, avatar: {
-        marginTop: theme.spacing(2), flexDirection: 'column', alignItems: 'center', width: 56, height: 56
-    }
+        marginTop: theme.spacing(2),
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+    },
+    avatar: {
+        marginTop: theme.spacing(2),
+        width: 56,
+        height: 56,
+        cursor: 'pointer'
+    },
+    listItem: {
+        width: '25%', // Default width for larger screens
+        boxSizing: 'border-box',
+        [theme.breakpoints.down('xs')]: {
+            width: '50%', // Two columns on small screens
+        },
+    },
 }));
 
 export default function Artists() {
@@ -30,25 +46,35 @@ export default function Artists() {
         }
     }, [artistsState.artists.length]);
 
-    return (<Container component="main" className={classes.container}>
-        <Stack
-            direction="row"
-            spacing={3}
-            justifyContent="flex-start"
-            alignItems="center"
-            flexWrap="wrap" // Allow items to wrap to the next line on smaller screens
-        >
-            {artistsState.artists && artistsState.artists.map(item => (
-                <div key={item.id}> {/* Add a unique key for each mapped element */}
-                    <Avatar
-                        aria-label="artist"
-                        className={classes.avatar}
-                        onClick={() => navigate(`/artist/${item.name}/`)}
-                        src={item.image_url}
-                        alt={item.name}
-                    />
-                    <Typography paragraph>{item.name}</Typography>
-                </div>))}
-        </Stack>
-    </Container>);
+    return (
+        <Container component="main" className={classes.container}>
+            <List style={{display: 'flex', flexWrap: 'wrap', width: '100%'}}>
+                {artistsState.artists &&
+                    artistsState.artists.map(item => (
+                        <ListItem
+                            key={item.name}
+                            className={classes.listItem}
+                        >
+                            <ListItemAvatar>
+                                <Avatar
+                                    aria-label="artist"
+                                    className={classes.avatar}
+                                    onClick={() => navigate(`/artist/${item.name}/`)}
+                                    src={item.image_url}
+                                    alt={item.name}
+                                />
+                            </ListItemAvatar>
+                            <ListItemText
+                                primary={item.name}
+                                style={{
+                                    marginLeft: '8px',
+                                    marginBottom: '-8px',
+                                    textAlign: 'left',
+                                }}
+                            />
+                        </ListItem>
+                    ))}
+            </List>
+        </Container>
+    );
 }

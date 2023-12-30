@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useRef, useState} from 'react';
 
 import Modal from "./ModalWindow";
 import {DeleteWord} from "../store/users/actions";

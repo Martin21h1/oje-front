@@ -7,8 +7,9 @@ import MenuItem from '@mui/material/MenuItem';
 import {useDispatch, useSelector} from "react-redux";
 import {searchHeaderSong, setSong} from "../store/songs/actions";
 import {useNavigate} from "react-router";
+import {CircularProgress} from "@material-ui/core";
 
-const Search = styled('div')(({ theme }) => ({
+const Search = styled('div')(({theme}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: alpha(theme.palette.common.white, 0.15),
@@ -28,7 +29,7 @@ const Search = styled('div')(({ theme }) => ({
     },
 }));
 
-const SearchIconWrapper = styled('div')(({ theme }) => ({
+const SearchIconWrapper = styled('div')(({theme}) => ({
     padding: theme.spacing(0, 2),
     height: '100%',
     position: 'absolute',
@@ -38,7 +39,7 @@ const SearchIconWrapper = styled('div')(({ theme }) => ({
     justifyContent: 'center',
 }));
 
-const StyledInputBase = styled(InputBase)(({ theme }) => ({
+const StyledInputBase = styled(InputBase)(({theme}) => ({
     color: 'inherit',
     '& .MuiInputBase-input': {
         padding: theme.spacing(1, 1, 1, 0),
@@ -55,6 +56,9 @@ const StyledInputBase = styled(InputBase)(({ theme }) => ({
         },
         [theme.breakpoints.up('md')]: {
             width: '20ch',
+            '&:focus': {
+                width: '20ch',
+            },
         },
     },
 }));
@@ -68,9 +72,8 @@ function ActiveSearch() {
 
     const handleSearchInputChange = (event) => {
         const newValue = event.target.value;
-        if (newValue.trim() !== '') {
+        if (newValue.trim() !== '' && newValue.length >= 2) {
             dispatch(searchHeaderSong(newValue, false));
-
         }
         setSearchValue(newValue);
         setMenuAnchor(event.target);
@@ -86,9 +89,8 @@ function ActiveSearch() {
         setSearchValue('');
     };
     const handleSearchClick = (song) => {
-        if (song.trim() !== '') {
+        if (song.trim() !== '' && song.length >= 2) {
             dispatch(searchHeaderSong(song, true));
-
         }
     };
 
@@ -96,7 +98,11 @@ function ActiveSearch() {
     return (<div>
         <Search>
             <SearchIconWrapper>
-                <SearchIcon/>
+                {songsState.searchLoading ?
+                    <CircularProgress
+                        size={24}/> :
+                    <SearchIcon/>
+                }
             </SearchIconWrapper>
             <StyledInputBase
                 placeholder="Eminem - Wihtout me"
@@ -112,14 +118,17 @@ function ActiveSearch() {
             disableAutoFocus={true}
             autoFocus={null}
         >
-            {songsState.foundHeaderSong.map((result, index) => (<MenuItem
-                onClick={() => handleOpenClick(result)}
-                key={index}>{`${result['name']} - ${result['title']}`}</MenuItem>))}
-            {songsState.foundHeaderSong.length === 0 && searchValue.trim() !== '' ? <MenuItem
-                onClick={() => handleSearchClick(searchValue)}
-            >
-                Global search
-            </MenuItem> : null}
+            {songsState.foundHeaderSong.map((result, index) => (
+                <MenuItem
+                    onClick={() => handleOpenClick(result)}
+                    key={index}>
+                    {`${result['name']} - ${result['title']}`}
+                </MenuItem>))}
+            {songsState.foundHeaderSong.length === 0 && !songsState.searchLoading && searchValue.trim() !== '' && searchValue.length >= 2 ?
+                <MenuItem
+                    onClick={() => handleSearchClick(searchValue)}>
+                    Global search
+                </MenuItem> : null}
         </Menu>
     </div>);
 }

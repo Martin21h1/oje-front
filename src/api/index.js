@@ -100,6 +100,12 @@ class ApiClass {
         });
     };
 
+    fetchLyricsRows = songId => {
+        return this.makeRequest({
+            url: `${this.url}/songs/lyricsRows?song_id=${songId}`
+        });
+    };
+
     likeSong = id => {
         return this.makeRequest({
             url: `${this.url}/songs/${id}/like`, data: {
